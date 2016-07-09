@@ -11,10 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160703123633) do
+ActiveRecord::Schema.define(version: 20160709180427) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "addresses", force: :cascade do |t|
+    t.string   "first_name",   null: false
+    t.string   "last_name",    null: false
+    t.string   "address_line", null: false
+    t.string   "city",         null: false
+    t.string   "country",      null: false
+    t.string   "zip",          null: false
+    t.string   "phone",        null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
 
   create_table "authors", force: :cascade do |t|
     t.string   "first_name"
@@ -52,11 +64,72 @@ ActiveRecord::Schema.define(version: 20160703123633) do
   add_index "books_categories", ["book_id"], name: "index_books_categories_on_book_id", using: :btree
   add_index "books_categories", ["category_id"], name: "index_books_categories_on_category_id", using: :btree
 
+  create_table "carts", force: :cascade do |t|
+    t.integer  "order_id",   null: false
+    t.integer  "book_id",    null: false
+    t.integer  "book_count", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "carts", ["book_id"], name: "index_carts_on_book_id", using: :btree
+  add_index "carts", ["order_id"], name: "index_carts_on_order_id", using: :btree
+
   create_table "categories", force: :cascade do |t|
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "credit_cards", force: :cascade do |t|
+    t.string   "number",          null: false
+    t.date     "expiration_date"
+    t.string   "code"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  create_table "deliveries", force: :cascade do |t|
+    t.string   "type",       null: false
+    t.decimal  "price"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "order_states", force: :cascade do |t|
+    t.string   "state"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "order_state_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.integer  "billing_address"
+    t.integer  "shiping_address"
+    t.integer  "delivery_id"
+    t.integer  "credit_card_id"
+  end
+
+  add_index "orders", ["credit_card_id"], name: "index_orders_on_credit_card_id", using: :btree
+  add_index "orders", ["delivery_id"], name: "index_orders_on_delivery_id", using: :btree
+  add_index "orders", ["order_state_id"], name: "index_orders_on_order_state_id", using: :btree
+  add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
+
+  create_table "reviews", force: :cascade do |t|
+    t.integer  "user_id",                    null: false
+    t.text     "text",                       null: false
+    t.integer  "vote"
+    t.boolean  "approved",   default: false, null: false
+    t.integer  "book_id",                    null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "reviews", ["book_id"], name: "index_reviews_on_book_id", using: :btree
+  add_index "reviews", ["user_id"], name: "index_reviews_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -84,4 +157,11 @@ ActiveRecord::Schema.define(version: 20160703123633) do
   add_foreign_key "authors_books", "books"
   add_foreign_key "books_categories", "books"
   add_foreign_key "books_categories", "categories"
+  add_foreign_key "orders", "addresses", column: "billing_address"
+  add_foreign_key "orders", "addresses", column: "shiping_address"
+  add_foreign_key "orders", "credit_cards"
+  add_foreign_key "orders", "deliveries"
+  add_foreign_key "orders", "order_states"
+  add_foreign_key "orders", "users"
+  add_foreign_key "reviews", "books"
 end

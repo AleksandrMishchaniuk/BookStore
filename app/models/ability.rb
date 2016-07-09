@@ -3,10 +3,18 @@ class Ability
 
   def initialize(user)
     can :read, :all
+    can :create, User
+    can :manage, person_data
     if user && user.admin?
       can :access, :rails_admin
       can :dashboard
-      can :manage, [Author, Book, Category]
+      cannot :create, User
+      can :manage, store_data
+      if request.original_fullpath.include? 'admin/'
+        cannot :manage, person_data
+        can :read, person_data
+        can :update, [Order, Review]
+      end
     end
 
     # Define abilities for the passed in user here. For example:
@@ -35,5 +43,15 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/wiki/Defining-Abilities
+  end
+
+  def request
+    Thread.current[:request]
+  end
+  def store_data
+    [Author, Book, Category, Delivery, OrderState]
+  end
+  def person_data
+    [Order, Address, Cart, CreditCard, Review]
   end
 end
