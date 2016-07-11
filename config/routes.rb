@@ -4,9 +4,37 @@ Rails.application.routes.draw do
 
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_for :users
-  resources :books
-  resources :categories
-  resources :authors
+
+  namespace :order do
+    resource :cart, only: [:show, :update]
+    resource :addresses, only: [:edit, :update]
+    resource :delivery, only: [:edit, :update]
+    resource :payment, only: [:edit, :update]
+    get 'confirm' => 'order#confirm', as: :confirm
+    post 'confirm' => 'order#to_progress', as: :in_progress
+    get 'order' => 'order#show', as: :order
+  end
+
+  namespace :shop do
+    resources :categories, only: :show
+    resources :books, only: [:index, :show] do
+      resources :reviews, only: [:new, :create]
+    end
+  end
+
+  namespace :user do
+    resources :orders, only: [:index, :show]
+    resource :settings, only: [:edit] do
+      member do
+        post 'billing_address'
+        post 'shipping_address'
+        post 'email'
+        post 'password'
+        post 'remove_user'
+      end
+    end
+  end
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

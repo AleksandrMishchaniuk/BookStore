@@ -1,0 +1,2 @@
+module Order::PaymentHelper
+end

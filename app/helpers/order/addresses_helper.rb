@@ -1,0 +1,2 @@
+module Order::AddressesHelper
+end

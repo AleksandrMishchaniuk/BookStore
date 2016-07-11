@@ -33,6 +33,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # gem 'capistrano-rails', group: :development
 
 gem 'haml', '~> 4.0', '>= 4.0.7'
+gem 'haml-rails', '~> 0.9.0'
+gem 'compass-rails', '~> 3.0', '>= 3.0.2'
+gem 'bootstrap-sass', '~> 3.3', '>= 3.3.6'
 
 gem 'figaro', '~> 1.1', '>= 1.1.1'
 

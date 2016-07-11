@@ -13,5 +13,8 @@ class Book < ActiveRecord::Base
     list do
       exclude_fields :image, :short_description, :full_description
     end
+    show do
+      include_fields :reviews, :orders
+    end
   end
 end
