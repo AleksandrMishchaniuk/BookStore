@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
 
   has_many :orders
   has_many :reviews
+  has_one :shipping_address, class_name: 'Address', foreign_key: :shipping_for_user
+  has_one :billing_address, class_name: 'Address', foreign_key: :billing_for_user
 
   def admin?
     ENV['ADMIN_EMAIL'] == self.email

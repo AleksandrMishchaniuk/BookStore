@@ -11,21 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160709180427) do
+ActiveRecord::Schema.define(version: 20160713201336) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "addresses", force: :cascade do |t|
-    t.string   "first_name",   null: false
-    t.string   "last_name",    null: false
-    t.string   "address_line", null: false
-    t.string   "city",         null: false
-    t.string   "country",      null: false
-    t.string   "zip",          null: false
-    t.string   "phone",        null: false
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.string   "first_name",        null: false
+    t.string   "last_name",         null: false
+    t.string   "address_line",      null: false
+    t.string   "city",              null: false
+    t.string   "country",           null: false
+    t.string   "zip",               null: false
+    t.string   "phone",             null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.integer  "shipping_for_user"
+    t.integer  "billing_for_user"
   end
 
   create_table "authors", force: :cascade do |t|
@@ -82,11 +84,12 @@ ActiveRecord::Schema.define(version: 20160709180427) do
   end
 
   create_table "credit_cards", force: :cascade do |t|
-    t.string   "number",          null: false
-    t.date     "expiration_date"
+    t.string   "number",           null: false
     t.string   "code"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+    t.integer  "expiration_month", null: false
+    t.integer  "expiration_year",  null: false
   end
 
   create_table "deliveries", force: :cascade do |t|
@@ -105,10 +108,10 @@ ActiveRecord::Schema.define(version: 20160709180427) do
   create_table "orders", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "order_state_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.integer  "billing_address"
-    t.integer  "shiping_address"
+    t.integer  "shipping_address"
     t.integer  "delivery_id"
     t.integer  "credit_card_id"
   end
@@ -153,12 +156,14 @@ ActiveRecord::Schema.define(version: 20160709180427) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
 
+  add_foreign_key "addresses", "users", column: "billing_for_user"
+  add_foreign_key "addresses", "users", column: "shipping_for_user"
   add_foreign_key "authors_books", "authors"
   add_foreign_key "authors_books", "books"
   add_foreign_key "books_categories", "books"
   add_foreign_key "books_categories", "categories"
   add_foreign_key "orders", "addresses", column: "billing_address"
-  add_foreign_key "orders", "addresses", column: "shiping_address"
+  add_foreign_key "orders", "addresses", column: "shipping_address"
   add_foreign_key "orders", "credit_cards"
   add_foreign_key "orders", "deliveries"
   add_foreign_key "orders", "order_states"

@@ -5,6 +5,12 @@ class Book < ActiveRecord::Base
   has_many :orders, through: :carts
   has_many :reviews
 
+  validates :title,               presence: true, length: {maximum: 64}
+  validates :short_description,   presence: true, length: {maximum: 128}
+  validates :full_description,    presence: true, length: {maximum: 1024}
+  validates :price,               presence: true, numericality: true
+  validates :authors,             presence: true
+
   mount_uploader :image, ImageUploader
 
   rails_admin do
