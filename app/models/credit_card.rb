@@ -15,6 +15,6 @@ class CreditCard < ActiveRecord::Base
                                   less_than: Time.new.year.to_i + 15
                                 }
   validates :code,              presence: true,
-                                numericality: {only_integer: true}
+                                numericality: {only_integer: true},
                                 length: {is: 3}
 end
