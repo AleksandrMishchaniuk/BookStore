@@ -71,3 +71,9 @@ group :test do
   gem 'database_cleaner', '~> 1.5', '>= 1.5.3'
   gem 'shoulda-matchers', '~> 3.1', '>= 3.1.1'
 end
+
+group :production do
+  gem 'rails_12factor'
+end
+
+ruby "2.3.0"
