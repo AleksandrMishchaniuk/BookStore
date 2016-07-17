@@ -5,9 +5,9 @@ class Book < ActiveRecord::Base
   has_many :orders, through: :carts
   has_many :reviews
 
-  validates :title,               presence: true, length: {maximum: 64}
-  validates :short_description,   presence: true, length: {maximum: 128}
-  validates :full_description,    presence: true, length: {maximum: 1024}
+  validates :title,               presence: true, length: {maximum: 128}
+  validates :short_description,   presence: true, length: {maximum: 512}
+  validates :full_description,    presence: true, length: {maximum: 2048}
   validates :price,               presence: true, numericality: true
   validates :authors,             presence: true
 
