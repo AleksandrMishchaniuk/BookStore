@@ -37,6 +37,8 @@ gem 'haml-rails', '~> 0.9.0'
 gem 'compass-rails', '~> 3.0', '>= 3.0.2'
 gem 'bootstrap-sass', '~> 3.3', '>= 3.3.6'
 
+gem "simple-navigation"
+
 gem 'figaro', '~> 1.1', '>= 1.1.1'
 
 gem 'devise', '~> 4.1', '>= 4.1.1'
