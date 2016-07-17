@@ -23,4 +23,13 @@ class Book < ActiveRecord::Base
       include_fields :reviews, :orders
     end
   end
+
+  class << self
+    def bestsellers(limit = 5)
+      ids = joins('LEFT OUTER JOIN carts ON carts.book_id = books.id')
+          .select('books.id, sum(book_count) AS selles')
+          .group('books.id').order('selles DESC').limit(limit)
+      includes(:authors).find(*ids)
+    end
+  end
 end

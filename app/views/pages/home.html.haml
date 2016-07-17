@@ -1,3 +1,34 @@
-%p= alert
-%h1 Pages#home
-%p Find me in app/views/pages/home.html.erb
+%h2.text-center
+  Our Bestsellers
+#carousel-bestsellers.carousel.slide{'data-ride': "carousel", "data-interval": "6000"}
+  %ol.carousel-indicators
+    %li.active{'data-target': "#carousel-bestsellers", 'data-slide-to': "0"}
+    %li{'data-target': "#carousel-bestsellers", 'data-slide-to': "1"}
+    %li{'data-target': "#carousel-bestsellers", 'data-slide-to': "2"}
+
+  .carousel-inner
+    - @books.each_with_index do |book, i|
+      .item{class: "#{i==0? 'active': ''}"}
+        .caption
+          %h3
+            = link_to book.title, shop_book_path(book)
+            %small
+              by
+              - book.authors.each_with_index do |author, j|
+                = (j == 0)? '': ', '
+                = author.full_name
+        .row
+          .col-md-4
+            .div_image
+              = image_tag(book.image, class: 'img-thumbnail')
+          .col-md-8
+            %p.description
+              = book.full_description
+
+  %a.left.carousel-control{ href: "#carousel-bestsellers", 'data-slide': "prev"}
+    %span.glyphicon.glyphicon-chevron-left
+  %a.right.carousel-control{ href: "#carousel-bestsellers", 'data-slide': "next"}
+    %span.glyphicon.glyphicon-chevron-right
+
+%h1.text-center
+  Welcome to the MAP-BookStore
