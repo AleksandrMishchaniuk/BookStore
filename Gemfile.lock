@@ -311,6 +311,7 @@ DEPENDENCIES
   haml-rails (~> 0.9.0)
   jbuilder (~> 2.0)
   jquery-rails
+  kaminari
   mini_magick (~> 4.5, >= 4.5.1)
   omniauth-facebook
   pg (~> 0.15)

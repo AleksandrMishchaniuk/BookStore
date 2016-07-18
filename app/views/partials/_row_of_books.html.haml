@@ -1,0 +1,9 @@
+.row.row_of_books
+  - books.each do |book|
+    %div{class: "col-sm-#{12/count} "}
+      .div_image.text-center
+        = image_tag(book.image.thumb, class: 'img-thumbnail')
+      %h4.text-center= link_to book.title, shop_book_path(book)
+      .price.text-center
+        %strong
+          = "$#{book.price}"

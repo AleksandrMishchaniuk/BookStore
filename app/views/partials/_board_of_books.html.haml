@@ -1,0 +1,9 @@
+- unless @books.empty?
+  - books_buffer = []
+  - count_in_row = 3
+  - @books.each_with_index do |book, i|
+    - books_buffer << book
+    - next unless books_buffer.count == count_in_row || @books.count - 1 == i
+    = render 'partials/row_of_books', books: books_buffer, count: count_in_row
+    - books_buffer = []
+  .text-center= paginate @books

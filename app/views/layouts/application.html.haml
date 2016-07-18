@@ -19,7 +19,7 @@
           %a.navbar-brand{href: "#{root_path}"} MAP-BookStore
         /end navbar-header
         .collapse.navbar-collapse#navbar_collapse_1
-          = render_navigation &main_menu_proc('nav navbar-nav')
+          = render_navigation level: 1, &main_menu_proc('nav navbar-nav')
           %ul.nav.navbar-nav.navbar-right
             - if user_signed_in?
               %li.dropdown

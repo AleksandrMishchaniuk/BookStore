@@ -38,6 +38,7 @@ gem 'compass-rails', '~> 3.0', '>= 3.0.2'
 gem 'bootstrap-sass', '~> 3.3', '>= 3.3.6'
 
 gem "simple-navigation"
+gem 'kaminari'
 
 gem 'figaro', '~> 1.1', '>= 1.1.1'
 

@@ -7,10 +7,10 @@ module NavigationsHelper
     end
   end
 
-  def category_menu_proc(css_class = '')
+  def category_menu_proc(css_class_wrap = '', css_class_item = '')
     proc do |category|
-      category.dom_class = css_class
-      eval Category.items_for_navigation
+      category.dom_class = css_class_wrap
+      eval Category.items_for_navigation(css_class_item)
     end
   end
 

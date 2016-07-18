@@ -1,0 +1,9 @@
+.col-sm-9
+  = render_navigation renderer: :breadcrumbs,
+                      join_with: ' / ',
+                      &main_menu_proc
+  %h1 Categories - #{@category.name}
+  = render 'partials/board_of_books'
+
+.col-sm-3
+  = render 'partials/category_navigation'
