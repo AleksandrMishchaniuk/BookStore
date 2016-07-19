@@ -13,10 +13,7 @@
           %h3
             = link_to book.title, shop_book_path(book)
             %small
-              by
-              - book.authors.each_with_index do |author, j|
-                = (j == 0)? '': ', '
-                = author.full_name
+              %i= "by #{authors_list book.authors}"
         .row
           .col-md-4
             .div_image

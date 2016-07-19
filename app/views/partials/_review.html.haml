@@ -1,0 +1,8 @@
+.review
+  .review_head
+    %span= review.voit
+    %span= review.title
+    %span= review.created_at
+  .review_author
+    = "by #{review.user.email}"
+  %p.review_text= review.text

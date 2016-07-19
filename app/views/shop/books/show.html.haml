@@ -1,0 +1,35 @@
+.caption
+  %h2= @book.title
+  %h3
+    %i= "Author: #{authors_list @book.authors}"
+.row
+  .col-md-4
+    .div_image
+      = image_tag(@book.image, class: 'img-thumbnail')
+  .col-md-8
+    .div_to_cart
+      .row
+        .col-sm-6
+          .price= "$ #{@book.price}"
+        .col-sm-6.text-right
+          = form_tag(order_add_book_path, class: 'form-inline', role: 'form') do
+            = hidden_field_tag(:id, @book.id.to_s)
+            .form-group
+              = number_field_tag(:count, 1, in: 1..20, step: 1, class: 'form-control')
+            .form-group
+              = submit_tag('Add to Cart', class: 'btn btn-primary')
+    %p.description
+      = @book.full_description
+.reviews
+  %h3 Reviews
+  - if user_signed_in?
+    = link_to 'Add review for this book', new_shop_book_review_path(@book)
+  - else
+    %i
+      for adding review, you should
+      %strong= link_to "Sign In", new_user_session_path
+  - if @reviews.empty?
+    %p.text-center.lead No Reviews yet
+  - else
+    - @review.each do |review|
+      = render 'partials/review', review: review

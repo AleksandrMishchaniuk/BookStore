@@ -32,4 +32,8 @@ class Book < ActiveRecord::Base
       includes(:authors).find(*ids)
     end
   end
+
+  def approved_reviews
+    reviews.where(approved: true)
+  end
 end
