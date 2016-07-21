@@ -6,12 +6,14 @@
 .row
   .col-sm-offset-2.col-sm-8
     = form_for @review, url: shop_book_reviews_path, html: {role: 'form'} do |review_f|
+      = review_f.hidden_field :user_id, value: current_user.id
+      = review_f.hidden_field :book_id, value: @review.book.id
       .form-group
         = review_f.label :title, 'Title'
         = review_f.text_field :title, class: 'form-control'
       .form-group
         = review_f.label :vote, 'Rating'
-        = review_f.number_field :vote, class: 'form-control'
+        = review_f.number_field :vote, class: 'form-control', min: 0, max: 5, step: 1
       .form-group
         = review_f.label :text, 'Text review'
         = review_f.text_area :text, class: 'form-control', rows: '10'

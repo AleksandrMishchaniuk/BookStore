@@ -15,4 +15,18 @@ class Order < ActiveRecord::Base
       field :order_state
     end
   end
+
+  class << self
+    def in_progress
+      nil
+    end
+  end
+
+  def item_total
+    0
+  end
+
+  def order_total
+    0
+  end
 end

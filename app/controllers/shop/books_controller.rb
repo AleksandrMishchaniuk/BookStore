@@ -6,5 +6,6 @@ class Shop::BooksController < ApplicationController
   def show
     @book = Book.find(params[:id])
     @reviews = @book.approved_reviews
+    @cart = Cart.in_process || Cart.new
   end
 end

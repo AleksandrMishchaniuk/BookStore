@@ -13,7 +13,6 @@ Rails.application.routes.draw do
     get 'confirm' => 'order#confirm', as: :confirm
     post 'confirm' => 'order#to_progress', as: :in_progress
     get 'order' => 'order#show', as: :order
-    post 'add_book' => 'order#add_book', as: :add_book
   end
 
   namespace :shop do

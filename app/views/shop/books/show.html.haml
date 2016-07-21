@@ -12,12 +12,12 @@
         .col-sm-6
           .price= "$ #{@book.price}"
         .col-sm-6.text-right
-          = form_tag(order_add_book_path, class: 'form-inline', role: 'form') do
-            = hidden_field_tag(:id, @book.id.to_s)
+          = form_for @cart, url: order_cart_path, method: 'put', html: {class: 'form-inline', role: 'form'} do |f|
+            = f.hidden_field :book_id, value: @book.id
             .form-group
-              = number_field_tag(:count, 1, in: 1..20, step: 1, class: 'form-control')
+              = f.number_field(:book_count, value: 1, in: 1..20, step: 1, class: 'form-control')
             .form-group
-              = submit_tag('Add to Cart', class: 'btn btn-primary')
+              = f.submit('Add to Cart', class: 'btn btn-primary')
     %p.description
       = @book.full_description
 .reviews

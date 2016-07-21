@@ -1,0 +1,6 @@
+%h3.text-center ORDER SUMMARY
+.text-right
+  .item_total= "Item total: $#{@order.item_total}"
+  - if @order.delivery
+    .order_shipping= "Shipping: $#{@order.delivery.price}"
+  .order_total= "Order total: $#{@order.order_total}"
