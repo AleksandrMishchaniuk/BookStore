@@ -12,12 +12,15 @@
         .col-sm-6
           .price= "$ #{@book.price}"
         .col-sm-6.text-right
-          = form_for @cart, url: cart_path, method: 'put', html: {class: 'form-inline', role: 'form'} do |f|
-            = f.hidden_field :book_id, value: @book.id
+          = form_for @cart, url: add_cart_path, html: {class: 'form-inline', role: 'form'} do |f|
+            = f.hidden_field :book_id, value: @cart.book_id
             .form-group
-              = f.number_field(:book_count, value: 1, in: 1..20, step: 1, class: 'form-control')
+              = f.number_field(:book_count, value: @cart.book_count, in: 1..20, step: 1, class: 'form-control')
             .form-group
               = f.submit('Add to Cart', class: 'btn btn-primary')
+          - if @in_cart
+            %p.text-success
+              %strong= "already in cart: #{@in_cart.book_count} pcs"
     %p.description
       = @book.full_description
 .reviews

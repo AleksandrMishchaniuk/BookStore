@@ -1,21 +1,16 @@
 - content_for :checkout_data do
-  .row
-    .col-md-8
-      = form_for @order, url: checkout_addresses_path, method: 'put', html: {role: 'form'} do |order|
-        .row
-          - [:billing, :shipping].each do |type|
-            .col-md-6
-              = render 'partials/address_fields', type: type, order: order
-        .row
-          .col-md-6
-            .form-group
-              = order.submit 'Save and Continue', class: 'btn btn-primary form-control'
-          .col-md-6
-            .form-group
-              = check_box_tag(:once_address)
-              = label_tag(:once_address, 'Use billing address as shipping')
-    .col-md-4
-      = render "checkout/order_summary"
-
+  = form_for @order, url: checkout_addresses_path, method: 'put', html: {role: 'form'} do |order|
+    .row
+      - [:billing, :shipping].each do |type|
+        .col-md-6
+          = render 'partials/address_fields', type: type, order: order
+    .row
+      .col-md-6
+        .form-group
+          = order.submit 'Save and Continue', class: 'btn btn-primary form-control'
+      .col-md-6
+        .form-group
+          = check_box_tag(:once_address)
+          = label_tag(:once_address, 'Use billing address as shipping')
 
 = render 'checkout/wraper', step: @step

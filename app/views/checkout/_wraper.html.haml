@@ -1,6 +1,8 @@
 %h1 Checkout
 #checkout_panel
-  - ['addresses', 'delivery', 'payment', 'confinm', 'complete'].each_with_index do |step_name, i|
+  - [
+  -  'addresses', 'delivery', 'payment', 'confirm', 'complete'
+  - ].each_with_index do |step_name, i|
     - unless i == 0
       %span.glyphicon.glyphicon-chevron-right
     - if i+1 == step
@@ -10,4 +12,8 @@
     - else
       %span.step= step_name.upcase
 #checkout_data
-  = yield :checkout_data
+  .row
+    .col-sm-8
+      = yield :checkout_data
+    .col-sm-4
+      = render "checkout/order_summary"

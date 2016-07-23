@@ -1,19 +1,14 @@
 - content_for :checkout_data do
-  .row
-    .col-md-8
-      = form_for @order, url: checkout_delivery_path, method: 'put', html: {role: 'form'} do |order|
-        .row
-          .col-md-6
-            %h3.text-center DELIVERY
-            - @deliveries.each_with_index do |delivery, i|
-              - checked = i == 0
-              .form-group
-                = order.radio_button(:delivery, delivery.id, checked: checked, "data-price": delivery.price)
-                = order.label("delivery_#{delivery.id}", " #{delivery.delivery_type} +$#{delivery.price}")
-            .form-group
-              = order.submit 'Save and Continue', class: 'btn btn-primary form-control'
-    .col-md-4
-      = render "checkout/order_summary"
-
+  = form_for @order, url: checkout_delivery_path, method: 'put', html: {role: 'form'} do |order|
+    .row
+      .col-md-6
+        %h3.text-center DELIVERY
+        - @deliveries.each_with_index do |delivery, i|
+          - checked = i == 0
+          .form-group
+            = order.radio_button(:delivery, delivery.id, checked: checked, "data-price": delivery.price)
+            = order.label("delivery_#{delivery.id}", " #{delivery.delivery_type} +$#{delivery.price}")
+        .form-group
+          = order.submit 'Save and Continue', class: 'btn btn-primary form-control'
 
 = render 'checkout/wraper', step: @step

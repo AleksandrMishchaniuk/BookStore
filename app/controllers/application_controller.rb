@@ -8,7 +8,19 @@ class ApplicationController < ActionController::Base
       redirect_to main_app.root_path, :alert => exception.message
   end
 
+  def define_order_in_progress
+    @order = Order.find(session[:order_in_progress_id]) if session[:order_in_progress_id]
+    @order ||=  current_user.try(:order_in_progress) || order_from_session || Order.new
+  end
+
   protected
+
+  def order_from_session
+    return false unless session[:cart_items]
+    order = Order.new
+    order.carts = session[:cart_items].map { |item| Cart.new(item) }
+    order
+  end
 
   def set_request_environment
     Thread.current[:request] = request

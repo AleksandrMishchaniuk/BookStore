@@ -4,7 +4,7 @@ class Cart < ActiveRecord::Base
 
   validates :order,       presence: true
   validates :book,        presence: true
-  validates :book_count,  presence: true, numericality: {only_integer: true, greater_than: 0}
+  validates :book_count,  presence: true, numericality: {only_integer: true}
 
   def self.in_process
     nil

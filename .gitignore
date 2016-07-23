@@ -16,3 +16,4 @@
 /config/application.yml
 
 public/uploads
+.byebug_history

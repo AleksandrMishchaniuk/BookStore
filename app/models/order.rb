@@ -16,11 +16,7 @@ class Order < ActiveRecord::Base
     end
   end
 
-  class << self
-    def in_progress
-      nil
-    end
-  end
+  alias :cart_items :carts
 
   def item_total
     0

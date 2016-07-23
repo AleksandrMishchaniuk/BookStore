@@ -6,5 +6,6 @@ module Checkout
       # check_step! @step
       @deliveries = Delivery.all
     end
+    
   end
 end

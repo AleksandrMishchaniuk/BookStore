@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_for :users
 
-  resource :cart, only: [:show, :update]
+  resource :cart, only: [:show, :update, :destroy], controller: :cart do
+    post :add, on: :member
+  end
   namespace :checkout do
     resource :addresses, only: [:edit, :update]
     resource :delivery, only: [:edit, :update], controller: :delivery
