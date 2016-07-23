@@ -1,2 +1,0 @@
-module Order::DeliveryHelper
-end

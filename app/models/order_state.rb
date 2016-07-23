@@ -8,4 +8,10 @@ class OrderState < ActiveRecord::Base
       exclude_fields :orders
     end
   end
+
+  class << self
+    def in_queue
+      find(2)
+    end
+  end
 end

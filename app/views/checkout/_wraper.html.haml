@@ -1,0 +1,13 @@
+%h1 Checkout
+#checkout_panel
+  - ['addresses', 'delivery', 'payment', 'confinm', 'complete'].each_with_index do |step_name, i|
+    - unless i == 0
+      %span.glyphicon.glyphicon-chevron-right
+    - if i+1 == step
+      %span.step.current.text-primary= step_name.upcase
+    - elsif i+1 < step && step < 5
+      %span.step.text-success= link_to step_name.upcase, eval("edit_checkout_#{step_name}_path")
+    - else
+      %span.step= step_name.upcase
+#checkout_data
+  = yield :checkout_data

@@ -12,7 +12,7 @@
         .col-sm-6
           .price= "$ #{@book.price}"
         .col-sm-6.text-right
-          = form_for @cart, url: order_cart_path, method: 'put', html: {class: 'form-inline', role: 'form'} do |f|
+          = form_for @cart, url: cart_path, method: 'put', html: {class: 'form-inline', role: 'form'} do |f|
             = f.hidden_field :book_id, value: @book.id
             .form-group
               = f.number_field(:book_count, value: 1, in: 1..20, step: 1, class: 'form-control')

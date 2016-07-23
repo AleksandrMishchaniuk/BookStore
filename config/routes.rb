@@ -5,13 +5,13 @@ Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   devise_for :users
 
-  namespace :order do
-    resource :cart, only: [:show, :update]
+  resource :cart, only: [:show, :update]
+  namespace :checkout do
     resource :addresses, only: [:edit, :update]
-    resource :delivery, only: [:edit, :update]
-    resource :payment, only: [:edit, :update]
+    resource :delivery, only: [:edit, :update], controller: :delivery
+    resource :payment, only: [:edit, :update], controller: :payment
     get 'confirm' => 'order#confirm', as: :confirm
-    post 'confirm' => 'order#to_progress', as: :in_progress
+    post 'confirm' => 'order#to_queue', as: :to_queue
     get 'order' => 'order#show', as: :order
   end
 

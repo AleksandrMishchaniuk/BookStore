@@ -1,0 +1,15 @@
+%h3.text-center ORDER SUMMARY
+.text-right
+  .item_total
+    Item total: $
+    %span.price
+      = '%.02f' % @order.item_total
+  - if @step > 1
+    .order_shipping
+      Shipping: $
+      %span.price
+        = '%.02f' % (@order.delivery.try(:price) || 0)
+  .order_total
+    Order total: $
+    %span.price
+      = '%.02f' % @order.order_total
