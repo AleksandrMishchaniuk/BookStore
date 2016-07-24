@@ -4,7 +4,7 @@
     Item total: $
     %span.price
       = '%.02f' % @order.item_total
-  - if @step > 1
+  - if @step > 1 || @order.delivery
     .order_shipping
       Shipping: $
       %span.price

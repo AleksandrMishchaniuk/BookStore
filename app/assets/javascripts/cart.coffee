@@ -3,10 +3,8 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $ ->
-  console.log "cart"
   $('.cart_item_count input').change ->
     current_row = $(this).parents(".cart_item")
-    console.log $(this).val()
     data =
       cart:
         book_id: current_row.attr('data-book_id')

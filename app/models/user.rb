@@ -11,13 +11,17 @@ class User < ActiveRecord::Base
   has_one :shipping_address, class_name: 'Address', foreign_key: :shipping_for_user
   has_one :billing_address, class_name: 'Address', foreign_key: :billing_for_user
 
-  def admin?
-    ENV['ADMIN_EMAIL'] == self.email
-  end
-
   rails_admin do
     object_label_method do
       :email
     end
+  end
+
+  def admin?
+    ENV['ADMIN_EMAIL'] == self.email
+  end
+
+  def order_in_progress
+    orders.find_by(order_state: OrderState.in_progress)
   end
 end

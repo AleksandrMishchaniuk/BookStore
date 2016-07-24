@@ -8,7 +8,7 @@ class Order < ActiveRecord::Base
   has_many :carts
   has_many :books, through: :carts
 
-  validates :book, presence: true
+  validates :carts, presence: true
 
   rails_admin do
     edit do
@@ -23,7 +23,15 @@ class Order < ActiveRecord::Base
   end
 
   def order_total
-    item_total.to_f + ( delivery.try(:ptice).try(:to_f) || 0 )
+    item_total.to_f + ( delivery.try(:price) || 0 )
+  end
+
+  def save_to_progress
+    return false unless save
+    unless cart_items.empty?
+      cart_items.each { |item| item.save unless item.persisted? }
+    end
+    true
   end
 
 end

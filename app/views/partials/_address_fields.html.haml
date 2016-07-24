@@ -1,6 +1,11 @@
+- address = @order.send(:"#{type.to_s}_address")
 %h3.text-center= "#{type.to_s.upcase} ADDRESS"
+- if address.errors.any?
+  %ul.list-unstyled
+    - address.errors.full_messages.each do |msg|
+      %li.text-danger= msg
 = order.fields_for type do |type_f|
-  = type_f.fields_for @order.send(:"#{type.to_s}_address") do |address_f|
+  = type_f.fields_for address do |address_f|
     .form-group
       = address_f.label :first_name, 'First name'
       = address_f.text_field :first_name, class: 'form-control'

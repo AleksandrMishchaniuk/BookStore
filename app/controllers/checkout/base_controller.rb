@@ -1,5 +1,6 @@
 module Checkout
   class BaseController < ::ApplicationController
+    before_filter :check_order, except: :start
 
     def check_step!(step)
       return if step == 1
@@ -11,6 +12,11 @@ module Checkout
       return if step == 4
       redirect_to checkout_confirm_path unless @order.order_state == OrderState.in_queue
     end
-    
+
+    protected
+
+    def check_order
+      redirect_to cart_path unless @order.persisted?
+    end
   end
 end

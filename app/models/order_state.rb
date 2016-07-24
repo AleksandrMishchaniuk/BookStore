@@ -10,6 +10,9 @@ class OrderState < ActiveRecord::Base
   end
 
   class << self
+    def in_progress
+      find(1)
+    end
     def in_queue
       find(2)
     end
