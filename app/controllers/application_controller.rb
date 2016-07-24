@@ -3,17 +3,18 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   before_filter :set_request_environment
+  before_action :define_order_in_progress
   after_filter :store_location
   rescue_from CanCan::AccessDenied do |exception|
       redirect_to main_app.root_path, :alert => exception.message
   end
 
+  protected
+
   def define_order_in_progress
     @order = Order.find(session[:order_in_progress_id]) if session[:order_in_progress_id]
     @order ||=  current_user.try(:order_in_progress) || order_from_session || Order.new
   end
-
-  protected
 
   def order_from_session
     return false unless session[:cart_items]

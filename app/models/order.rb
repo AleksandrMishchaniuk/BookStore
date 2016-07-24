@@ -19,10 +19,11 @@ class Order < ActiveRecord::Base
   alias :cart_items :carts
 
   def item_total
-    0
+    cart_items.inject(0) { |sum, item| sum + item.total_price }
   end
 
   def order_total
-    0
+    item_total.to_f + ( delivery.try(:ptice).try(:to_f) || 0 )
   end
+
 end

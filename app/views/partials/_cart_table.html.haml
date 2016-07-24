@@ -1,0 +1,54 @@
+- unless @order.cart_items.empty?
+  - editable ||= false
+  - show_shipping_price ||= false
+  - show_order_total ||= false
+  %table.table
+    %thead
+      %tr
+        %th.text-center{colspan: 2} BOOK
+        %th.text-center PRICE
+        %th.text-center QTY
+        %th.text-center TOTAL
+        %th
+    %tbody
+      - @order.cart_items.each do |item|
+        %tr.cart_item{'data-book_id': item.book_id}
+          %td.cart_item_image= image_tag(item.book.image.thumb, class: 'img-thumbnail')
+          %td.cart_item_text
+            %h4= link_to item.book.title, shop_book_path(item.book)
+            %p.description= item.book.short_description
+          %td.cart_item_price.price= "$ %.02f" % item.book.price
+          %td.cart_item_count.text-center
+            - if editable
+              = number_field_tag(:count, item.book_count, class: 'form-control')
+            - else
+              %p.lead= item.book_count
+          %td.cart_item_total_price.price
+            $
+            %span= "%.02f" % item.total_price
+          - if editable
+            %td
+              = link_to remove_item_cart_path(item.book.id), method: :delete, title: "remove" do
+                == <i class='fa fa-remove fa-lg'></i>
+    %tbody.cart_total
+      %tr.price_row
+        %td.text-right{colspan: 4} SUBTOTAL:
+        %td.items_total.price
+          $
+          %span= "%.02f" % @order.item_total
+      - if show_shipping_price
+        %tr.price_row
+          %td.text-right{colspan: 4} SHIPPING:
+          %td.shipping_price.price
+            $
+            %span= "%.02f" % (@order.delivery.try(:price) || 0)
+      - if show_order_total
+        %tr.price_row
+          %td.text-right{colspan: 4} ORDER TOTAL:
+          %td.order_total.price
+            $
+            %span= "%.02f" % @order.order_total
+- else
+  %h3.text-center
+    Cart is empty
+    = link_to "Go to Shop", shop_books_path, class: 'btn btn-primary'	

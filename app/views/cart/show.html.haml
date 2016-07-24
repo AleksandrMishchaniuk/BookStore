@@ -1,0 +1,9 @@
+%h1 Cart
+= render "partials/cart_table", editable: true
+- unless @order.cart_items.empty?
+  .row
+    .col-sm-6
+      = link_to "Empty Cart", cart_path, method: :delete, class: 'btn btn-danger'
+      = link_to "Continue Shopping", shop_books_path, class: 'btn btn-primary'
+    .col-sm-6.text-right
+      = link_to "Checkout", checkout_start_path, class: 'btn btn-primary'

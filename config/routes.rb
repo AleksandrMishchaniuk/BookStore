@@ -3,12 +3,16 @@ Rails.application.routes.draw do
   root 'pages#home'
 
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
-  devise_for :users
+  devise_for :users, controllers: { sessions: 'user/sessions' }
 
-  resource :cart, only: [:show, :update, :destroy], controller: :cart do
-    post :add, on: :member
+  resource :cart, only: [:show, :destroy], controller: :cart do
+    post :add_item, on: :member
+    post :update_item, on: :member
+    delete 'remove/:id' => 'cart#remove_item', as: :remove_item
   end
+  
   namespace :checkout do
+    get 'start' => 'order#start', as: :start
     resource :addresses, only: [:edit, :update]
     resource :delivery, only: [:edit, :update], controller: :delivery
     resource :payment, only: [:edit, :update], controller: :payment

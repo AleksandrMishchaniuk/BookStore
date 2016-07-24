@@ -1,6 +1,5 @@
 module Checkout
   class BaseController < ::ApplicationController
-    before_action :define_order_in_progress
 
     def check_step!(step)
       return if step == 1
@@ -12,5 +11,6 @@ module Checkout
       return if step == 4
       redirect_to checkout_confirm_path unless @order.order_state == OrderState.in_queue
     end
+    
   end
 end
