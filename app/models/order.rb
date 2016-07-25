@@ -26,6 +26,10 @@ class Order < ActiveRecord::Base
     item_total.to_f + ( delivery.try(:price) || 0 )
   end
 
+  def number
+    "R#{created_at.strftime("%Y%m%d")}#{id}"
+  end
+
   def save_to_progress
     return false unless save
     unless cart_items.empty?

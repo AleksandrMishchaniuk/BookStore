@@ -1,3 +1,4 @@
+- order_summary = true if order_summary.nil?
 %h1 Checkout
 #checkout_panel
   - [
@@ -12,8 +13,11 @@
     - else
       %span.step= step_name.upcase
 #checkout_data
-  .row
-    .col-sm-8
-      = yield :checkout_data
-    .col-sm-4
-      = render "checkout/order_summary"
+  - if order_summary
+    .row
+      .col-sm-8
+        = yield :checkout_data
+      .col-sm-4
+        = render "checkout/order_summary"
+  - else
+    = yield :checkout_data

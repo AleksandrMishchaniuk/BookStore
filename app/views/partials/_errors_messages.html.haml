@@ -1,0 +1,4 @@
+- if entity.errors.any?
+  %ul.list-unstyled
+    - entity.errors.full_messages.each do |msg|
+      %li.text-danger= msg

@@ -1,9 +1,6 @@
 - address = @order.send(:"#{type.to_s}_address")
 %h3.text-center= "#{type.to_s.upcase} ADDRESS"
-- if address.errors.any?
-  %ul.list-unstyled
-    - address.errors.full_messages.each do |msg|
-      %li.text-danger= msg
+= render 'partials/errors_messages', entity: address
 = order.fields_for type do |type_f|
   = type_f.fields_for address do |address_f|
     .form-group

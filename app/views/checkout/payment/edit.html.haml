@@ -3,6 +3,7 @@
     .row
       .col-sm-6
         %h3.text-center PAYMENT
+        = render 'partials/errors_messages', entity: @order.credit_card
         = fields_for @order.credit_card do |credit_card_f|
           .form-group
             = credit_card_f.label :number, 'Card number'

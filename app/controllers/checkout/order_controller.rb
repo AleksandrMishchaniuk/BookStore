@@ -14,5 +14,18 @@ module Checkout
       redirect_to edit_checkout_addresses_path
     end
 
+    def confirm
+      @step = 4
+      check_step! @step
+    end
+
+    def to_queue
+      @step = 4
+      check_step! @step
+      @order.order_state = OrderState.in_queue
+      @order.save!
+      render 'show'
+    end
+
   end
 end

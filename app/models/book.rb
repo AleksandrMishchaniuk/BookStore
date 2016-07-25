@@ -27,7 +27,7 @@ class Book < ActiveRecord::Base
   class << self
     def bestsellers(limit = 5)
       ids = joins('LEFT OUTER JOIN carts ON carts.book_id = books.id')
-          .select('books.id, sum(book_count) AS selles')
+          .select('books.id, COALESCE(sum(book_count),0) AS selles')
           .group('books.id').order('selles DESC').limit(limit)
       includes(:authors).find(*ids)
     end
