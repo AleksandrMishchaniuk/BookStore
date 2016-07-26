@@ -29,7 +29,6 @@ class CartController < ApplicationController
   end
 
   def destroy
-    @order.cart_items.delete_all
     order_destroy
     redirect_to :back
   end
@@ -45,7 +44,8 @@ class CartController < ApplicationController
   end
 
   def order_destroy
-    @order.destroy if @order.persisted?
+    @order.delete_from_progress if @order.persisted?
+    @order.cart_items.delete_all
     session[:order_in_progress_id] = nil
   end
 

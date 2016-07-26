@@ -33,9 +33,16 @@ class Order < ActiveRecord::Base
   def save_to_progress
     return false unless save
     unless cart_items.empty?
-      cart_items.each { |item| item.save unless item.persisted? }
+      cart_items.each { |item| item.save! }
     end
     true
+  end
+
+  def delete_from_progress
+    unless cart_items.empty?
+      cart_items.each { |item| item.destroy! }
+    end
+    destroy!
   end
 
 end

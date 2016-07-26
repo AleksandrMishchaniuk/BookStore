@@ -24,6 +24,9 @@ module Checkout
       check_step! @step
       @order.order_state = OrderState.in_queue
       @order.save!
+      session[:order_in_progress_id] = nil
+      @curent_order = @order
+      @order = Order.new
       render 'show'
     end
 

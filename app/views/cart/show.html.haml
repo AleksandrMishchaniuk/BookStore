@@ -1,5 +1,5 @@
 %h1 Cart
-= render "partials/cart_table", editable: true
+= render "partials/cart_table", order: @order, editable: true
 - unless @order.cart_items.empty?
   .row
     .col-sm-6

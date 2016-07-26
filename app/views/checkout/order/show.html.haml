@@ -1,21 +1,21 @@
-%h3= @order.number
+%h3= @curent_order.number
 .row
   .col-md-3
     %h4
       Shipping address
-    - preaty_address @order.shipping_address
+    - preaty_address @curent_order.shipping_address
   .col-md-3
     %h4
       Billing address
-    - preaty_address @order.billing_address
+    - preaty_address @curent_order.billing_address
   .col-md-3
     %h4
       Shipments
-    %span= @order.delivery.delivery_type
+    %span= @curent_order.delivery.delivery_type
   .col-md-3
     %h4
       Payment information
-    - preaty_credit_card @order.credit_card
+    - preaty_credit_card @curent_order.credit_card
 %br
-= render 'partials/cart_table', show_shipping_price: true, show_order_total: true
+= render 'partials/cart_table', order: @curent_order, show_shipping_price: true, show_order_total: true
 = link_to 'Go back to Store', shop_books_path, class: "btn btn-primary btn-lg"

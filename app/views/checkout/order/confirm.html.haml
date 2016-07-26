@@ -22,6 +22,6 @@
         == (#{link_to 'edit', edit_checkout_payment_path})
       - preaty_credit_card @order.credit_card
   %br
-  = render 'partials/cart_table', show_shipping_price: true, show_order_total: true
+  = render 'partials/cart_table', order: @order, show_shipping_price: true, show_order_total: true
   = link_to 'Place Order', checkout_to_queue_path, method: :post, class: "btn btn-primary btn-lg"
 = render 'checkout/wraper', step: @step, order_summary: false
