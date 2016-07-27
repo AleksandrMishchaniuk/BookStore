@@ -1,0 +1,15 @@
+%h3= title.upcase
+%table.table
+  %thead
+    %tr
+      %th Number
+      %th Completed at
+      %th Total
+      %th
+  %tbody
+    - orders.each do |order|
+      %tr
+        %td= link_to order.number, user_order_path(order)
+        %td= order.updated_at.strftime("%Y-%m-%d")
+        %td= "$#{order.order_total}"
+        %td= link_to "View", user_order_path(order)

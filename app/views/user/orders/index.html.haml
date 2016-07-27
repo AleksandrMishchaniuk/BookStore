@@ -1,0 +1,15 @@
+%h1 Orders
+- if @order.cart_items.any?
+  %hr
+  %h3 In Progress
+  = render 'partials/cart_table', order: @order
+  = link_to 'Go to Cart', cart_path, class: 'btn btn-primary btn-lg'
+- if @orders_in_queue.any?
+  %hr
+  = render 'user/orders_table', orders: @orders_in_queue, title: "waiting for processing"
+- if @orders_in_delivery.any?
+  %hr
+  = render 'user/orders_table', orders: @orders_in_delivery, title: "in delivery"
+- if @orders_delivered.any?
+  %hr
+  = render 'user/orders_table', orders: @orders_delivered, title: "delivered"

@@ -11,6 +11,9 @@ class Order < ActiveRecord::Base
   validates :carts, presence: true
 
   rails_admin do
+    list do
+      exclude_fields :carts, :credit_card
+    end
     edit do
       field :order_state
     end

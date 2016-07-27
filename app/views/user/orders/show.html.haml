@@ -1,0 +1,7 @@
+= link_to user_orders_path do
+  %i.fa.fa-chevron-left
+  %strong Back to orders
+%h1
+  = "Order #{@viewing_order.number}"
+  %small= @viewing_order.order_state.state
+= render "partials/cart_table", order: @viewing_order, show_shipping_price: true, show_order_total: true

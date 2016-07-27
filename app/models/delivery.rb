@@ -8,5 +8,8 @@ class Delivery < ActiveRecord::Base
     edit do
       exclude_fields :orders
     end
+    object_label_method do
+      :delivery_type
+    end
   end
 end
