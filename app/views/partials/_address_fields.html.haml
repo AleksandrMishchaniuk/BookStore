@@ -1,7 +1,9 @@
-- address = @order.send(:"#{type.to_s}_address")
+-# type - type of address (for exemple :billing)
+-# object - object of current form
+-# address - address object
 %h3.text-center= "#{type.to_s.upcase} ADDRESS"
 = render 'partials/errors_messages', entity: address
-= order.fields_for type do |type_f|
+= object.fields_for type do |type_f|
   = type_f.fields_for address do |address_f|
     .form-group
       = address_f.label :first_name, 'First name'

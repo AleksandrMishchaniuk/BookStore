@@ -1,9 +1,10 @@
 - content_for :checkout_data do
   = form_for @order, url: checkout_addresses_path, method: 'put', html: {role: 'form'} do |order|
     .row
-      - [:billing, :shipping].each do |type|
-        .col-md-6
-          = render 'partials/address_fields', type: type, order: order
+      .col-md-6
+        = render 'partials/address_fields', type: :billing, object: order, address: @order.billing_address
+      .col-md-6
+        = render 'partials/address_fields', type: :shipping, object: order, address: @order.shipping_address
     .row
       .col-md-6
         .form-group
