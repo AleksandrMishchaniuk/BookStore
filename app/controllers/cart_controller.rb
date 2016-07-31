@@ -39,7 +39,7 @@ class CartController < ApplicationController
     if @order.persisted?
       @order.save_to_progress
     else
-      session[:cart_items] = @order.cart_items
+      session[:cart_items] = @order.cart_items.map { |item| item.attributes }
     end
   end
 

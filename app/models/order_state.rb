@@ -1,7 +1,8 @@
 class OrderState < ActiveRecord::Base
   has_many :orders
 
-  validates :state, presence: true, length: {maximum: 64}
+  validates :state,         presence: true, length: {maximum: 64}
+  validates :id_of_state,   numericality: {only_integer: true, greater_than: 0}
 
   rails_admin do
     edit do
@@ -14,19 +15,19 @@ class OrderState < ActiveRecord::Base
 
   class << self
     def in_progress
-      find(1)
+      find_by id_of_state: 1
     end
     def in_queue
-      find(2)
+      find_by id_of_state: 2
     end
     def in_delivery
-      find(3)
+      find_by id_of_state: 3
     end
     def delivered
-      find(4)
+      find_by id_of_state: 4
     end
     def canceled
-      find(5)
+      find_by id_of_state: 5
     end
   end
 end

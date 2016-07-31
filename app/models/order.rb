@@ -48,4 +48,8 @@ class Order < ActiveRecord::Base
     destroy!
   end
 
+  def ==(another)
+    attributes == another.attributes && cart_items == another.cart_items
+  end
+
 end

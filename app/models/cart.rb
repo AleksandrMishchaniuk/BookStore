@@ -9,4 +9,9 @@ class Cart < ActiveRecord::Base
   def total_price
     book.price.to_f * book_count.to_i
   end
+
+  def ==(another)
+    attributes == another.attributes
+  end
+
 end
