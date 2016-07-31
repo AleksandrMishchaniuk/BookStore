@@ -1,5 +1,5 @@
 require 'rails_helper'
-require './spec/factories/helpers/order_in_progress_helpers.rb'
+require './spec/controllers/helpers/order_in_progress_helpers.rb'
 
 RSpec.describe ApplicationController, type: :controller do
   include OdrderInProgressHelpers
