@@ -10,6 +10,11 @@ class Order < ActiveRecord::Base
 
   validates :carts, presence: true
 
+  scope :in_progress, -> { find_by(order_state: OrderState.in_progress) }
+  scope :in_queue, -> { where(order_state: OrderState.in_queue) }
+  scope :in_delivery, -> { where(order_state: OrderState.in_delivery) }
+  scope :delivered, -> { where(order_state: OrderState.delivered) }
+
   rails_admin do
     list do
       exclude_fields :carts, :credit_card

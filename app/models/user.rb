@@ -22,6 +22,7 @@ class User < ActiveRecord::Base
   end
 
   def order_in_progress
-    orders.find_by(order_state: OrderState.in_progress)
+    orders.in_progress
   end
+
 end
