@@ -6,9 +6,10 @@ class User::SettingsController < ApplicationController
   end
 
   def billing_address
-    (current_user.billing_address)? current_user.billing_address.update(address_params :billing):
-                                    current_user.billing_address = Address.create(address_params :billing)
-    if current_user.billing_address.errors.empty?
+    @billing_address = Address.new(address_params :billing)
+    if @billing_address.valid?
+      (current_user.billing_address)? current_user.billing_address.update(address_params :billing):
+                                      current_user.billing_address = @billing_address
       redirect_to edit_user_settings_path
     else
       define_variables
@@ -17,9 +18,10 @@ class User::SettingsController < ApplicationController
   end
 
   def shipping_address
-    (current_user.shipping_address)? current_user.shipping_address.update(address_params :shipping):
-                                     current_user.shipping_address = Address.create(address_params :shipping)
-    if current_user.shipping_address.errors.empty?
+    @shipping_address = Address.new(address_params :shipping)
+    if @shipping_address.valid?
+      (current_user.shipping_address)? current_user.shipping_address.update(address_params :shipping):
+                                       current_user.shipping_address = @shipping_address
       redirect_to edit_user_settings_path
     else
       define_variables
@@ -52,7 +54,7 @@ class User::SettingsController < ApplicationController
     if params[:confirm] && current_user.destroy
       redirect_to new_user_session_path, notice: 'account was deleted'
     else
-      redirect_to edit_user_settings_path, alert: "You should check \"I understand that all data will be lost\""  
+      redirect_to edit_user_settings_path, alert: "You should check \"I understand that all data will be lost\""
     end
   end
 

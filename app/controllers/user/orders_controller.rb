@@ -8,11 +8,9 @@ class User::OrdersController < ApplicationController
   end
 
   def show
-    begin
-      @viewing_order = current_user.orders.find(params[:id].to_i)
-    rescue
-      redirect_to user_orders_path
-    end
+    @viewing_order = current_user.orders.find(params[:id].to_i)
+  rescue
+    redirect_to user_orders_path
   end
 
 end

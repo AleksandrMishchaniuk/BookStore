@@ -10,5 +10,5 @@ class Address < ActiveRecord::Base
   validates :city,            presence: true, length: {maximum: 255}
   validates :country,         presence: true, length: {maximum: 255}
   validates :zip,             presence: true, length: {maximum: 25}
-  validates :phone,           presence: true, phone: true
+  validates :phone,           presence: true, phone: { possible: true, types: [:voip, :mobile] }
 end
