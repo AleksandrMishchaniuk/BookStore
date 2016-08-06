@@ -23,6 +23,10 @@ class ApplicationController < ActionController::Base
     order
   end
 
+  def order
+    @order
+  end
+
   def set_request_environment
     Thread.current[:request] = request
   end

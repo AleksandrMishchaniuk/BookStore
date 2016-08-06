@@ -2,30 +2,32 @@ module Checkout
   class AddressesController < BaseController
     def edit
       @step = 1
-      @order.billing_address  ||= current_user.try(:billing_address)  || Address.new
-      @order.shipping_address ||= current_user.try(:shipping_address) || Address.new
+      order.billing_address  ||= current_user.try(:billing_address)  || Address.new
+      order.shipping_address ||= current_user.try(:shipping_address) || Address.new
     end
 
     def update
       @step = 1
-      if @order.billing_address
-        @order.billing_address.update(address_params :billing)
+      # byebug
+      if order.billing_address
+        order.billing_address.update(address_params :billing)
+        # byebug
       else
-        @order.billing_address = Address.create(address_params :billing)
+        order.billing_address = Address.create(address_params :billing)
       end
       if params[:once_address]
-        @order.shipping_address = @order.billing_address
+        order.shipping_address = order.billing_address
       else
-        if @order.shipping_address && @order.shipping_address != @order.billing_address
-          @order.shipping_address.update(address_params :shipping)
+        if order.shipping_address && order.shipping_address != order.billing_address
+          order.shipping_address.update(address_params :shipping)
         else
-          @order.shipping_address = Address.create(address_params :shipping)
+          order.shipping_address = Address.create(address_params :shipping)
         end
       end
-      if @order.billing_address.errors.any? || @order.shipping_address.errors.any?
+      if order.billing_address.errors.any? || order.shipping_address.errors.any?
         render :edit
       else
-        @order.save!
+        order.save!
         redirect_to edit_checkout_delivery_path
       end
     end
