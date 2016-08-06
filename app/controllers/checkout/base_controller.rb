@@ -4,13 +4,25 @@ module Checkout
 
     def check_step!(step)
       return if step == 1
-      redirect_to edit_checkout_addresses_path unless @order.billing_address
+      unless @order.billing_address
+        redirect_to edit_checkout_addresses_path
+        return
+      end
       return if step == 2
-      redirect_to edit_checkout_delivery_path unless @order.delivery
+      unless @order.delivery
+        redirect_to edit_checkout_delivery_path
+        return
+      end
       return if step == 3
-      redirect_to edit_checkout_payment_path unless @order.credit_card
+      unless @order.credit_card
+        redirect_to edit_checkout_payment_path
+        return
+      end
       return if step == 4
-      redirect_to checkout_confirm_path unless @order.order_state == OrderState.in_queue
+      unless @order.order_state == OrderState.in_queue
+        redirect_to checkout_confirm_path
+        return
+      end
     end
 
     protected
