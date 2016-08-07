@@ -14,25 +14,36 @@ RSpec.describe Checkout::BaseController, type: :controller do
       assigns(:order).order_state = create(:state_in_queue)
     end
 
+    shared_examples 'once redirect' do
+      it 'makes only once redirect' do
+        expect(controller).to receive(:redirect_to).once
+        controller.check_step!(5)
+      end
+    end
+
     context 'when "step" more than 4 and ' do
       context 'when order does not have only billing address' do
         before do
           assigns(:order).billing_address = nil
+          assigns(:order).credit_card = nil
         end
         it 'redirects to checkout addresses page' do
           expect(controller).to receive(:redirect_to).with(edit_checkout_addresses_path)
           controller.check_step!(5)
         end
+        include_examples 'once redirect'
       end
 
       context 'when order does not have only delivery method' do
         before do
           assigns(:order).delivery = nil
+          assigns(:order).order_state = create(:state_in_progress)
         end
         it 'redirects to checkout addresses page' do
           expect(controller).to receive(:redirect_to).with(edit_checkout_delivery_path)
           controller.check_step!(5)
         end
+        include_examples 'once redirect'
       end
 
       context 'when order does not have only payment data' do
@@ -43,6 +54,7 @@ RSpec.describe Checkout::BaseController, type: :controller do
           expect(controller).to receive(:redirect_to).with(edit_checkout_payment_path)
           controller.check_step!(5)
         end
+        include_examples 'once redirect'
       end
 
       context 'when order only does not state "in queue"' do
@@ -53,6 +65,7 @@ RSpec.describe Checkout::BaseController, type: :controller do
           expect(controller).to receive(:redirect_to).with(checkout_confirm_path)
           controller.check_step!(5)
         end
+        include_examples 'once redirect'
       end
     end
 
