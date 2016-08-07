@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
       session_to_nil(:cart_items)
       session_to_nil(:order_in_progress_id)
       order.order_state ||= OrderState.in_progress
-      current_user.orders << order
+      current_user.orders << order unless current_user.orders.include? order
     else
       session_to_nil(:cart_items)
       session[:order_in_progress_id] = order.id

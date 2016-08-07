@@ -1,5 +1,4 @@
 require 'rails_helper'
-require './spec/shared_examples/controllers/cart_controller_shared_examples.rb'
 
 RSpec.describe CartController, type: :controller do
   include OdrderInProgressHelpers

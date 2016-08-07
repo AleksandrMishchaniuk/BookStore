@@ -10,14 +10,14 @@ Rails.application.routes.draw do
     post :update_item, on: :member
     delete 'remove/:id' => 'cart#remove_item', as: :remove_item
   end
-  
+
   namespace :checkout do
     get 'start' => 'order#start', as: :start
     resource :addresses, only: [:edit, :update]
     resource :delivery, only: [:edit, :update], controller: :delivery
     resource :payment, only: [:edit, :update], controller: :payment
     get 'confirm' => 'order#confirm', as: :confirm
-    post 'confirm' => 'order#to_queue', as: :to_queue
+    get 'complete' => 'order#to_queue', as: :to_queue
     get 'order' => 'order#show', as: :order
   end
 
