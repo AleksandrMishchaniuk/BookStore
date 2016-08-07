@@ -8,10 +8,8 @@ module Checkout
 
     def update
       @step = 1
-      # byebug
       if order.billing_address
         order.billing_address.update(address_params :billing)
-        # byebug
       else
         order.billing_address = Address.create(address_params :billing)
       end

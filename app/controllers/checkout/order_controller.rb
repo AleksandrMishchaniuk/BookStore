@@ -9,6 +9,7 @@ module Checkout
           (current_user)? current_user.orders << @order: session[:order_in_progress_id] = @order.id
         else
           redirect_to :back
+          return
         end
       end
       redirect_to edit_checkout_addresses_path

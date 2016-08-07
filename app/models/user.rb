@@ -23,7 +23,7 @@ class User < ActiveRecord::Base
 
   def order_in_progress
     order = orders.in_progress
-    (order.try(:id))? order : false
+    (order.try(:id))? order : nil
   end
 
 end

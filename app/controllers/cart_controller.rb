@@ -36,17 +36,12 @@ class CartController < ApplicationController
   protected
 
   def save_order_for_progress
-    if @order.persisted?
-      @order.save_to_progress
-    else
-      session[:cart_items] = @order.cart_items.map { |item| item.attributes }
-    end
+    @order.save_to_progress if @order.persisted?
   end
 
   def order_destroy
     @order.delete_from_progress if @order.persisted?
     @order.cart_items.delete_all
-    session[:order_in_progress_id] = nil
   end
 
   def cart_params

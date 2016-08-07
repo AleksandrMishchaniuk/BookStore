@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_filter :set_request_environment
   before_action :define_order_in_progress
+  after_action :save_order_in_progress
   after_filter :store_location
   rescue_from CanCan::AccessDenied do |exception|
       redirect_to main_app.root_path, :alert => exception.message
@@ -23,8 +24,31 @@ class ApplicationController < ActionController::Base
     order
   end
 
+  def save_order_in_progress
+    if !order.persisted?
+      session_to_nil(:order_in_progress_id)
+      session[:cart_items] = order.cart_items.map { |item| item.attributes }
+    elsif user_signed_in?
+      session_to_nil(:cart_items)
+      session_to_nil(:order_in_progress_id)
+      order.order_state ||= OrderState.in_progress
+      current_user.orders << order
+    else
+      session_to_nil(:cart_items)
+      session[:order_in_progress_id] = order.id
+    end
+  end
+
+  def session_to_nil(key)
+    session[key] = nil unless session[key].nil?
+  end
+
   def order
     @order
+  end
+
+  def order=(var)
+    @order = var
   end
 
   def set_request_environment
