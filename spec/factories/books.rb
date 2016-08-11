@@ -1,10 +1,10 @@
 FactoryGirl.define do
   factory :book do
-    title               FFaker::Movie.title
-    short_description   FFaker::Lorem.paragraph
-    full_description    FFaker::Lorem.paragraphs
-    image               FFaker::Avatar.image
-    price               { rand(0.01..50.00) }
+    sequence(:title)               {FFaker::Movie.title}
+    sequence(:short_description)   {FFaker::Lorem.paragraph}
+    sequence(:full_description)    {FFaker::Lorem.paragraphs}
+    sequence(:image)               {FFaker::Avatar.image}
+    sequence(:price)               { rand(0.01..50.00) }
 
     transient do
       authors_count 2
