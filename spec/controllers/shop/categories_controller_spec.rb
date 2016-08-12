@@ -7,6 +7,7 @@ RSpec.describe Shop::CategoriesController, type: :controller do
     context 'when category id is valid' do
       let(:resource) { create(:category_with_books) }
       let(:resource_id) { resource.id }
+      before { 5.times { create(:book) } }
       it 'renders :show page' do
         query
         expect(response).to render_template :show
@@ -18,7 +19,7 @@ RSpec.describe Shop::CategoriesController, type: :controller do
         end
       end
     end # 'when category id is valid'
-    context 'when category id not is valid' do
+    context 'when category id is not valid' do
       let(:resource_id) { 0 }
       it 'redirects to shop page' do
         query
