@@ -53,6 +53,22 @@ RSpec.describe Shop::BooksController, type: :controller do
           expect(assigns(:in_cart)).to be_nil
         end
       end
+      context 'when book has approved reviews' do
+        let(:user) { create(:user) }
+        let(:reviews) { (1..3).map { create(:review, book_id: resource_id, user_id: user.id, approved: true) } }
+        it 'sets variable @reviews as array of reviews' do
+          query
+          expect(assigns(:reviews)).to eq(reviews)
+        end
+      end
+      context 'when book does not have approved reviews' do
+        let(:user) { create(:user) }
+        let(:reviews) { (1..3).map { create(:review, book_id: resource_id, user_id: user.id) } }
+        it 'sets variable @reviews as nill' do
+          query
+          expect(assigns(:reviews)).to be_empty
+        end
+      end
     end # 'when book id is valid'
 
     context 'when book id is not valid' do

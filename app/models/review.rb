@@ -4,8 +4,8 @@ class Review < ActiveRecord::Base
 
   validates :user, presence: true
   validates :book, presence: true
-  validates :title, presence: true, length: {maximum: 128}
-  validates :text, presence: true, length: {maximum: 512}
+  validates :title, presence: true, length: {maximum: 256}
+  validates :text, presence: true, length: {maximum: 1028}
   validates :vote, numericality: {only_integer: true, greater_than: 0, less_than: 6}
 
   rails_admin do
