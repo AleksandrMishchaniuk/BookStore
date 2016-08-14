@@ -136,4 +136,59 @@ RSpec.describe CartController, type: :controller do
       include_examples 'redirect'
     end
   end
+
+  describe 'POST #update_coupon' do
+    let(:query) { post :update_coupon, coupon: code }
+    let(:coupon) { create(:coupon).reload }
+
+    shared_examples 'base coupon expectations' do
+      before do
+        allow_any_instance_of(Order).to receive(:session).and_return(controller.session)
+        controller.instance_variable_set(:@order, order)
+      end
+      let(:code) { coupon.code }
+      it 'redirects to :show page' do
+        query
+        expect(response).to redirect_to cart_path
+      end
+      context 'when coupon code exists' do
+        it 'sets value for @order.coupon' do
+          query
+          expect(order.coupon).to eq(coupon)
+        end
+        context 'when coupon already used' do
+          before(:each) do
+            order.coupon = nil
+            coupon.update_attributes(used: true)
+          end
+          it 'sets @order.coupon to nil' do
+            query
+            expect(order.coupon).to be_nil
+          end
+          it 'sends alert flash' do
+            query
+            expect(flash[:alert]).to_not be_nil
+          end
+        end # 'when coupon already used'
+      end # 'when coupon code exists'
+
+      context 'when coupon code does not exist' do
+        let(:code) { 0000 }
+        it 'sends alert flash' do
+          query
+          expect(flash[:alert]).to_not be_nil
+        end
+      end # 'when coupon code does not exist'
+    end # shared_examples 'base coupon expectations'
+
+    context 'when order is persisted' do
+      let(:order) { create(:order).reload }
+      include_examples 'base coupon expectations'
+    end # 'when order is persisted'
+    context 'when order is not persisted' do
+      let(:order) { build(:order) }
+      include_examples 'base coupon expectations'
+    end # 'when order is not persisted'
+
+  end # 'POST #update_coupon'
 end

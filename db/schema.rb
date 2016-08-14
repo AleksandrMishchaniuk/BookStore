@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160731080622) do
+ActiveRecord::Schema.define(version: 20160813173527) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,6 +82,17 @@ ActiveRecord::Schema.define(version: 20160731080622) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "coupons", force: :cascade do |t|
+    t.string   "code",                       null: false
+    t.decimal  "discount",                   null: false
+    t.boolean  "used",       default: false
+    t.integer  "order_id"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
+
+  add_index "coupons", ["order_id"], name: "index_coupons_on_order_id", using: :btree
 
   create_table "credit_cards", force: :cascade do |t|
     t.string   "number",          null: false

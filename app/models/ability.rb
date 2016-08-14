@@ -49,7 +49,7 @@ class Ability
     Thread.current[:request]
   end
   def store_data
-    [Author, Book, Category, Delivery, OrderState]
+    [Author, Book, Category, Delivery, OrderState, Coupon]
   end
   def person_data
     [Order, Address, Cart, CreditCard, Review]

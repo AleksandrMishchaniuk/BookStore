@@ -1,9 +1,14 @@
 %h3.text-center ORDER SUMMARY
-.text-right
+.text-right.order_summary
   .item_total
     Item total: $
     %span.price
       = '%.02f' % @order.item_total
+  - if @order.item_discount > 0
+    .item_discount
+      Item discount: -$
+      %span.price
+        = '%.02f' % @order.item_discount
   - if @step > 1 || @order.delivery
     .order_shipping
       Shipping: $

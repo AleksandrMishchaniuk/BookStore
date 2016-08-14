@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   resource :cart, only: [:show, :destroy], controller: :cart do
     post :add_item, on: :member
     post :update_item, on: :member
+    post :update_coupon, on: :member
     delete 'remove/:id' => 'cart#remove_item', as: :remove_item
   end
 

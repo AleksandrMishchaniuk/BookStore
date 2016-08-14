@@ -37,5 +37,6 @@
               = link_to 'Sign In', new_user_session_path, class: 'btn btn-default navbar-btn'
               = link_to 'Sign Up', new_user_registration_path, class: 'btn btn-default navbar-btn'
     /end navbar
+    .text-center= render 'partials/messages'
     .container
       = yield

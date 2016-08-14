@@ -36,6 +36,17 @@
         %td.items_total.price
           $
           %span= "%.02f" % order.item_total
+      - if order.item_discount > 0
+        %tr.price_row
+          %td.text-right{colspan: 4} DISCOUNT (coupon ##{order.coupon.code} : #{order.coupon.discount * 100}%):
+          %td.items_discount.price
+            == -$
+            %span= "%.02f" % order.item_discount
+        %tr.price_row
+          %td.text-right{colspan: 4} SUBTOTAL WITH DISCOUNT:
+          %td.items_total_with_discount.price
+            $
+            %span= "%.02f" % order.item_total_with_discount
       - if show_shipping_price
         %tr.price_row
           %td.text-right{colspan: 4} SHIPPING:

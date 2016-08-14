@@ -7,6 +7,7 @@ class Order < ActiveRecord::Base
   belongs_to :delivery
   has_many :carts
   has_many :books, through: :carts
+  has_one  :coupon
 
   validates :carts, presence: true
 
@@ -27,11 +28,20 @@ class Order < ActiveRecord::Base
   alias :cart_items :carts
 
   def item_total
-    cart_items.inject(0) { |sum, item| sum + item.total_price }
+    cart_items.inject(0) { |sum, item| sum + item.total_price }.to_f
+  end
+
+  def item_discount
+    return 0 unless coupon
+    item_total * coupon.discount
+  end
+
+  def item_total_with_discount
+    item_total - item_discount
   end
 
   def order_total
-    item_total.to_f + ( delivery.try(:price) || 0 )
+    item_total_with_discount + ( delivery.try(:price) || 0 )
   end
 
   def number
@@ -40,6 +50,7 @@ class Order < ActiveRecord::Base
 
   def save_to_progress
     return false unless save
+    set_coupon_after_save
     unless cart_items.empty?
       cart_items.each { |item| item.save! }
     end
@@ -55,6 +66,52 @@ class Order < ActiveRecord::Base
 
   def ==(another)
     attributes == another.attributes && cart_items == another.cart_items
+  end
+
+  def coupon
+    (persisted?)? super : get_coupon_from_session
+  end
+
+  def coupon_id
+    coupon.try(:id)
+  end
+
+  def coupon=(object)
+    return if object == coupon
+    raise 'Object shoult be Coupon or NilClass' unless object.kind_of?(Coupon) || object.nil?
+    object.update_attributes(used: true) if object && !object.used
+    detach_coupon
+    if persisted?
+      super(object)
+    else
+      save_coupon_to_session(object)
+    end
+  end
+
+  def detach_coupon
+    coupon.update_attributes(used: false, order_id: nil) if coupon
+    session[:coupon_id] = nil
+  end
+
+  protected
+
+  def session
+    Thread.current[:session]
+  end
+
+  def save_coupon_to_session(object)
+    session[:coupon_id] = (object)? object.id : nil
+  end
+
+  def get_coupon_from_session
+    (session[:coupon_id])? Coupon.find(session[:coupon_id]) : nil
+  end
+
+  def set_coupon_after_save
+    if get_coupon_from_session
+      update_attributes(coupon: get_coupon_from_session)
+      session[:coupon_id] = nil
+    end
   end
 
 end

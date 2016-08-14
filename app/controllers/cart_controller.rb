@@ -33,6 +33,18 @@ class CartController < ApplicationController
     redirect_to :back
   end
 
+  def update_coupon
+    error = nil
+    coupon = Coupon.find_by(code: params[:coupon])
+    if coupon && !coupon.used
+      order.coupon = coupon
+    elsif coupon.nil? || coupon != order.coupon
+      error = 'This coupon does not exist'
+      order.coupon = nil
+    end
+    redirect_to cart_path, alert: error
+  end
+
   protected
 
   def save_order_for_progress
@@ -40,6 +52,7 @@ class CartController < ApplicationController
   end
 
   def order_destroy
+    @order.detach_coupon
     @order.delete_from_progress if @order.persisted?
     @order.cart_items.delete_all
   end
@@ -47,4 +60,5 @@ class CartController < ApplicationController
   def cart_params
     params.require(:cart).permit(:book_id, :book_count)
   end
+
 end

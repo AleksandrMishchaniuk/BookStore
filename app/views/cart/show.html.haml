@@ -6,4 +6,7 @@
       = link_to "Empty Cart", cart_path, method: :delete, class: 'btn btn-danger'
       = link_to "Continue Shopping", shop_books_path, class: 'btn btn-primary'
     .col-sm-6.text-right
+      = form_tag update_coupon_cart_path, class: 'form-inline coupon_form', role: 'form' do
+        = text_field_tag :coupon, '', placeholder: 'Coupon code', class: 'form-control'
+        = submit_tag 'Update', class: 'btn'
       = link_to "Checkout", checkout_start_path, class: 'btn btn-primary'

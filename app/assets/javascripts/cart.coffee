@@ -17,3 +17,5 @@ $ ->
       success: (data)->
         current_row.find('.cart_item_total_price span').html(data['item_total'])
         $('.items_total span').html(data['items_total'])
+        $('.items_discount span').html(data['items_discount'])
+        $('.items_total_with_discount span').html(data['items_total_with_discount'])
