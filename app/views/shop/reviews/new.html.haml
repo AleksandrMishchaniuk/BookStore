@@ -13,7 +13,7 @@
         = review_f.text_field :title, class: 'form-control'
       .form-group
         = review_f.label :vote, 'Rating'
-        = review_f.number_field :vote, class: 'form-control', min: 0, max: 5, step: 1
+        .vote
       .form-group
         = review_f.label :text, 'Text review'
         = review_f.text_area :text, class: 'form-control', rows: '10'

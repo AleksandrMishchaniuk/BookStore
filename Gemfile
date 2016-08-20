@@ -39,6 +39,8 @@ gem 'compass-rails', '~> 3.0', '>= 3.0.2'
 gem 'bootstrap-sass', '~> 3.3', '>= 3.3.6'
 gem 'font-awesome-sass'
 
+gem 'jquery-raty-rails', github: 'bmc/jquery-raty-rails'
+
 gem "simple-navigation"
 gem 'kaminari'
 

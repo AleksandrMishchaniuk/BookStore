@@ -34,5 +34,7 @@
   - if @reviews.empty?
     %p.text-center.lead No Reviews yet
   - else
-    - @review.each do |review|
+    %hr
+    - @reviews.each do |review|
       = render 'partials/review', review: review
+      %hr

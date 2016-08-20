@@ -41,7 +41,7 @@ class User::SettingsController < ApplicationController
 
   def password
     if current_user.update_with_password(user_params)
-      sign_in current_user, bypass: true
+      bypass_sign_in current_user
       redirect_to edit_user_settings_path, notice: 'password was changed'
     else
       current_user.reload

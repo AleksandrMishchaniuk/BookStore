@@ -1,8 +1,9 @@
 .review
   .review_head
-    %span= review.vote
+    %span.vote_ready{'data-score': review.vote}
     %span= review.title
-    %span= review.created_at
+    %span.small= review.created_at.strftime('%B %d, %Y')
   .review_author
-    = "by #{review.user.email}"
-  %p.review_text= review.text
+    by
+    %span.author_name= review.user.email
+  .review_text= review.text
