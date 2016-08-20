@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   after_action :save_order_in_progress
   after_filter :store_location
   rescue_from CanCan::AccessDenied do |exception|
-      redirect_to main_app.root_path, :alert => exception.message
+      redirect_to main_app.forbidden_path
   end
 
   protected
@@ -79,4 +79,5 @@ class ApplicationController < ActionController::Base
       session[:previous_url] = request.fullpath
     end
   end
+
 end

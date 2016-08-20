@@ -97,4 +97,6 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
+  get 'forbidden', to: 'errors#render_403', as: :forbidden
+  match '*a', to: 'errors#render_404', via: :all
 end
