@@ -1,19 +1,32 @@
 class Ability
   include CanCan::Ability
 
+  def store_data
+    [Author, Book, Category, Delivery, OrderState, Coupon]
+  end
+  def order_data
+    [Order, Address, Cart, CreditCard]
+  end
+
   def initialize(user)
     can :read, :all
     can :create, User
-    can :manage, person_data
-    if user && user.admin?
-      can :access, :rails_admin
-      can :dashboard
+    can :manage, order_data
+    can :read, Review
+    if user
+      can :create, Review
       cannot :create, User
-      can :manage, store_data
-      if request.original_fullpath.include? 'admin/'
-        cannot :manage, person_data
-        can :read, person_data
-        can :update, [Order, Review]
+      if user.admin?
+        can :access, :rails_admin
+        can :dashboard
+        if request.original_fullpath.include? 'admin/'
+          can :manage, store_data
+          cannot :manage, order_data
+          cannot :manage, Review
+          can :read, order_data
+          can :read, Review
+          can :update, [Order, Review]
+        end
       end
     end
 
@@ -47,11 +60,5 @@ class Ability
 
   def request
     Thread.current[:request]
-  end
-  def store_data
-    [Author, Book, Category, Delivery, OrderState, Coupon]
-  end
-  def person_data
-    [Order, Address, Cart, CreditCard, Review]
   end
 end
