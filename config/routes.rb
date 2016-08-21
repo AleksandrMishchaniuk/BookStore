@@ -2,46 +2,50 @@ Rails.application.routes.draw do
 
   root 'pages#home'
 
-  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
+  get 'change/locale/:locale' => 'application#change_locale', as: :change_locale
+
   devise_for :users, controllers: { sessions: 'user/sessions' }
+  scope "/:locale" do
+    get '/' => 'pages#home', as: :root_locale
+    mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 
-  resource :cart, only: [:show, :destroy], controller: :cart do
-    post :add_item, on: :member
-    post :update_item, on: :member
-    post :update_coupon, on: :member
-    delete 'remove/:id' => 'cart#remove_item', as: :remove_item
-  end
-
-  namespace :checkout do
-    get 'start' => 'order#start', as: :start
-    resource :addresses, only: [:edit, :update]
-    resource :delivery, only: [:edit, :update], controller: :delivery
-    resource :payment, only: [:edit, :update], controller: :payment
-    get 'confirm' => 'order#confirm', as: :confirm
-    get 'complete' => 'order#to_queue', as: :to_queue
-    get 'order' => 'order#show', as: :order
-  end
-
-  namespace :shop do
-    resources :categories, only: :show
-    resources :books, only: [:index, :show] do
-      resources :reviews, only: [:new, :create]
+    resource :cart, only: [:show, :destroy], controller: :cart do
+      post :add_item, on: :member
+      post :update_item, on: :member
+      post :update_coupon, on: :member
+      delete 'remove/:id' => 'cart#remove_item', as: :remove_item
     end
-  end
 
-  namespace :user do
-    resources :orders, only: [:index, :show]
-    resource :settings, only: [:edit] do
-      member do
-        post 'billing_address'
-        post 'shipping_address'
-        post 'email'
-        post 'password'
-        post 'remove_user'
+    namespace :checkout do
+      get 'start' => 'order#start', as: :start
+      resource :addresses, only: [:edit, :update]
+      resource :delivery, only: [:edit, :update], controller: :delivery
+      resource :payment, only: [:edit, :update], controller: :payment
+      get 'confirm' => 'order#confirm', as: :confirm
+      get 'complete' => 'order#to_queue', as: :to_queue
+      get 'order' => 'order#show', as: :order
+    end
+
+    namespace :shop do
+      resources :categories, only: :show
+      resources :books, only: [:index, :show] do
+        resources :reviews, only: [:new, :create]
+      end
+    end
+
+    namespace :user do
+      resources :orders, only: [:index, :show]
+      resource :settings, only: [:edit] do
+        member do
+          post 'billing_address'
+          post 'shipping_address'
+          post 'email'
+          post 'password'
+          post 'remove_user'
+        end
       end
     end
   end
-
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

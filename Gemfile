@@ -47,6 +47,7 @@ gem 'kaminari'
 gem 'figaro', '~> 1.1', '>= 1.1.1'
 
 gem 'devise', '~> 4.1', '>= 4.1.1'
+gem 'devise-i18n', '~> 1.1'
 gem 'omniauth-facebook'
 gem 'rails_admin', '~> 0.8.1'
 gem 'cancancan', '~> 1.15'

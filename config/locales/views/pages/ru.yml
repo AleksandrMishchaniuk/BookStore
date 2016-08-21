@@ -1,0 +1,7 @@
+ru:
+  views:
+    pages:
+      home:
+        bestsellers_title: 'Хиты продаж'
+        welcome: 'Добро пожаловать в %{shop_name}'
+        by: 'автор:'

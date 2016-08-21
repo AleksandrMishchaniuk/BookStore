@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
+  before_action :set_locale
   before_filter :set_request_environment
   before_filter :set_session_environment
   before_action :define_order_in_progress
@@ -9,6 +10,12 @@ class ApplicationController < ActionController::Base
   after_filter :store_location
   rescue_from CanCan::AccessDenied do |exception|
       redirect_to main_app.forbidden_path
+  end
+
+  def change_locale
+    route = Rails.application.routes.recognize_path(request.referer)
+    route[:locale] = params[:locale]
+    redirect_to route
   end
 
   protected
@@ -59,6 +66,15 @@ class ApplicationController < ActionController::Base
     Thread.current[:session] = session
   end
 
+  def set_locale
+    I18n.locale = params[:locale] || I18n.default_locale
+  end
+  def default_url_options
+    # byebug
+    { locale: I18n.locale }
+  end
+
+  # Devise hooks
   def after_sign_out_path_for(resource_or_scope)
     request.referrer || root_path
   end

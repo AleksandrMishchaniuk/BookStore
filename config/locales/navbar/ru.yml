@@ -1,0 +1,12 @@
+ru:
+  navbar:
+    link:
+      home: 'Главная'
+      shop: 'Магазин'
+      sign_in: 'Войти'
+      sign_up: 'Зарегистрироваться'
+      sign_out: 'Выйти'
+      user:
+        settings: 'Настройки'
+        orders: 'Заказы'
+        admin_panel: 'Панель администратора'

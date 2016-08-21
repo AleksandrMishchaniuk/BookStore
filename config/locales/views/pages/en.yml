@@ -1,0 +1,7 @@
+en:
+  views:
+    pages:
+      home:
+        bestsellers_title: 'Our Bestsellers'
+        welcome: 'Welcome to the %{shop_name}'
+        by: 'by'

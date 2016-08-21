@@ -16,7 +16,7 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.navbar-brand{href: "#{root_path}"} MAP-BookStore
+          %a.navbar-brand{href: "#{root_locale_path}"} MAP-BookStore
         /end navbar-header
         .collapse.navbar-collapse#navbar_collapse_1
           = render_navigation level: 1, &main_menu_proc('nav navbar-nav')
@@ -32,10 +32,14 @@
                   = current_user.email
                   %b.caret
                 = render_navigation &user_menu_proc('dropdown-menu')
-              = link_to 'Sign Out', destroy_user_session_path, class: 'btn btn-default navbar-btn', method: :delete
+              = link_to t('navbar.link.sign_out'), destroy_user_session_path, class: 'btn btn-default navbar-btn', method: :delete
             - else
-              = link_to 'Sign In', new_user_session_path, class: 'btn btn-default navbar-btn'
-              = link_to 'Sign Up', new_user_registration_path, class: 'btn btn-default navbar-btn'
+              = link_to t('navbar.link.sign_in'), new_user_session_path, class: 'btn btn-default navbar-btn'
+              = link_to t('navbar.link.sign_up'), new_user_registration_path, class: 'btn btn-default navbar-btn'
+            %span
+              = link_to 'EN', change_locale_path(locale: :en)
+              |
+              = link_to 'RU', change_locale_path(locale: :ru)
     /end navbar
     .text-center= render 'partials/messages'
     .container

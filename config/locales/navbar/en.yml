@@ -1,0 +1,12 @@
+en:
+  navbar:
+    link:
+      home: 'Home'
+      shop: 'Shop'
+      sign_in: 'Sign In'
+      sign_up: 'Sign Up'
+      sign_out: 'Sign Out'
+      user:
+        settings: 'Settings'
+        orders: 'Orders'
+        admin_panel: 'Admin panel'

@@ -1,5 +1,5 @@
 %h2.text-center
-  Our Bestsellers
+  = t('views.pages.home.bestsellers_title')
 #carousel-bestsellers.carousel.slide{'data-ride': "carousel", "data-interval": "6000"}
   %ol.carousel-indicators
     %li.active{'data-target': "#carousel-bestsellers", 'data-slide-to': "0"}
@@ -13,7 +13,7 @@
           %h3
             = link_to book.title, shop_book_path(book)
             %small
-              %i= "by #{authors_list book.authors}"
+              %i= "#{t('views.pages.home.by')} #{authors_list book.authors}"
         .row
           .col-md-4
             .div_image
@@ -28,4 +28,4 @@
     %span.glyphicon.glyphicon-chevron-right
 
 %h1.text-center
-  Welcome to the MAP-BookStore
+  = t('views.pages.home.welcome' ,shop_name: 'MAP-BookStore')

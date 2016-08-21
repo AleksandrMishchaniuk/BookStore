@@ -1,0 +1,149 @@
+ru:
+  activerecord:
+    models:
+      address:
+        one: адрес
+        other: адреса
+      author:
+        one: автор
+        other: авторы
+      book:
+        one: книга
+        other: книги
+      cart:
+        one: элемент корзины
+        other: элементы корзины
+      category:
+        one: категория
+        other: категории
+      coupon:
+        one: купон
+        other: купоны
+      credit_card:
+        one: кредитная карта
+        other: кредитные карты
+      delivery:
+        one: вид доставки
+        other: виды доставки
+      order_state:
+        one: состояние заказа
+        other: состояния заказа
+      order:
+        one: заказ
+        other: заказы
+      review:
+        one: отзыв
+        other: отзывы
+    attributes:
+      address:
+        first_name: Имя
+        last_name: Фамилия
+        address_line: Улица, дом
+        city: Город
+        country: Страна
+        zip: Почтовый индекс
+        phone: Телефон
+        shipping_for_user: Адресс доставки для пользователя
+        billing_for_user: Платежный адресс для пользователя
+        billing_for_orders: Платежный адресс для заказов
+        shipping_for_orders: Адресс доставки для заказов
+        created_at: Время создания
+        updated_at: Время обновления
+      author:
+        first_name: Имя
+        last_name: Фамилия
+        description: Описание
+        books: Книги
+        created_at: Время создания
+        updated_at: Время обновления
+      book:
+        title: Название
+        image: Изабражение
+        price: Цена
+        short_description: краткое описание
+        full_description: полное описание
+        authors: Автора
+        categories: Категории
+        carts: Элементы корзины
+        orders: Заказы
+        reviews: Отзывы
+        created_at: Время создания
+        updated_at: Время обновления
+      cart:
+        order: Заказ
+        book: Книга
+        book_count: Количество книг
+        created_at: Время создания
+        updated_at: Время обновления
+      category:
+        name: Название
+        books: Книги
+        created_at: Время создания
+        updated_at: Время обновления
+      coupon:
+        code: Код
+        discount: Скидка
+        used: Использован
+        order: Заказ
+        created_at: Время создания
+        updated_at: Время обновления
+      credit_card:
+        number: Номер
+        code: Код
+        expiration_date: Срок годности
+        orders: Заказы
+        created_at: Время создания
+        updated_at: Время обновления
+      delivery:
+        delivery_type: Тип доставки
+        price: Стоимость
+        orders: Заказы
+        created_at: Время создания
+        updated_at: Время обновления
+      order_state:
+        state: Состояние
+        id_of_state: ID состояния
+        orders: Заказы
+        created_at: Время создания
+        updated_at: Время обновления
+      order:
+        user: Пользователь
+        order_state: Состояние заказа
+        billing_address: Платежный адрес
+        shipping_address: Адресс достаски
+        delivery: Вид доставки
+        credit_card: Кредитная карта
+        carts: Элементы корзины
+        books: Книги
+        coupon: Купон
+        created_at: Время создания
+        updated_at: Время обновления
+      review:
+        user: Пользователь
+        text: Текст
+        vote: Голос
+        approved: Одобрен
+        book: Книга
+        title: Заголовок
+        created_at: Время создания
+        updated_at: Время обновления
+      user:
+        email: Эл. почта
+        encrypted_password: Зашифрованный пароль
+        reset_password_token: Токен востановления пароля
+        reset_password_sent_at: Время отправки востановления пароля
+        remember_created_at: Время запоминания
+        sign_in_count: Количество залогиниваний
+        current_sign_in_at: Время текущего залогинивания
+        last_sign_in_at: Время последнего залогинивания
+        current_sign_in_ip: IP текущего залогинивания
+        last_sign_in_ip: IP последнего залогинивания
+        failed_attempts: Неудачные попытки
+        unlock_token: Токен разблокировки
+        locked_at: Время блокировки
+        orders: Заказы
+        reviews: Отзывы
+        shipping_address: Адрес доставки
+        billing_address: Платежный адрес
+        created_at: Время создания
+        updated_at: Время обновления
