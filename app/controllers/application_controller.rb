@@ -70,7 +70,6 @@ class ApplicationController < ActionController::Base
     I18n.locale = params[:locale] || I18n.default_locale
   end
   def default_url_options
-    # byebug
     { locale: I18n.locale }
   end
 
@@ -85,12 +84,12 @@ class ApplicationController < ActionController::Base
 
   def store_location
     return unless request.get?
-    if (request.path != "/users/sign_in" &&
-        request.path != "/users/sign_up" &&
-        request.path != "/users/password/new" &&
-        request.path != "/users/password/edit" &&
+    if (request.path != new_user_session_path &&
+        request.path != new_user_registration_path &&
+        request.path != new_user_password_path &&
+        request.path != edit_user_password_path &&
         request.path != "/users/confirmation" &&
-        request.path != "/users/sign_out" &&
+        request.path != destroy_user_session_path &&
         !request.xhr?) # don't store ajax calls
       session[:previous_url] = request.fullpath
     end

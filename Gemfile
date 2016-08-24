@@ -79,6 +79,7 @@ group :test do
   gem 'ffaker', '~> 2.2'
   gem 'database_cleaner', '~> 1.5', '>= 1.5.3'
   gem 'shoulda-matchers', '~> 3.1', '>= 3.1.1'
+  gem 'capybara', '~> 2.8'
 end
 
 group :production do

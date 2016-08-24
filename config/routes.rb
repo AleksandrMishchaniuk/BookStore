@@ -4,8 +4,8 @@ Rails.application.routes.draw do
 
   get 'change/locale/:locale' => 'application#change_locale', as: :change_locale
 
-  devise_for :users, controllers: { sessions: 'user/sessions' }
-  scope "/:locale" do
+  scope "(:locale)", locale: /en|ru/ do
+    devise_for :users, controllers: { sessions: 'user/sessions' }
     get '/' => 'pages#home', as: :root_locale
     mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 
