@@ -43,10 +43,10 @@ ru:
         country: Страна
         zip: Почтовый индекс
         phone: Телефон
-        shipping_for_user: Адресс доставки для пользователя
-        billing_for_user: Платежный адресс для пользователя
-        billing_for_orders: Платежный адресс для заказов
-        shipping_for_orders: Адресс доставки для заказов
+        shipping_for_user: Доставки для пользователя
+        billing_for_user: Платежный для пользователя
+        billing_for_orders: Платежный для заказов
+        shipping_for_orders: Доставки для заказов
         created_at: Время создания
         updated_at: Время обновления
       author:
@@ -111,7 +111,7 @@ ru:
         order_state: Состояние заказа
         billing_address: Платежный адрес
         shipping_address: Адресс достаски
-        delivery: Вид доставки
+        delivery: Доставка
         credit_card: Кредитная карта
         carts: Элементы корзины
         books: Книги
@@ -121,7 +121,7 @@ ru:
       review:
         user: Пользователь
         text: Текст
-        vote: Голос
+        vote: Рейтинг
         approved: Одобрен
         book: Книга
         title: Заголовок

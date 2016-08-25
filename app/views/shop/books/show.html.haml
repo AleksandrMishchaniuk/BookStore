@@ -1,7 +1,7 @@
 .caption
   %h2= @book.title
   %h3
-    %i= "Author: #{authors_list @book.authors}"
+    %i= "#{t('activerecord.models.author.one').mb_chars.capitalize}: #{authors_list @book.authors}"
 .row
   .col-md-4
     .div_image
@@ -17,22 +17,22 @@
             .form-group
               = f.number_field(:book_count, value: @cart.book_count, in: 1..20, step: 1, class: 'form-control')
             .form-group
-              = f.submit('Add to Cart', class: 'btn btn-primary')
+              = f.submit(t('views.shop.add_to_cart'), class: 'btn btn-primary')
           - if @in_cart
             %p.text-success
-              %strong= "already in cart: #{@in_cart.book_count} pcs"
+              %strong= "#{t('views.shop.already_in_cart')}: #{@in_cart.book_count} #{t('views.shop.pcs')}"
     %p.description
       = @book.full_description
 .reviews
-  %h3 Reviews
+  %h3= "#{t('activerecord.models.review.other').mb_chars.capitalize}"
   - if user_signed_in?
-    = link_to 'Add review for this book', new_shop_book_review_path(@book)
+    = link_to t('views.shop.add_review_link'), new_shop_book_review_path(@book)
   - else
     %i
-      for adding review, you should
-      %strong= link_to "Sign In", new_user_session_path
+      = t('views.shop.review_msg_without_user')
+      %strong= link_to t('navbar.link.sign_in'), new_user_session_path
   - if @reviews.empty?
-    %p.text-center.lead No Reviews yet
+    %p.text-center.lead= t('views.shop.no_reviews_text')
   - else
     %hr
     - @reviews.each do |review|

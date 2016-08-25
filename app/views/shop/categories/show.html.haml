@@ -2,7 +2,7 @@
   = render_navigation renderer: :breadcrumbs,
                       join_with: ' / ',
                       &main_menu_proc
-  %h1 Categories - #{@category.name}
+  %h1= "#{t('activerecord.models.category.one').mb_chars.capitalize} - #{@category.name}"
   = render 'partials/board_of_books'
 
 .col-sm-3

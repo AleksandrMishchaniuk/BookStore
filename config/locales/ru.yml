@@ -1,4 +1,9 @@
 ru:
+  btn:
+    add: добавить
+    cancel: отменить
+    save: сохранить
+    update: обновить
   datetime:
     formats:
       default: "%d.%m.%y %H:%M"

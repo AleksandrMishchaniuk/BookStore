@@ -1,0 +1,11 @@
+en:
+  views:
+    shop:
+      add_to_cart: Add to Cart
+      already_in_cart: already in cart
+      pcs: pcs
+      add_review_link: Add review for this book
+      review_msg_without_user: for adding review, you should
+      no_reviews_text: No Reviews yet
+    review:
+      new_review_title: new review for

@@ -1,0 +1,149 @@
+en:
+  activerecord:
+    models:
+      address:
+        one: address
+        other: addresses
+      author:
+        one: author
+        other: authors
+      book:
+        one: book
+        other: books
+      cart:
+        one: cart item
+        other: cart items
+      category:
+        one: category
+        other: categories
+      coupon:
+        one: coupon
+        other: coupons
+      credit_card:
+        one: credit card
+        other: credit cards
+      delivery:
+        one: delivery
+        other: deliveries
+      order_state:
+        one: order state
+        other: order states
+      order:
+        one: order
+        other: orders
+      review:
+        one: review
+        other: reviews
+    attributes:
+      address:
+        first_name: First name
+        last_name: Last name
+        address_line: Address line
+        city: City
+        country: Country
+        zip: Zip
+        phone: Phone
+        shipping_for_user: Shipping for user
+        billing_for_user: Billing for user
+        billing_for_orders: Billing for orders
+        shipping_for_orders: Shipping for orders
+        created_at: Created at
+        updated_at: Updated at
+      author:
+        first_name: First name
+        last_name: Last name
+        description: Description
+        books: Books
+        created_at: Created at
+        updated_at: Updated at
+      book:
+        title: Title
+        image: Image
+        price: Price
+        short_description: Short description
+        full_description: Full description
+        authors: Authors
+        categories: Categories
+        carts: Cart items
+        orders: Orders
+        reviews: Reviews
+        created_at: Created at
+        updated_at: Updated at
+      cart:
+        order: Order
+        book: Book
+        book_count: Book count
+        created_at: Created at
+        updated_at: Updated at
+      category:
+        name: Name
+        books: Books
+        created_at: Created at
+        updated_at: Updated at
+      coupon:
+        code: Code
+        discount: Discount
+        used: Used
+        order: Order
+        created_at: Created at
+        updated_at: Updated at
+      credit_card:
+        number: Number
+        code: Code
+        expiration_date: Expiration date
+        orders: Orders
+        created_at: Created at
+        updated_at: Updated at
+      delivery:
+        delivery_type: Delivery type
+        price: Price
+        orders: Orders
+        created_at: Created at
+        updated_at: Updated at
+      order_state:
+        state: State
+        id_of_state: Id of state
+        orders: Orders
+        created_at: Created at
+        updated_at: Updated at
+      order:
+        user: User
+        order_state: Order state
+        billing_address: Billing address
+        shipping_address: Shipping address
+        delivery: Delivery
+        credit_card: Credit card
+        carts: Cart items
+        books: Books
+        coupon: Coupon
+        created_at: Created at
+        updated_at: Updated at
+      review:
+        user: User
+        text: Text
+        vote: Rating
+        approved: Approved
+        book: Book
+        title: Title
+        created_at: Created at
+        updated_at: Updated at
+      user:
+        email: E-mail
+        encrypted_password: Encrypted password
+        reset_password_token: Reset password token
+        reset_password_sent_at: Reset password sent at
+        remember_created_at: Remember created at
+        sign_in_count: Sign in count
+        current_sign_in_at: Current sign in at
+        last_sign_in_at: Last sign in at
+        current_sign_in_ip: Current sign in IP
+        last_sign_in_ip: Last sign in IP
+        failed_attempts: Failed attempts
+        unlock_token: Unlock token
+        locked_at: Locked at
+        orders: Orders
+        reviews: Reviews
+        shipping_address: Shipping address
+        billing_address: Billing address
+        created_at: Created at
+        updated_at: Updated at

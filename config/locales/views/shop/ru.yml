@@ -1,0 +1,11 @@
+ru:
+  views:
+    shop:
+      add_to_cart: В Корзину
+      already_in_cart: в корзине уже
+      pcs: шт
+      add_review_link: Добавить отзыв для этой книги
+      review_msg_without_user: для добавления отзыва, Вы должны
+      no_reviews_text: Пока нет ни одного отзыва
+    review:
+      new_review_title: новый отзыв для

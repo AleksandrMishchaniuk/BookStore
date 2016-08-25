@@ -1,6 +1,6 @@
 .row
   .col-sm-4.text-center
-    %h2 New review for:
+    %h2= "#{t('views.review.new_review_title').mb_chars.capitalize}:"
   .col-sm-8
     %h3= link_to @review.book.title, shop_book_path(@review.book)
 .row
@@ -9,14 +9,14 @@
       = review_f.hidden_field :user_id, value: current_user.id
       = review_f.hidden_field :book_id, value: @review.book.id
       .form-group
-        = review_f.label :title, 'Title'
+        = review_f.label :title
         = review_f.text_field :title, class: 'form-control'
       .form-group
-        = review_f.label :vote, 'Rating'
+        = review_f.label :vote
         .vote
       .form-group
-        = review_f.label :text, 'Text review'
+        = review_f.label :text
         = review_f.text_area :text, class: 'form-control', rows: '10'
       .form-group
-        .pull-left= review_f.submit 'Add', class: 'btn btn-primary'
-        .pull-right= link_to 'Cancel', shop_book_path(@review.book), class: 'btn btn-default'
+        .pull-left= review_f.submit t('btn.add').mb_chars.capitalize, class: 'btn btn-primary'
+        .pull-right= link_to t('btn.cancel').mb_chars.capitalize, shop_book_path(@review.book), class: 'btn btn-default'
