@@ -1,0 +1,11 @@
+ru:
+  views:
+    cart:
+      title: корзина
+      btn:
+        empty_cart: очистить корзину
+        checkout: оформить заказ
+      placeholder:
+        coupon_code: код купона
+      msg:
+        coupon_error: Этот купон не существует

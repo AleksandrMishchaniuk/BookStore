@@ -5,12 +5,12 @@
   %table.table
     %thead
       %tr
-        %th.text-center{colspan: 2} BOOK
-        %th.text-center PRICE
-        %th.text-center QTY
-        %th.text-center TOTAL
+        %th.text-center{colspan: 2}= t('activerecord.models.book.one').mb_chars.upcase
+        %th.text-center= t('activerecord.attributes.book.price').mb_chars.upcase
+        %th.text-center= t('views.partials.cart_table.title.qty').mb_chars.upcase
+        %th.text-center= t('views.partials.cart_table.title.total').mb_chars.upcase
         %th
-    %tbody
+    %tbody.catr_items
       - order.cart_items.each do |item|
         %tr.cart_item{'data-book_id': item.book_id}
           %td.cart_item_image= image_tag(item.book.image.thumb, class: 'img-thumbnail')
@@ -28,38 +28,41 @@
             %span= "%.02f" % item.total_price
           - if editable
             %td
-              = link_to remove_item_cart_path(item.book.id), method: :delete, title: "remove" do
+              = link_to remove_item_cart_path(item.book.id), method: :delete, title: t('btn.remove') do
                 == <i class='fa fa-remove fa-lg'></i>
     %tbody.cart_total
       %tr.price_row
-        %td.text-right{colspan: 4} SUBTOTAL:
+        %td.text-right{colspan: 4}= "#{t('views.partials.cart_table.subtotal').mb_chars.upcase}:"
         %td.items_total.price
           $
           %span= "%.02f" % order.item_total
       - if order.item_discount > 0
         %tr.price_row
-          %td.text-right{colspan: 4} DISCOUNT (coupon ##{order.coupon.code} : #{order.coupon.discount * 100}%):
+          %td.text-right{colspan: 4}
+            = t('activerecord.attributes.coupon.discount').mb_chars.upcase
+            = "(#{t('activerecord.models.coupon.one')}"
+            == ##{order.coupon.code} : #{order.coupon.discount * 100}%):
           %td.items_discount.price
             == -$
             %span= "%.02f" % order.item_discount
         %tr.price_row
-          %td.text-right{colspan: 4} SUBTOTAL WITH DISCOUNT:
+          %td.text-right{colspan: 4}= "#{t('views.partials.cart_table.subtotal_with_discount').mb_chars.upcase}:"
           %td.items_total_with_discount.price
             $
             %span= "%.02f" % order.item_total_with_discount
       - if show_shipping_price
         %tr.price_row
-          %td.text-right{colspan: 4} SHIPPING:
+          %td.text-right{colspan: 4}= "#{t('views.partials.cart_table.shipping').mb_chars.upcase}:"
           %td.shipping_price.price
             $
             %span= "%.02f" % (order.delivery.try(:price) || 0)
       - if show_order_total
         %tr.price_row
-          %td.text-right{colspan: 4} ORDER TOTAL:
+          %td.text-right{colspan: 4}= "#{t('views.partials.cart_table.order_total').mb_chars.upcase}:"
           %td.order_total.price
             $
             %span= "%.02f" % order.order_total
 - else
   %h3.text-center
-    Cart is empty
-    = link_to "Go to Shop", shop_books_path, class: 'btn btn-primary'
+    = t('views.partials.cart_table.cart_empty').mb_chars.capitalize
+    = link_to t('btn.go_to_shop').mb_chars.capitalize, shop_books_path, class: 'btn btn-primary'

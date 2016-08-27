@@ -1,0 +1,11 @@
+en:
+  views:
+    cart:
+      title: cart
+      btn:
+        empty_cart: empty cart
+        checkout: checkout
+      placeholder:
+        coupon_code: coupon code
+      msg:
+        coupon_error: This coupon does not exist

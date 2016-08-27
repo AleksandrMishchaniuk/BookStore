@@ -4,6 +4,8 @@ ru:
     cancel: отменить
     save: сохранить
     update: обновить
+    go_to_shop: продолжить покупки
+    remove: удалить
   datetime:
     formats:
       default: "%d.%m.%y %H:%M"

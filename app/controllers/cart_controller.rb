@@ -39,7 +39,7 @@ class CartController < ApplicationController
     if coupon && !coupon.used
       order.coupon = coupon
     elsif coupon.nil? || coupon != order.coupon
-      error = 'This coupon does not exist'
+      error = t('views.cart.msg.coupon_error')
       order.coupon = nil
     end
     redirect_to cart_path, alert: error

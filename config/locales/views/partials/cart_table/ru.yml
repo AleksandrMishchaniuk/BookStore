@@ -1,0 +1,12 @@
+ru:
+  views:
+    partials:
+      cart_table:
+        title:
+          qty: кол-во
+          total: всего
+        subtotal: общая стоимость
+        subtotal_with_discount: стоимость со скидкой
+        shipping: доставка
+        order_total: стоимость заказа
+        cart_empty: корзина пуста

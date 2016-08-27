@@ -1,0 +1,12 @@
+en:
+  views:
+    partials:
+      cart_table:
+        title:
+          qty: qty
+          total: total
+        subtotal: subtotal
+        subtotal_with_discount: subtotal with discount
+        shipping: shipping
+        order_total: order total
+        cart_empty: cart is empty

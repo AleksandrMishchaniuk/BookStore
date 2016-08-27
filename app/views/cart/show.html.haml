@@ -1,12 +1,12 @@
-%h1 Cart
+%h1= t('views.cart.title').mb_chars.capitalize
 = render "partials/cart_table", order: @order, editable: true
 - unless @order.cart_items.empty?
   .row
     .col-sm-6
-      = link_to "Empty Cart", cart_path, method: :delete, class: 'btn btn-danger'
-      = link_to "Continue Shopping", shop_books_path, class: 'btn btn-primary'
+      = link_to t('views.cart.btn.empty_cart').mb_chars.capitalize, cart_path, method: :delete, class: 'btn btn-danger'
+      = link_to t('btn.go_to_shop').mb_chars.capitalize, shop_books_path, class: 'btn btn-primary'
     .col-sm-6.text-right
       = form_tag update_coupon_cart_path, class: 'form-inline coupon_form', role: 'form' do
-        = text_field_tag :coupon, '', placeholder: 'Coupon code', class: 'form-control'
-        = submit_tag 'Update', class: 'btn'
-      = link_to "Checkout", checkout_start_path, class: 'btn btn-primary'
+        = text_field_tag :coupon, '', placeholder: t('views.cart.placeholder.coupon_code').mb_chars.capitalize, class: 'form-control'
+        = submit_tag t('btn.update').mb_chars.capitalize, class: 'btn'
+      = link_to t('views.cart.btn.checkout').mb_chars.capitalize, checkout_start_path, class: 'btn btn-primary'
