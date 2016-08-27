@@ -5,7 +5,7 @@ feature 'Home page' do
     3.times.each { create :order }
   end
   scenario 'visit home page' do
-      visit '/'
+      visit root_path
       expect(page).to have_content 'Welcome'
       expect(page).to have_content 'Bestsellers'
       expect(page).to have_css '.slide'
