@@ -7,7 +7,7 @@
     - defined = (i == 0 && @order.billing_address) ||
     -           (i == 1 && @order.delivery) ||
     -           (i == 2 && @order.credit_card) ||
-    -           (i == 3 && @order.billing_address && @order.delivery && @order.credit_card)
+    -           (i == 3 && @order.billing_address && @order.delivery && @order.credit_card.try(:persisted?))
     - unless i == 0
       %span.glyphicon.glyphicon-chevron-right
     - if i+1 == step

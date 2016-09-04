@@ -10,7 +10,7 @@
         %th.text-center= t('views.partials.cart_table.title.qty').mb_chars.upcase
         %th.text-center= t('views.partials.cart_table.title.total').mb_chars.upcase
         %th
-    %tbody.catr_items
+    %tbody.cart_items
       - order.cart_items.each do |item|
         %tr.cart_item{'data-book_id': item.book_id}
           %td.cart_item_image= image_tag(item.book.image.thumb, class: 'img-thumbnail')
