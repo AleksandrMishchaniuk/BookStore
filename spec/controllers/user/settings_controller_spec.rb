@@ -118,7 +118,7 @@ RSpec.describe User::SettingsController, type: :controller do
   describe 'POST #password' do
     let(:new_password) { FFaker::Internet.password }
 
-    context 'with invalid email' do
+    context 'with invalid password' do
       let(:wrong_password) { FFaker::Internet.password }
       context 'when user types wrong current password' do
         let(:query) do

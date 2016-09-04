@@ -42,6 +42,11 @@ Rails.application.routes.draw do
           post 'email'
           post 'password'
           post 'remove_user'
+          get 'billing_address' => 'settings#edit'
+          get 'shipping_address' => 'settings#edit'
+          get 'email' => 'settings#edit'
+          get 'password' => 'settings#edit'
+          get 'remove_user' => 'settings#edit'
         end
       end
     end
