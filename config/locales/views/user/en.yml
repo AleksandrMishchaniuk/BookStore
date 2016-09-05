@@ -1,0 +1,13 @@
+en:
+  views:
+    user:
+      orders:
+        index:
+          title: orders
+        table_header:
+          number: number
+          completed_at: completed at
+          total: total
+        link:
+          view: view
+          back_to_orders: back to orders

@@ -1,0 +1,13 @@
+ru:
+  views:
+    user:
+      orders:
+        index:
+          title: заказы
+        table_header:
+          number: номер
+          completed_at: дата завершения
+          total: сумма
+        link:
+          view: просмотр
+          back_to_orders: вернуться к заказам

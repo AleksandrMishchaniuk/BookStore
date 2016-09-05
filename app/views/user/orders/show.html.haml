@@ -1,7 +1,7 @@
 = link_to user_orders_path do
   %i.fa.fa-chevron-left
-  %strong Back to orders
+  %strong= t('views.user.orders.link.back_to_orders').mb_chars.capitalize
 %h1
-  = "Order #{@viewing_order.number}"
-  %small= @viewing_order.order_state.state
+  = "#{t('activerecord.models.order.one').mb_chars.capitalize} #{@viewing_order.number}"
+  %small= t("order_state.s#{@viewing_order.order_state.id_of_state}")
 = render "partials/cart_table", order: @viewing_order, show_shipping_price: true, show_order_total: true

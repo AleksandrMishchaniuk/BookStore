@@ -10,3 +10,7 @@ en:
         shipping: shipping
         order_total: order total
         cart_empty: cart is empty
+      shop_by_categories:
+        title: Shop by Categories
+      review:
+        by: by

@@ -1,15 +1,15 @@
-%h1 Orders
+%h1= t('views.user.orders.index.title').mb_chars.capitalize
 - if @order.cart_items.any?
   %hr
-  %h3 In Progress
+  %h3= t("order_state.s1").mb_chars.upcase
   = render 'partials/cart_table', order: @order
-  = link_to 'Go to Cart', cart_path, class: 'btn btn-primary btn-lg'
+  = link_to t('btn.go_to_cart').mb_chars.capitalize, cart_path, class: 'btn btn-primary btn-lg'
 - if @orders_in_queue.any?
   %hr
-  = render 'user/orders_table', orders: @orders_in_queue, title: "waiting for processing"
+  = render 'user/orders_table', orders: @orders_in_queue, state: "s#{@orders_in_queue[0].order_state.id_of_state}"
 - if @orders_in_delivery.any?
   %hr
-  = render 'user/orders_table', orders: @orders_in_delivery, title: "in delivery"
+  = render 'user/orders_table', orders: @orders_in_delivery, state: "s#{@orders_in_delivery[0].order_state.id_of_state}"
 - if @orders_delivered.any?
   %hr
-  = render 'user/orders_table', orders: @orders_delivered, title: "delivered"
+  = render 'user/orders_table', orders: @orders_delivered, state: "s#{@orders_delivered[0].order_state.id_of_state}"

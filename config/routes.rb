@@ -18,12 +18,17 @@ Rails.application.routes.draw do
 
     namespace :checkout do
       get 'start' => 'order#start', as: :start
-      resource :addresses, only: [:edit, :update]
-      resource :delivery, only: [:edit, :update], controller: :delivery
-      resource :payment, only: [:edit, :update], controller: :payment
+      resource :addresses, only: [:edit, :update] do
+        get '/' => 'addresses#edit', on: :member
+      end
+      resource :delivery, only: [:edit, :update], controller: :delivery do
+        get '/' => 'delivery#edit', on: :member
+      end
+      resource :payment, only: [:edit, :update], controller: :payment do
+        get '/' => 'payment#edit', on: :member
+      end
       get 'confirm' => 'order#confirm', as: :confirm
       get 'complete' => 'order#to_queue', as: :to_queue
-      get 'order' => 'order#show', as: :order
     end
 
     namespace :shop do

@@ -6,3 +6,12 @@ en:
     update: update
     remove: remove
     go_to_shop: go to shop
+    go_to_cart: go to cart
+  time:
+    formats:
+      review: '%B %d, %Y'
+  order_state:
+    s1: in progress
+    s2: waiting for progressing
+    s3: in delivery
+    s4: delivered

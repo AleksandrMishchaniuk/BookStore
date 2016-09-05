@@ -2,8 +2,8 @@
   .review_head
     %span.vote_ready{'data-score': review.vote}
     %span= review.title
-    %span.small= review.created_at.strftime('%B %d, %Y')
+    %span.small= l(review.created_at, format: :review)
   .review_author
-    by
+    = t('views.partials.review.by')
     %span.author_name= review.user.email
   .review_text= review.text

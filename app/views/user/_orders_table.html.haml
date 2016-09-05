@@ -1,10 +1,10 @@
-%h3= title.upcase
+%h3= t("order_state.#{state}").mb_chars.upcase
 %table.table
   %thead
     %tr
-      %th Number
-      %th Completed at
-      %th Total
+      %th= t('views.user.orders.table_header.number').mb_chars.capitalize
+      %th= t('views.user.orders.table_header.completed_at').mb_chars.capitalize
+      %th= t('views.user.orders.table_header.total').mb_chars.capitalize
       %th
   %tbody
     - orders.each do |order|
@@ -12,4 +12,4 @@
         %td= link_to order.number, user_order_path(order)
         %td= order.updated_at.strftime("%Y-%m-%d")
         %td= "$#{order.order_total}"
-        %td= link_to "View", user_order_path(order)
+        %td= link_to t('views.user.orders.link.view').mb_chars.capitalize, user_order_path(order)

@@ -59,6 +59,8 @@ gem 'phonelib', '~> 0.6.2'
 gem 'credit_card_validations', '~> 3.2', '>= 3.2.2'
 gem 'date_validator', '~> 0.9.0'
 
+gem 'russian', '~> 0.6.0'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'

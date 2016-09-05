@@ -4,8 +4,14 @@ ru:
     cancel: отменить
     save: сохранить
     update: обновить
-    go_to_shop: продолжить покупки
     remove: удалить
-  datetime:
+    go_to_shop: продолжить покупки
+    go_to_cart: перейти в корзину
+  time:
     formats:
-      default: "%d.%m.%y %H:%M"
+      review: '%d %B %Yг.'
+  order_state:
+    s1: в процессе
+    s2: в обработке
+    s3: в процессе доставки
+    s4: доставлен

@@ -10,3 +10,7 @@ ru:
         shipping: доставка
         order_total: стоимость заказа
         cart_empty: корзина пуста
+      shop_by_categories:
+        title: По категориям
+      review:
+        by: от
