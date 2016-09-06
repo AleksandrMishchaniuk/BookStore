@@ -129,6 +129,7 @@ ru:
         updated_at: Время обновления
       user:
         email: Эл. почта
+        password: Пароль
         encrypted_password: Зашифрованный пароль
         reset_password_token: Токен востановления пароля
         reset_password_sent_at: Время отправки востановления пароля

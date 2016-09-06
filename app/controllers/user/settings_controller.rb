@@ -42,7 +42,7 @@ class User::SettingsController < ApplicationController
   def password
     if current_user.update_with_password(user_params)
       sign_in current_user, bypass: true
-      redirect_to edit_user_settings_path, notice: 'password was changed'
+      redirect_to edit_user_settings_path, notice: t('views.user.settings.password.success_msg')
     else
       current_user.reload
       define_variables
@@ -52,9 +52,10 @@ class User::SettingsController < ApplicationController
 
   def remove_user
     if params[:confirm] && current_user.destroy
-      redirect_to new_user_session_path, notice: 'account was deleted'
+      redirect_to new_user_session_path, notice: t('views.user.settings.remove_account.success_msg')
     else
-      redirect_to edit_user_settings_path, alert: "You should check \"I understand that all data will be lost\""
+      label_conf = t('views.user.settings.remove_account.confirm').mb_chars.capitalize
+      redirect_to edit_user_settings_path, alert: t('views.user.settings.remove_account.error_msg', label: label_conf)
     end
   end
 

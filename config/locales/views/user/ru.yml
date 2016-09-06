@@ -11,3 +11,15 @@ ru:
         link:
           view: просмотр
           back_to_orders: вернуться к заказам
+      settings:
+        remove_account:
+          title: удаление профиля
+          btn: пожалуйста, удалите мой профиль
+          confirm: я понимаю, что все данные будут потеряны
+          error_msg: Вы должны выбрать "%{label}"
+          success_msg: профиль был удален
+        password:
+          success_msg: пароль был изменен
+          old_lable: старый пароль
+          new_lable: новый пароль
+          confirm_lable: подтверждение нового пароля

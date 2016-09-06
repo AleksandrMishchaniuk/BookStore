@@ -11,3 +11,15 @@ en:
         link:
           view: view
           back_to_orders: back to orders
+      settings:
+        remove_account:
+          title: remove account
+          btn: please remove my account
+          confirm: I understand that all data will be lost
+          error_msg: You should check "%{label}"
+          success_msg: account was deleted
+        password:
+          success_msg: password was changed
+          old_lable: old password
+          new_lable: new password
+          confirm_lable: confirm your new password

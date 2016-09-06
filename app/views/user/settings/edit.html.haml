@@ -4,42 +4,42 @@
     = form_for @user, method: :post, url: billing_address_user_settings_path, html: {role: 'form', id: 'edit_user_billing_address'} do |user_f|
       = render "partials/address_fields", address: @billing_address, type: :billing, object: user_f
       .form-group
-        = user_f.submit 'Save', class: 'btn btn-primary'
+        = user_f.submit t('btn.save').mb_chars.capitalize, class: 'btn btn-primary'
   .col-sm-6
     = form_for @user, method: :post, url: shipping_address_user_settings_path, html: {role: 'form', id: 'edit_user_shipping_address'} do |user_f|
       = render "partials/address_fields", address: @shipping_address, type: :shipping, object: user_f
       .form-group
-        = user_f.submit 'Save', class: 'btn btn-primary'
+        = user_f.submit t('btn.save').mb_chars.capitalize, class: 'btn btn-primary'
 .text-center= render 'partials/errors_messages', entity: @user
 .row
   .col-sm-6
     = form_for @user, method: :post, url: email_user_settings_path, html: {role: 'form', id: 'edit_user_email'} do |user_f|
-      %h3.text-center EMAIL
+      %h3.text-center= t('activerecord.attributes.user.email').mb_chars.upcase
       .form-group
         = user_f.text_field :email, class: 'form-control'
       .form-group
-        =user_f.submit 'Save', class: 'btn btn-primary'
+        =user_f.submit t('btn.save').mb_chars.capitalize, class: 'btn btn-primary'
     %br
     %hr
-    %h3 REMOVE ACCOUNT
+    %h3= t('views.user.settings.remove_account.title').mb_chars.upcase
     = form_tag(remove_user_user_settings_path, id: 'remove_user_account') do
       .form-group
-        = submit_tag 'please remove my account'.upcase, class: 'btn btn-danger'
+        = submit_tag t('views.user.settings.remove_account.btn').mb_chars.upcase, class: 'btn btn-danger'
       .form-group
         = check_box_tag :confirm
-        = label_tag :confirm, "I understand that all data will be lost"
+        = label_tag :confirm, t('views.user.settings.remove_account.confirm').mb_chars.capitalize
 
   .col-sm-6
     = form_for @user, method: :post, url: password_user_settings_path, html: {role: 'form', id: 'change_user_password'} do |user_f|
-      %h3.text-center PASSWORD
+      %h3.text-center= t('activerecord.attributes.user.password').mb_chars.upcase
       .form-group
-        = user_f.label :current_password, 'Old password'
+        = user_f.label :current_password, t('views.user.settings.password.old_lable').mb_chars.capitalize
         = user_f.password_field :current_password, class: 'form-control'
       .form-group
-        = user_f.label :password, 'New password'
+        = user_f.label :password, t('views.user.settings.password.new_lable').mb_chars.capitalize
         = user_f.password_field :password, autocomplete: 'off', class: 'form-control'
       .form-group
-        = user_f.label :password_confirmation, 'Confirm your new password'
+        = user_f.label :password_confirmation, t('views.user.settings.password.confirm_lable').mb_chars.capitalize
         = user_f.password_field :password_confirmation, autocomplete: 'off', class: 'form-control'
       .form-group
-        = user_f.submit 'Save', class: 'btn btn-primary'
+        = user_f.submit t('btn.save').mb_chars.capitalize, class: 'btn btn-primary'
