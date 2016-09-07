@@ -2,14 +2,14 @@
   = form_for @order, url: checkout_payment_path, method: 'put', html: {role: 'form'} do |order|
     .row
       .col-sm-6
-        %h3.text-center PAYMENT
+        %h3.text-center= t('views.checkout.panel.payment').mb_chars.upcase
         = render 'partials/errors_messages', entity: @order.credit_card
         = fields_for @order.credit_card do |credit_card_f|
           .form-group
-            = credit_card_f.label :number, 'Card number'
+            = credit_card_f.label :number, t('activerecord.attributes.credit_card.number').mb_chars.capitalize
             = credit_card_f.text_field :number, class: 'form-control'
           .form-group
-            = credit_card_f.label :expiration_date, 'Expiration date'
+            = credit_card_f.label :expiration_date, t('activerecord.attributes.credit_card.expiration_date').mb_chars.capitalize
             .expiration_date
               = credit_card_f.date_select :expiration_date, {discard_day: true,
                                                           use_month_numbers: true,
@@ -17,9 +17,9 @@
                                                           end_year: Date.today.year + 10},
                                                           {class: 'form-control'}
           .form-group
-            = credit_card_f.label :code, 'Code'
+            = credit_card_f.label :code, t('activerecord.attributes.credit_card.code').mb_chars.capitalize
             = credit_card_f.text_field :code, class: 'form-control', size: 3, maxlength: 3
         .form-group
-          = order.submit 'Save and Continue', class: 'btn btn-primary form-control'
+          = order.submit t('views.checkout.btn.save_and_cont').mb_chars.capitalize, class: 'btn btn-primary form-control'
 
 = render 'checkout/wraper', step: @step

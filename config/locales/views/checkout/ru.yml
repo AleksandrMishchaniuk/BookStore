@@ -1,0 +1,27 @@
+ru:
+  views:
+    checkout:
+      title: Оформление заказа
+      panel:
+        addresses: адреса
+        delivery: доставка
+        payment: оплата
+        confirm: подтверждение
+        complete: завершение
+      summary:
+        title: итог заказа
+        item_total: стоимость товаров
+        item_discount: скидка
+        shipping: доставка
+        order_total: стоимость заказа
+      btn:
+        save_and_cont: сохранить и продолжить
+        edit: ред.
+        place_order: разместить заказ
+      addresses:
+        once_address_label: использовать платежный адрес как адрес доставки
+      confirm:
+        shipping_address: адрес доставки
+        billing_address: платежный адрес
+        shipments: доставка
+        payment_info: платежная информация

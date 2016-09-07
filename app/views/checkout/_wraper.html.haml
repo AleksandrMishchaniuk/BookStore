@@ -1,9 +1,13 @@
 - order_summary = true if order_summary.nil?
-%h1 Checkout
+%h1= t('views.checkout.title').mb_chars.capitalize
 #checkout_panel
   - [
-  -  'addresses', 'delivery', 'payment', 'confirm', 'complete'
-  - ].each_with_index do |step_name, i|
+  -  { val: t('views.checkout.panel.addresses'), name: 'addresses' },
+     { val: t('views.checkout.panel.delivery'), name: 'delivery' },
+     { val: t('views.checkout.panel.payment'), name: 'payment' },
+     { val: t('views.checkout.panel.confirm'), name: 'confirm' },
+     { val: t('views.checkout.panel.complete'), name: 'complete' }
+  - ].each_with_index do |step_data, i|
     - defined = (i == 0 && @order.billing_address) ||
     -           (i == 1 && @order.delivery) ||
     -           (i == 2 && @order.credit_card) ||
@@ -11,13 +15,13 @@
     - unless i == 0
       %span.glyphicon.glyphicon-chevron-right
     - if i+1 == step
-      %span.step.current.text-primary= step_name.upcase
+      %span.step.current.text-primary= step_data[:val].mb_chars.upcase
     - elsif i < 3 && defined
-      %span.step.text-success= link_to step_name.upcase, eval("edit_checkout_#{step_name}_path")
+      %span.step.text-success= link_to step_data[:val].mb_chars.upcase, eval("edit_checkout_#{step_data[:name]}_path")
     - elsif i == 3 && defined
-      %span.step.text-success= link_to step_name.upcase, eval("checkout_#{step_name}_path")
+      %span.step.text-success= link_to step_data[:val].mb_chars.upcase, eval("checkout_#{step_data[:name]}_path")
     - else
-      %span.step= step_name.upcase
+      %span.step= step_data[:val].mb_chars.upcase
 #checkout_data
   - if order_summary
     .row

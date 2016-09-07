@@ -88,7 +88,7 @@ ru:
         created_at: Время создания
         updated_at: Время обновления
       credit_card:
-        number: Номер
+        number: Номер карты
         code: Код
         expiration_date: Срок годности
         orders: Заказы

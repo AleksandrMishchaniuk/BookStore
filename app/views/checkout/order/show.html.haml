@@ -1,21 +1,17 @@
 %h3= @curent_order.number
 .row
   .col-md-3
-    %h4
-      Shipping address
+    %h4= t('views.checkout.confirm.shipping_address').mb_chars.capitalize
     - preaty_address @curent_order.shipping_address
   .col-md-3
-    %h4
-      Billing address
+    %h4= t('views.checkout.confirm.billing_address').mb_chars.capitalize
     - preaty_address @curent_order.billing_address
   .col-md-3
-    %h4
-      Shipments
+    %h4= t('views.checkout.confirm.shipments').mb_chars.capitalize
     %span= @curent_order.delivery.delivery_type
   .col-md-3
-    %h4
-      Payment information
+    %h4= t('views.checkout.confirm.payment_info').mb_chars.capitalize
     - preaty_credit_card @curent_order.credit_card
 %br
 = render 'partials/cart_table', order: @curent_order, show_shipping_price: true, show_order_total: true
-= link_to 'Go back to Store', shop_books_path, class: "btn btn-primary btn-lg"
+= link_to t('btn.go_to_shop').mb_chars.capitalize, shop_books_path, class: "btn btn-primary btn-lg"

@@ -1,27 +1,27 @@
 - content_for :checkout_data do
-  %h3 CONFIRM
+  %h3= t('views.checkout.panel.confirm').mb_chars.upcase
   .row
     .col-md-3
       %h4
-        Shipping address
-        == (#{link_to 'edit', edit_checkout_addresses_path})
+        = t('views.checkout.confirm.shipping_address').mb_chars.capitalize
+        == (#{link_to t('views.checkout.btn.edit'), edit_checkout_addresses_path})
       - preaty_address @order.shipping_address
     .col-md-3
       %h4
-        Billing address
-        == (#{link_to 'edit', edit_checkout_addresses_path})
+        = t('views.checkout.confirm.billing_address').mb_chars.capitalize
+        == (#{link_to t('views.checkout.btn.edit'), edit_checkout_addresses_path})
       - preaty_address @order.billing_address
     .col-md-3
       %h4
-        Shipments
-        == (#{link_to 'edit', edit_checkout_delivery_path})
+        = t('views.checkout.confirm.shipments').mb_chars.capitalize
+        == (#{link_to t('views.checkout.btn.edit'), edit_checkout_delivery_path})
       %span= @order.delivery.delivery_type
     .col-md-3
       %h4
-        Payment information
-        == (#{link_to 'edit', edit_checkout_payment_path})
+        = t('views.checkout.confirm.payment_info').mb_chars.capitalize
+        == (#{link_to t('views.checkout.btn.edit'), edit_checkout_payment_path})
       - preaty_credit_card @order.credit_card
   %br
   = render 'partials/cart_table', order: @order, show_shipping_price: true, show_order_total: true
-  = link_to 'Place Order', checkout_to_queue_path, class: "btn btn-primary btn-lg"
+  = link_to t('views.checkout.btn.place_order').mb_chars.capitalize, checkout_to_queue_path, class: "btn btn-primary btn-lg"
 = render 'checkout/wraper', step: @step, order_summary: false

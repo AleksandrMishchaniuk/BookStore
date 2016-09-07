@@ -1,20 +1,20 @@
-%h3.text-center ORDER SUMMARY
+%h3.text-center= t('views.checkout.summary.title').mb_chars.upcase
 .text-right.order_summary
   .item_total
-    Item total: $
+    = "#{t('views.checkout.summary.item_total').mb_chars.capitalize}: $"
     %span.price
       = '%.02f' % @order.item_total
   - if @order.item_discount > 0
     .item_discount
-      Item discount: -$
+      = "#{t('views.checkout.summary.item_discount').mb_chars.capitalize}: -$"
       %span.price
         = '%.02f' % @order.item_discount
   - if @step > 1 || @order.delivery
     .order_shipping
-      Shipping: $
+      = "#{t('views.checkout.summary.shipping').mb_chars.capitalize}: $"
       %span.price
         = '%.02f' % (@order.delivery.try(:price) || 0)
   .order_total
-    Order total: $
+    = "#{t('views.checkout.summary.order_total').mb_chars.capitalize}: $"
     %span.price
       = '%.02f' % @order.order_total

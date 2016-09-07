@@ -8,10 +8,10 @@
     .row
       .col-md-6
         .form-group
-          = order.submit 'Save and Continue', class: 'btn btn-primary form-control'
+          = order.submit t('views.checkout.btn.save_and_cont').mb_chars.capitalize, class: 'btn btn-primary form-control'
       .col-md-6
         .form-group
           = check_box_tag(:once_address)
-          = label_tag(:once_address, 'Use billing address as shipping')
+          = label_tag(:once_address, t('views.checkout.addresses.once_address_label').mb_chars.capitalize)
 
 = render 'checkout/wraper', step: @step

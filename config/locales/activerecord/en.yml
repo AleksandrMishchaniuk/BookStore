@@ -88,7 +88,7 @@ en:
         created_at: Created at
         updated_at: Updated at
       credit_card:
-        number: Number
+        number: Card number
         code: Code
         expiration_date: Expiration date
         orders: Orders

@@ -1,0 +1,27 @@
+en:
+  views:
+    checkout:
+      title: checkout
+      panel:
+        addresses: addresses
+        delivery: delivery
+        payment: payment
+        confirm: confirm
+        complete: complete
+      summary:
+        title: order summary
+        item_total: item total
+        item_discount: item discount
+        shipping: shipping
+        order_total: order total
+      btn:
+        save_and_cont: save and continue
+        edit: edit
+        place_order: place order
+      addresses:
+        once_address_label: use billing address as shipping
+      confirm:
+        shipping_address: shipping address
+        billing_address: billing address
+        shipments: shipments
+        payment_info: payment information

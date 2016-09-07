@@ -2,13 +2,13 @@
   = form_for @order, url: checkout_delivery_path, method: 'put', html: {role: 'form'} do |order|
     .row
       .col-md-6
-        %h3.text-center DELIVERY
+        %h3.text-center= t('views.checkout.panel.delivery').mb_chars.upcase
         - @deliveries.each_with_index do |delivery, i|
           - checked = (@order.delivery_id)? delivery.id.to_i == @order.delivery_id.to_i : i == 0
           .form-group
             = order.radio_button(:delivery, delivery.id, checked: checked, "data-price": delivery.price)
             = order.label("delivery_#{delivery.id}", " #{delivery.delivery_type} +$#{delivery.price}")
         .form-group
-          = order.submit 'Save and Continue', class: 'btn btn-primary form-control'
+          = order.submit t('views.checkout.btn.save_and_cont').mb_chars.capitalize, class: 'btn btn-primary form-control'
 
 = render 'checkout/wraper', step: @step
