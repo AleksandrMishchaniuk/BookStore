@@ -1,0 +1,4 @@
+%li
+  = link_to_unless current_page.first?,
+    raw('<i class="fa fa-chevron-left" aria-hidden="true"></i><i class="fa fa-chevron-left" aria-hidden="true"></i>'),
+    url, :remote => remote
