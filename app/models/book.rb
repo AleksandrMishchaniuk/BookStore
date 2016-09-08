@@ -9,7 +9,6 @@ class Book < ActiveRecord::Base
   validates :short_description,   presence: true, length: {maximum: 512}
   validates :full_description,    presence: true, length: {maximum: 2048}
   validates :price,               presence: true, numericality: true
-  validates :authors,             presence: true
 
   mount_uploader :image, ImageUploader
 
