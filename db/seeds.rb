@@ -11,6 +11,21 @@ Author.create!([
   {first_name: "Matt", last_name: "Hutchinson", description: ""},
   {first_name: "Gary", last_name: "Paulsen", description: "Gary Paulsen is one of the most honored writers of contemporary literature for young readers. He has written more than one hundred book for adults and young readers, and is the author of three Newbery Honor titles: Dogsong, Hatchet, and The Winter Room. He divides his time among Alaska, New Mexico, Minnesota, and the Pacific."}
 ])
+Author::HABTM_Books.create!([
+  {author_id: 3, book_id: 5},
+  {author_id: 3, book_id: 6},
+  {author_id: 4, book_id: 7},
+  {author_id: 5, book_id: 8},
+  {author_id: 6, book_id: 9},
+  {author_id: 7, book_id: 10},
+  {author_id: 8, book_id: 11},
+  {author_id: 9, book_id: 12},
+  {author_id: 10, book_id: 13},
+  {author_id: 11, book_id: 13},
+  {author_id: 11, book_id: 14},
+  {author_id: 12, book_id: 14},
+  {author_id: 13, book_id: 15}
+])
 Book.create!([
   {title: "Fifty Shades of Grey: Book One of the Fifty Shades Trilogy (Fifty Shades of Grey Series)", short_description: "MORE THAN 100 MILLION COPIES SOLD WORDWIDENOW A MAJOR MOTION PICTUREWhen literature student Anastasia Steele goes to interview young entrepreneur Christian Grey, she encounters a man who is beautiful, brilliant, and intimidating.", full_description: "MORE THAN 100 MILLION COPIES SOLD WORDWIDENOW A MAJOR MOTION PICTUREWhen literature student Anastasia Steele goes to interview young entrepreneur Christian Grey, she encounters a man who is beautiful, brilliant, and intimidating. The unworldly, innocent Ana is startled to realize she wants this man and, despite his enigmatic reserve, finds she is desperate to get close to him. Unable to resist Ana’s quiet beauty, wit, and independent spirit, Grey admits he wants her, too—but on his own terms. Shocked yet thrilled by Grey’s singular erotic tastes, Ana hesitates. For all the trappings of success—his multinational businesses, his vast wealth, his loving family—Grey is a man tormented by demons and consumed by the need to control. When the couple embarks on a daring, passionately physical affair, Ana discovers Christian Grey’s secrets and explores her own dark desires.This book is intended for mature audiences.", image: "51RhsdrKNHL._SL300_.jpg", price: "3.59"},
   {title: "Fifty Shades Freed: Book Three of the Fifty Shades Trilogy (Fifty Shades of Grey Series)", short_description: "MORE THAN 100 MILLION COPIES SOLD WORLDWIDEFIFTY SHADES OF GREY IS NOW A MAJOR MOTION PICTUREWhen unworldly student Anastasia Steele first encountered the driven and dazzling young entrepreneur Christian Grey it sparked a sensual affair that changed both of their lives irrevocably.", full_description: "MORE THAN 100 MILLION COPIES SOLD WORLDWIDEFIFTY SHADES OF GREY IS NOW A MAJOR MOTION PICTUREWhen unworldly student Anastasia Steele first encountered the driven and dazzling young entrepreneur Christian Grey it sparked a sensual affair that changed both of their lives irrevocably. Shocked, intrigued, and, ultimately, repelled by Christian’s singular erotic tastes, Ana demands a deeper commitment. Determined to keep her, Christian agrees. Now, Ana and Christian have it all—love, passion, intimacy, wealth, and a world of possibilities for their future. But Ana knows that loving her Fifty Shades will not be easy, and that being together will pose challenges that neither of them would anticipate. Ana must somehow learn to share Christian’s opulent lifestyle without sacrificing her own identity. And Christian must overcome his compulsion to control as he wrestles with the demons of a tormented past. Just when it seems that their strength together will eclipse any obstacle, misfortune, malice, and fate conspire to make Ana’s deepest fears turn to reality.This book is intended for mature audiences.", image: "51TChFM9hXL._SL300_.jpg", price: "3.59"},
@@ -24,12 +39,59 @@ Book.create!([
   {title: "A Brief Atlas of the Human Body", short_description: "This full-color atlas includes 107 bone and 47 soft-tissue photographs with easy-to-read labels. This new edition of the atlas contains a brand new comprehensive histology photomicrograph section featuring over 50 slides of basic tissue and organ systems.", full_description: "This full-color atlas includes 107 bone and 47 soft-tissue photographs with easy-to-read labels. This new edition of the atlas contains a brand new comprehensive histology photomicrograph section featuring over 50 slides of basic tissue and organ systems. Featuring photos taken by renowned biomedical photographer Ralph Hutchings, this high-quality photographic atlas makes an excellent resource for the classroom and laboratory, and is referenced in appropriate figure legends throughout the text.", image: "4157ZE720ML._SL300_.jpg", price: "4.39"},
   {title: "Hatchet", short_description: "Thirteen-year-old Brian Robeson is on his way to visit his father when the single-engine plane in which he is flying crashes. Suddenly, Brian finds himself alone in the Canadian wilderness with nothing but a tattered Windbreaker and the hatchet his mother gave him as a present -- and the dreadful secret that has been tearing him apart since his parent's divorce.", full_description: "Thirteen-year-old Brian Robeson is on his way to visit his father when the single-engine plane in which he is flying crashes. Suddenly, Brian finds himself alone in the Canadian wilderness with nothing but a tattered Windbreaker and the hatchet his mother gave him as a present -- and the dreadful secret that has been tearing him apart since his parent's divorce. But now Brian has no time for anger, self pity, or despair -- it will take all his know-how and determination, and more courage than he knew he possessed, to survive. For twenty years Gary Paulsen's award-winning contemporary classic has been the survival story with which all others are compared. This new edition, with a reading group guide, will introduce a new generation of readers to this page-turning, heart-stopping adventure.", image: "41lO2e0xt3L._SL300_.jpg", price: "3.59"}
 ])
+Book::HABTM_Authors.create!([
+  {author_id: 3, book_id: 5},
+  {author_id: 3, book_id: 6},
+  {author_id: 4, book_id: 7},
+  {author_id: 5, book_id: 8},
+  {author_id: 6, book_id: 9},
+  {author_id: 7, book_id: 10},
+  {author_id: 8, book_id: 11},
+  {author_id: 9, book_id: 12},
+  {author_id: 10, book_id: 13},
+  {author_id: 11, book_id: 13},
+  {author_id: 11, book_id: 14},
+  {author_id: 12, book_id: 14},
+  {author_id: 13, book_id: 15}
+])
+Book::HABTM_Categories.create!([
+  {book_id: 5, category_id: 6},
+  {book_id: 6, category_id: 6},
+  {book_id: 7, category_id: 6},
+  {book_id: 8, category_id: 6},
+  {book_id: 8, category_id: 3},
+  {book_id: 9, category_id: 4},
+  {book_id: 9, category_id: 3},
+  {book_id: 10, category_id: 2},
+  {book_id: 11, category_id: 2},
+  {book_id: 12, category_id: 5},
+  {book_id: 12, category_id: 3},
+  {book_id: 13, category_id: 5},
+  {book_id: 14, category_id: 5},
+  {book_id: 15, category_id: 4}
+])
 Category.create!([
   {name: "Cooking"},
   {name: "Children's Books"},
   {name: "Science & Math"},
   {name: "Romance"},
   {name: "History"}
+])
+Category::HABTM_Books.create!([
+  {book_id: 5, category_id: 6},
+  {book_id: 6, category_id: 6},
+  {book_id: 7, category_id: 6},
+  {book_id: 8, category_id: 6},
+  {book_id: 8, category_id: 3},
+  {book_id: 9, category_id: 4},
+  {book_id: 9, category_id: 3},
+  {book_id: 10, category_id: 2},
+  {book_id: 11, category_id: 2},
+  {book_id: 12, category_id: 5},
+  {book_id: 12, category_id: 3},
+  {book_id: 13, category_id: 5},
+  {book_id: 14, category_id: 5},
+  {book_id: 15, category_id: 4}
 ])
 Coupon.create!([
   {code: "0003", discount: "0.15", used: false, order_id: nil},
