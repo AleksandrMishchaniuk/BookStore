@@ -8,6 +8,7 @@ require 'rspec/rails'
 require 'capybara/rails'
 require 'capybara/rspec'
 require 'rack_session_access/capybara'
+require 'ffaker'
 # Add additional requires below this line. Rails is not loaded until this point!
 require './spec/controllers/helpers/order_in_progress_helpers.rb'
 require './spec/shared_examples/controllers/cart_controller_shared_examples.rb'
