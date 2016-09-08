@@ -31,21 +31,6 @@ Category.create!([
   {name: "Romance"},
   {name: "History"}
 ])
-Author::HABTM_Books.create!([
-  {author_id: 1, book_id: 1},
-  {author_id: 1, book_id: 2},
-  {author_id: 2, book_id: 3},
-  {author_id: 3, book_id: 4},
-  {author_id: 4, book_id: 5},
-  {author_id: 5, book_id: 6},
-  {author_id: 6, book_id: 7},
-  {author_id: 7, book_id: 8},
-  {author_id: 8, book_id: 9},
-  {author_id: 9, book_id: 9},
-  {author_id: 9, book_id: 10},
-  {author_id: 10, book_id: 10},
-  {author_id: 11, book_id: 11}
-  ])
 Book::HABTM_Authors.create!([
   {author_id: 1, book_id: 1},
   {author_id: 1, book_id: 2},
@@ -62,22 +47,6 @@ Book::HABTM_Authors.create!([
   {author_id: 11, book_id: 11}
 ])
 Book::HABTM_Categories.create!([
-  {book_id: 1, category_id: 5},
-  {book_id: 2, category_id: 5},
-  {book_id: 3, category_id: 5},
-  {book_id: 4, category_id: 5},
-  {book_id: 4, category_id: 2},
-  {book_id: 5, category_id: 3},
-  {book_id: 5, category_id: 2},
-  {book_id: 6, category_id: 1},
-  {book_id: 7, category_id: 1},
-  {book_id: 8, category_id: 4},
-  {book_id: 8, category_id: 2},
-  {book_id: 9, category_id: 4},
-  {book_id: 10, category_id: 4},
-  {book_id: 11, category_id: 3}
-])
-Category::HABTM_Books.create!([
   {book_id: 1, category_id: 5},
   {book_id: 2, category_id: 5},
   {book_id: 3, category_id: 5},
