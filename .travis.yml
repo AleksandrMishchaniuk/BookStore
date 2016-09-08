@@ -3,3 +3,7 @@ rvm:
  - 2.2
 gemfile:
   - gemfiles/ruby-2.2.0
+before_script:
+  - psql -c "CREATE USER some_name WITH PASSWORD 'some_pass';" -U postgres
+env:
+  - BOOKSTORE_DATABASE_USERNAME=some_name BOOKSTORE_DATABASE_PASSWORD=some_pass
