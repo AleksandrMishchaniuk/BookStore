@@ -8,6 +8,8 @@ class Review < ActiveRecord::Base
   validates :text, presence: true, length: {maximum: 1028}
   validates :vote, numericality: {only_integer: true, greater_than: 0, less_than: 6}
 
+  scope :approved, -> { where(approved: true) }
+
   rails_admin do
     edit do
       field :approved

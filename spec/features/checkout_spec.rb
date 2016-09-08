@@ -212,7 +212,7 @@ feature 'Checkout' do
 
       scenario 'opens complete page after confirm' do
         visit checkout_confirm_path
-        click_on 'Place Order'
+        click_on 'Place order'
         expect(page).to have_current_path(checkout_to_queue_path(locale: 'en'))
       end
     end # when order has credit card

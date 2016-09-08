@@ -29,11 +29,15 @@ class Book < ActiveRecord::Base
       ids = joins('LEFT OUTER JOIN carts ON carts.book_id = books.id')
           .select('books.id, COALESCE(sum(book_count),0) AS selles')
           .group('books.id').order('selles DESC').limit(limit)
-      includes(:authors).find(*ids)
+      books = includes(:authors).find(*ids)
+      books_hash = books.each_with_object({}) do |book, hash|
+        hash[book.id] = book
+      end
+      ids.map { |i| books_hash[i.id] }
     end
   end
 
   def approved_reviews
-    reviews.where(approved: true)
+    reviews.approved
   end
 end
