@@ -17,7 +17,7 @@
         .row
           .col-md-4
             .div_image
-              = image_tag("#{book.image}", class: 'img-thumbnail')
+              = image_tag(book.image_url, class: 'img-thumbnail')
           .col-md-8
             %p.description
               = book.full_description
