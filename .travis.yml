@@ -1,8 +1,9 @@
 language: ruby
 rvm:
- - 2.2
-gemfile:
-  - gemfiles/ruby-2.2.0
+ - 2.3
 before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
-  - cp config/database.yml.travis config/database.yml
+before_install:
+  - rvm install 2.3.0
+env:
+  - AWS_ACCESS_KEY_ID=GGGGGGGGGGGGGGGGGGG AWS_SECRET_ACCESS_KEY=GGGGGGGGggggggggggggggGGGGGGGGGG S3_REGION=your-s3-region S3_BUCKET=your-bucket
