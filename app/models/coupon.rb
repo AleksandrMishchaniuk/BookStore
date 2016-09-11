@@ -13,4 +13,12 @@ class Coupon < ActiveRecord::Base
     end
   end
 
+  def attach
+    update_attributes(used: true) unless used
+  end
+
+  def detach
+    update_attributes(used: false, order_id: nil)
+  end
+
 end

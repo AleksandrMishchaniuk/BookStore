@@ -16,6 +16,8 @@ class Order < ActiveRecord::Base
   scope :in_delivery, -> { where(order_state: OrderState.in_delivery) }
   scope :delivered, -> { where(order_state: OrderState.delivered) }
 
+  after_create :set_coupon_after_save
+
   rails_admin do
     list do
       exclude_fields :carts, :credit_card
@@ -50,7 +52,6 @@ class Order < ActiveRecord::Base
 
   def save_to_progress
     return false unless save
-    set_coupon_after_save
     unless cart_items.empty?
       cart_items.each { |item| item.save! }
     end
@@ -79,8 +80,8 @@ class Order < ActiveRecord::Base
   def coupon=(object)
     return if object == coupon
     raise 'Object shoult be Coupon or NilClass' unless object.kind_of?(Coupon) || object.nil?
-    object.update_attributes(used: true) if object && !object.used
     detach_coupon
+    object.attach if object
     if persisted?
       super(object)
     else
@@ -89,8 +90,8 @@ class Order < ActiveRecord::Base
   end
 
   def detach_coupon
-    coupon.update_attributes(used: false, order_id: nil) if coupon
-    session[:coupon_id] = nil
+    coupon.detach if coupon
+    clear_coupon_in_session
   end
 
   protected
@@ -107,10 +108,13 @@ class Order < ActiveRecord::Base
     (session[:coupon_id])? Coupon.find(session[:coupon_id]) : nil
   end
 
+  def clear_coupon_in_session
+    session[:coupon_id] = nil
+  end
+
   def set_coupon_after_save
     if get_coupon_from_session
       update_attributes(coupon: get_coupon_from_session)
-      session[:coupon_id] = nil
     end
   end
 

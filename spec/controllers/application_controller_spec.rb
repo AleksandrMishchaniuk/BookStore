@@ -12,6 +12,7 @@ RSpec.describe ApplicationController, type: :controller do
     context "when session has saved :cart_items hash" do
       it do
         order = order_from_session_by_cart_items
+        controller.send(:set_session_environment)
         controller.send(:define_order_in_progress)
         expect(assigns(:order)).to eq(order)
       end
@@ -21,6 +22,7 @@ RSpec.describe ApplicationController, type: :controller do
       it do
         order_not_persisted = order_from_session_by_cart_items
         order_persisted_with_session = order_by_id_from_session
+        controller.send(:set_session_environment)
         controller.send(:define_order_in_progress)
         expect(assigns(:order)).to eq(order_persisted_with_session)
         expect(assigns(:order)).to_not eq(order_not_persisted)
@@ -31,6 +33,7 @@ RSpec.describe ApplicationController, type: :controller do
       it do
         order_persisted_with_user = order_by_current_user
         order_not_persisted = order_from_session_by_cart_items
+        controller.send(:set_session_environment)
         controller.send(:define_order_in_progress)
         expect(assigns(:order)).to eq(order_persisted_with_user)
         expect(assigns(:order)).to_not eq(order_not_persisted)
@@ -42,6 +45,7 @@ RSpec.describe ApplicationController, type: :controller do
         order_not_persisted = order_from_session_by_cart_items
         order_persisted_with_session = order_by_id_from_session
         order_persisted_with_user = order_by_current_user
+        controller.send(:set_session_environment)
         controller.send(:define_order_in_progress)
         expect(assigns(:order)).to eq(order_persisted_with_session)
         expect(assigns(:order)).to_not eq(order_not_persisted)
