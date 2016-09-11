@@ -50,7 +50,7 @@ RSpec.describe Order, type: :model do
     let(:order) { create :order }
 
     describe '#save_to_progress' do
-      context 'when user rty to change book count in cart item' do
+      context 'when user try to change book count in cart item' do
 
         it 'changes cart item' do
           old_count = order.carts[0].book_count
