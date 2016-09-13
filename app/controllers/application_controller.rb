@@ -76,11 +76,11 @@ class ApplicationController < ActionController::Base
 
   # Devise hooks
   def after_sign_out_path_for(resource_or_scope)
-    request.referrer || root_locale
+    request.referrer || root_locale_path
   end
 
   def after_sign_in_path_for(resource)
-    url = session[:previous_url] || root_locale
+    url = session[:previous_url] || root_locale_path
     route = Rails.application.routes.recognize_path(url)
     route[:locale] = session[:locale] || I18n.locale
     Rails.application.routes.generate_extras(route)[0]
