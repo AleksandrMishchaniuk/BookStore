@@ -1,0 +1,24 @@
+.text-center
+  = link_to omniauth_authorize_path(resource_name, :facebook) do
+    == <i class='fa fa-facebook-official fa-5x text-primary'></i>
+%br
+.text-center= t('.or')
+%br
+.row
+  .col-xs-offset-3.col-xs-6
+    = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+      .form-group
+        = f.email_field :email, autofocus: true, class: 'form-control', placeholder: t('activerecord.attributes.user.email')
+
+      .form-group
+        = f.password_field :password, autocomplete: "off", class: 'form-control', placeholder: t('activerecord.attributes.user.password')
+
+      .form-group
+        = f.password_field :password_confirmation, autocomplete: "off", class: 'form-control', placeholder: t('.password_confirmation')
+
+      .form-group
+        = f.submit t('.sign_up'), class: 'btn btn-primary'
+%br
+.text-center
+  = t('.have_account?') + ' '
+  = link_to t('.sign_in'), new_session_path(resource_name)

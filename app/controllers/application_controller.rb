@@ -15,6 +15,7 @@ class ApplicationController < ActionController::Base
   def change_locale
     route = Rails.application.routes.recognize_path(request.referer)
     route[:locale] = params[:locale]
+    session[:locale] = params[:locale]
     redirect_to route
   end
 
@@ -75,11 +76,14 @@ class ApplicationController < ActionController::Base
 
   # Devise hooks
   def after_sign_out_path_for(resource_or_scope)
-    request.referrer || root_path
+    request.referrer || root_locale
   end
 
   def after_sign_in_path_for(resource)
-    session[:previous_url] || root_path
+    url = session[:previous_url] || root_locale
+    route = Rails.application.routes.recognize_path(url)
+    route[:locale] = I18n.locale
+    Rails.application.routes.generate_extras(route)[0]
   end
 
   def store_location
@@ -88,8 +92,10 @@ class ApplicationController < ActionController::Base
         request.path != main_app.new_user_registration_path &&
         request.path != main_app.new_user_password_path &&
         request.path != main_app.edit_user_password_path &&
+        request.path != main_app.new_user_unlock_path &&
         request.path != "/users/confirmation" &&
         request.path != main_app.destroy_user_session_path &&
+        request.path != main_app.change_locale_path &&
         !request.xhr?) # don't store ajax calls
       session[:previous_url] = request.fullpath
     end

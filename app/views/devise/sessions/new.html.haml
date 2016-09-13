@@ -1,0 +1,29 @@
+.text-center
+  = link_to omniauth_authorize_path(resource_name, :facebook) do
+    == <i class='fa fa-facebook-official fa-5x text-primary'></i>
+%br
+.text-center= t('.or')
+%br
+.row
+  .col-xs-offset-3.col-xs-6
+    = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+      .form-group
+        = f.email_field :email, autofocus: true, class: 'form-control', placeholder: t('activerecord.attributes.user.email')
+
+      .form-group
+        = f.password_field :password, autocomplete: "off", class: 'form-control', placeholder: t('activerecord.attributes.user.password')
+        = link_to t(".forgot?"), new_password_path(resource_name), class: 'forgot_password_link'
+
+      .form-group
+        = f.submit t('.sign_in'), class: 'btn btn-primary'
+        - if devise_mapping.rememberable?
+          .pull-right
+            = f.check_box :remember_me
+            = f.label :remember_me
+%br
+.text-center
+  = t('.dont_have_account?') + ' '
+  = link_to t('.sign_up'), new_registration_path(resource_name)
+%br
+.text-center
+  = link_to t('.didn_t_receive_unlock_instructions'), new_unlock_path(resource_name)

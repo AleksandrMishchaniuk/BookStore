@@ -15,3 +15,20 @@ ru:
     s2: в обработке
     s3: в процессе доставки
     s4: доставлен
+  oauth:
+    msg:
+      error: Извиите. Произошла ошибка. Пожалуйста, попробуйте еще раз позже.
+  devise:
+    sessions:
+      new:
+        dont_have_account?: Нет профиля?
+        forgot?: забыли?
+        sign_up: Зарегистрироваться
+        or: или
+        didn_t_receive_unlock_instructions: Не получили код разблокировки?
+    registrations:
+      new:
+        have_account?: Есть профиль?
+        or: или
+        password_confirmation: Подтверждение пароля
+        sign_in: Войти

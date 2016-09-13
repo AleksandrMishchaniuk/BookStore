@@ -4,10 +4,11 @@ class User < ActiveRecord::Base
     devise :database_authenticatable, :registerable,
            :recoverable, :rememberable, :trackable, :validatable,
            :lockable
-  #  devise  :omniauthable, :omniauth_providers => [:facebook]
+   devise  :omniauthable, :omniauth_providers => [:facebook]
 
   has_many :orders
   has_many :reviews
+  has_many :soc_auths
   has_one :shipping_address, class_name: 'Address', foreign_key: :shipping_for_user
   has_one :billing_address, class_name: 'Address', foreign_key: :billing_for_user
 

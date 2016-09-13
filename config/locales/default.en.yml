@@ -15,3 +15,20 @@ en:
     s2: waiting for progressing
     s3: in delivery
     s4: delivered
+  oauth:
+    msg:
+      error: Sorry. Something wrong. Please, try again later.
+  devise:
+    sessions:
+      new:
+        dont_have_account?: Don't have an account?
+        forgot?: forgot?
+        sign_up: Sign Up
+        or: or
+        didn_t_receive_unlock_instructions: Didn't receive unlock instructions?
+    registrations:
+      new:
+        have_account?: Have an account?
+        or: or
+        password_confirmation: Password confirmation
+        sign_in: Sign In
