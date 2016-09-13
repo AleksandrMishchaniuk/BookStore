@@ -82,7 +82,7 @@ class ApplicationController < ActionController::Base
   def after_sign_in_path_for(resource)
     url = session[:previous_url] || root_locale
     route = Rails.application.routes.recognize_path(url)
-    route[:locale] = I18n.locale
+    route[:locale] = session[:locale] || I18n.locale
     Rails.application.routes.generate_extras(route)[0]
   end
 
