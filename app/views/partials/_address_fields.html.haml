@@ -2,27 +2,34 @@
 -# object - object of current form
 -# address - address object
 %h3.text-center= t("activerecord.attributes.user.#{type.to_s}_address").mb_chars.upcase
-= render 'partials/errors_messages', entity: address
 = object.fields_for type do |type_f|
   = type_f.fields_for address do |address_f|
     .form-group
       = address_f.label :first_name
       = address_f.text_field :first_name, class: 'form-control'
+      - error_message address, :first_name
     .form-group
       = address_f.label :last_name
       = address_f.text_field :last_name, class: 'form-control'
+      - error_message address, :last_name
     .form-group
       = address_f.label :address_line
       = address_f.text_field :address_line, class: 'form-control'
+      - error_message address, :address_line
     .form-group
       = address_f.label :city
       = address_f.text_field :city, class: 'form-control'
+      - error_message address, :city
     .form-group
       = address_f.label :country
       = address_f.text_field :country, class: 'form-control'
+      - error_message address, :country
     .form-group
       = address_f.label :zip
       = address_f.text_field :zip, class: 'form-control'
+      - error_message address, :zip
     .form-group
       = address_f.label :phone
+      %span.small= "(#{t('.example')} +380961111111)"
       = address_f.text_field :phone, class: 'form-control'
+      - error_message address, :phone

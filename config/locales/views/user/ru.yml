@@ -20,6 +20,6 @@ ru:
           success_msg: профиль был удален
         password:
           success_msg: пароль был изменен
-          old_lable: старый пароль
+          old_lable: текущий пароль
           new_lable: новый пароль
           confirm_lable: подтверждение нового пароля

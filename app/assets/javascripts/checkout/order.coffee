@@ -12,4 +12,4 @@ $ ->
       $('[name ^= "order[shipping]"]').removeAttr('disabled')
                                       .parents('.form-group').show()
 
-  $('#once_address').click toggle_shipping_address
+  $('#once_address').change(toggle_shipping_address).change()

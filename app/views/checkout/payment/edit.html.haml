@@ -3,11 +3,12 @@
     .row
       .col-sm-6
         %h3.text-center= t('views.checkout.panel.payment').mb_chars.upcase
-        = render 'partials/errors_messages', entity: @order.credit_card
         = fields_for @order.credit_card do |credit_card_f|
           .form-group
             = credit_card_f.label :number, t('activerecord.attributes.credit_card.number').mb_chars.capitalize
+            %span.small= "(#{t('.example')} 4539795011193619)"
             = credit_card_f.text_field :number, class: 'form-control'
+            - error_message @order.credit_card, :number
           .form-group
             = credit_card_f.label :expiration_date, t('activerecord.attributes.credit_card.expiration_date').mb_chars.capitalize
             .expiration_date
@@ -16,9 +17,11 @@
                                                           start_year: Date.today.year,
                                                           end_year: Date.today.year + 10},
                                                           {class: 'form-control'}
+            - error_message @order.credit_card, :expiration_date
           .form-group
             = credit_card_f.label :code, t('activerecord.attributes.credit_card.code').mb_chars.capitalize
             = credit_card_f.text_field :code, class: 'form-control', size: 3, maxlength: 3
+            - error_message @order.credit_card, :code
         .form-group
           = order.submit t('views.checkout.btn.save_and_cont').mb_chars.capitalize, class: 'btn btn-primary form-control'
 

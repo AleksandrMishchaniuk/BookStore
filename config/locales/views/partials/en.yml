@@ -14,3 +14,6 @@ en:
         title: Shop by Categories
       review:
         by: by
+  partials:
+    address_fields:
+      example: ex.

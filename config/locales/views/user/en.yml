@@ -20,6 +20,6 @@ en:
           success_msg: account was deleted
         password:
           success_msg: password was changed
-          old_lable: old password
+          old_lable: current password
           new_lable: new password
           confirm_lable: confirm your new password

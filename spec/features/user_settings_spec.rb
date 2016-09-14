@@ -82,7 +82,7 @@ feature 'User settings' do
           find('[name="commit"]').click
         end
         expect(find('#user_email').value).to_not eq(new_email)
-        expect(page).to have_css('.text-danger')
+        expect(page).to have_css('.field_with_errors')
       end
     end # when user with new email already exists
   end # when user changed email
@@ -95,7 +95,7 @@ feature 'User settings' do
           find('[name="commit"]').click
         end
         expect(page).to have_current_path(edit_user_settings_path(locale: 'en'))
-        expect(page).to have_css('.text-danger')
+        expect(page).to have_css('.alert-danger')
       end
     end # when confirm checkbox does not set
 
@@ -107,7 +107,7 @@ feature 'User settings' do
           find('[name="commit"]').click
         end
         expect(page).to have_current_path(new_user_session_path(locale: 'en'))
-        expect(page).to have_css('.text-success')
+        expect(page).to have_css('.alert-success')
       end
     end
   end # when user removes his account
@@ -123,7 +123,7 @@ feature 'User settings' do
           fill_in('user_password_confirmation', with: new_password)
           find('[name="commit"]').click
         end
-        expect(page).to have_css('.text-success')
+        expect(page).to have_css('.alert-success')
       end
     end # when user types true current password
 
@@ -137,7 +137,7 @@ feature 'User settings' do
           fill_in('user_password_confirmation', with: new_password)
           find('[name="commit"]').click
         end
-        expect(page).to have_css('.text-danger')
+        expect(page).to have_css('.field_with_errors')
       end
     end # when user types wrong current password
   end # when user change password

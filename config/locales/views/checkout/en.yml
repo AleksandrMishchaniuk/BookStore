@@ -25,3 +25,7 @@ en:
         billing_address: billing address
         shipments: shipments
         payment_info: payment information
+  checkout:
+    payment:
+      edit:
+        example: ex.

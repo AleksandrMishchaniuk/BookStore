@@ -44,7 +44,7 @@ feature 'Checkout' do
         find('[name="commit"]').click
       end
       expect(page).to have_current_path(checkout_addresses_path(locale: 'en'))
-      expect(page).to have_css('.text-danger')
+      expect(page).to have_css('.field_with_errors')
     end
 
     context 'when order already has delivery and payment' do
@@ -166,7 +166,7 @@ feature 'Checkout' do
           find('[name="commit"]').click
         end
         expect(page).to have_current_path(checkout_payment_path(locale: 'en'))
-        expect(page).to have_css('.text-danger')
+        expect(page).to have_css('.field_with_errors')
       end
     end # when order have delivery
   end # visit payment page

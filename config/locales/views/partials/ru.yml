@@ -14,3 +14,6 @@ ru:
         title: По категориям
       review:
         by: от
+  partials:
+    address_fields:
+      example: прим.

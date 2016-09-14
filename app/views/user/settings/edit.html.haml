@@ -10,13 +10,14 @@
       = render "partials/address_fields", address: @shipping_address, type: :shipping, object: user_f
       .form-group
         = user_f.submit t('btn.save').mb_chars.capitalize, class: 'btn btn-primary'
-.text-center= render 'partials/errors_messages', entity: @user
 .row
   .col-sm-6
     = form_for @user, method: :post, url: email_user_settings_path, html: {role: 'form', id: 'edit_user_email'} do |user_f|
       %h3.text-center= t('activerecord.attributes.user.email').mb_chars.upcase
+      %br
       .form-group
         = user_f.text_field :email, class: 'form-control'
+        - error_message @user, :email
       .form-group
         =user_f.submit t('btn.save').mb_chars.capitalize, class: 'btn btn-primary'
     %br
@@ -35,11 +36,14 @@
       .form-group
         = user_f.label :current_password, t('views.user.settings.password.old_lable').mb_chars.capitalize
         = user_f.password_field :current_password, class: 'form-control'
+        - error_message @user, :current_password
       .form-group
         = user_f.label :password, t('views.user.settings.password.new_lable').mb_chars.capitalize
         = user_f.password_field :password, autocomplete: 'off', class: 'form-control'
+        - error_message @user, :password
       .form-group
         = user_f.label :password_confirmation, t('views.user.settings.password.confirm_lable').mb_chars.capitalize
         = user_f.password_field :password_confirmation, autocomplete: 'off', class: 'form-control'
+        - error_message @user, :password_confirmation
       .form-group
         = user_f.submit t('btn.save').mb_chars.capitalize, class: 'btn btn-primary'

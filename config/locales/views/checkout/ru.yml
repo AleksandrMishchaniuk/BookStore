@@ -25,3 +25,7 @@ ru:
         billing_address: платежный адрес
         shipments: доставка
         payment_info: платежная информация
+  checkout:
+    payment:
+      edit:
+        example: прим.        
