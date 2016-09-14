@@ -2,8 +2,8 @@ module Checkout
   class AddressesController < BaseController
     def edit
       @step = 1
-      order.billing_address  ||= current_user.try(:billing_address)  || Address.new(current_user.data)
-      order.shipping_address ||= current_user.try(:shipping_address) || Address.new(current_user.data)
+      order.billing_address  ||= current_user.try(:billing_address)  || Address.new(current_user.try(:data))
+      order.shipping_address ||= current_user.try(:shipping_address) || Address.new(current_user.try(:data))
     end
 
     def update

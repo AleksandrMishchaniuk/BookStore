@@ -10,7 +10,7 @@ RSpec.describe User::OmniauthCallbacksController, type: :controller do
             provider: auth.provider,
             uid: auth.uid,
             info: {
-              email: user.email
+              email: user.email,
               first_name: auth.data[:first_name],
               last_name:  auth.data[:last_name]
             }
