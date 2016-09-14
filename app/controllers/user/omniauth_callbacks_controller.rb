@@ -1,7 +1,6 @@
 class User::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def facebook
-    logger.info { "Facebook hash: " + data.inspect }
     @auth = SocAuth.where(uid: data[:uid], provider: data[:provider]).first()
     unless @auth
       @user = User.find_or_create_by!(email: data[:info][:email]) do |user|
@@ -12,14 +11,14 @@ class User::OmniauthCallbacksController < Devise::OmniauthCallbacksController
                 provider: data[:provider],
                 user_id: @user.id,
                 data: {
-                  first_name: extra_data(data, :first_name),
-                  last_name: extra_data(data, :last_name)
+                  first_name: data[:info][:first_name],
+                  last_name: data[:info][:last_name]
                 }
       )
     end
     sign_in_and_redirect @auth.user
   rescue Exception => e
-    # byebug
+    logger.error 'Facebook auth error: ' + e.message
     redirect_to new_user_session_path(locale: session[:locale]), alert: t('oauth.msg.error')
   end
 
@@ -27,11 +26,6 @@ class User::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def data
     request.env['omniauth.auth']
-  end
-
-  def extra_data(data, key)
-    raise 'argument \'data\' should be kind of HashClass' unless data.kind_of? Hash
-    data[:extra].try(:[], :raw_info).try(:[], key)
   end
 
 end

@@ -23,3 +23,7 @@ en:
           old_lable: current password
           new_lable: new password
           confirm_lable: confirm your new password
+  user:
+    settings:
+      edit:
+        error: Sorry. Something wrong. Please, try again later.

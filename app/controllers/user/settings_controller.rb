@@ -51,12 +51,17 @@ class User::SettingsController < ApplicationController
   end
 
   def remove_user
-    if params[:confirm] && current_user.destroy
+    if params[:confirm]
+      current_user.soc_auths.each{ |item| item.destroy! }
+      current_user.destroy!
       redirect_to new_user_session_path, notice: t('views.user.settings.remove_account.success_msg')
     else
-      label_conf = t('views.user.settings.remove_account.confirm').mb_chars.capitalize
-      redirect_to edit_user_settings_path, alert: t('views.user.settings.remove_account.error_msg', label: label_conf)
+      label_confirm = t('views.user.settings.remove_account.confirm').mb_chars.capitalize
+      redirect_to edit_user_settings_path, alert: t('views.user.settings.remove_account.error_msg', label: label_confirm)
     end
+  rescue Exception => e
+    logger.error 'Remove user error: ' + e.message
+    redirect_to edit_user_settings_path, alert: t('.error')
   end
 
   protected

@@ -11,12 +11,8 @@ RSpec.describe User::OmniauthCallbacksController, type: :controller do
             uid: auth.uid,
             info: {
               email: user.email
-            },
-            extra: {
-              raw_info: {
-                first_name: auth.data[:first_name],
-                last_name:  auth.data[:last_name]
-              }
+              first_name: auth.data[:first_name],
+              last_name:  auth.data[:last_name]
             }
     }}
     let(:auth) { build :soc_auth }

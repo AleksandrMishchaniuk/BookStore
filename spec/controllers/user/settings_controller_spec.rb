@@ -167,7 +167,7 @@ RSpec.describe User::SettingsController, type: :controller do
         query
         expect(user).to be_persisted
       end
-    end
+    end # when params do not have :confirm
     context 'when params have :confirm' do
       before(:each) { post :remove_user, confirm: 1 }
       it 'redirect to login page' do
@@ -176,8 +176,18 @@ RSpec.describe User::SettingsController, type: :controller do
       it 'destroys user' do
         expect(user).to_not be_persisted
       end
-    end
-  end
+    end # when params have :confirm
+    context 'when user has social accounts and params have :confirm' do
+      let(:soc_auths){ 3.times.map{ create(:soc_auth, user: user) } }
+      before(:each) do
+        allow(user).to receive(:soc_auths).and_return(soc_auths)
+        post :remove_user, confirm: 1
+      end
+      it "destroys soc_auths" do
+        soc_auths.each{ |item| expect(item).to_not be_persisted }
+      end
+    end # when user has social accounts and params have :confirm
+  end # POST #remove_user
 
   describe '#define_variables' do
     before do
