@@ -53,6 +53,7 @@ gem 'rails_admin', '~> 0.8.1'
 gem 'cancancan', '~> 1.15'
 
 gem 'fog-aws', '~> 0.11.0'
+gem 'asset_sync', '~> 1.2', '>= 1.2.1'
 gem 'carrierwave', '~> 0.11.2'
 gem 'mini_magick', '~> 4.5', '>= 4.5.1'
 
