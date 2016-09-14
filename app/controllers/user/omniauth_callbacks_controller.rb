@@ -1,7 +1,7 @@
 class User::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def facebook
-    logger.info { "Facebook hash: " + data.inspect}
+    logger.info { "Facebook hash: " + data.inspect }
     @auth = SocAuth.where(uid: data[:uid], provider: data[:provider]).first()
     unless @auth
       @user = User.find_or_create_by!(email: data[:info][:email]) do |user|
