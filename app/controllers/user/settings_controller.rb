@@ -72,8 +72,8 @@ class User::SettingsController < ApplicationController
 
   def define_variables
     @user ||= current_user
-    @billing_address ||= current_user.billing_address || Address.new
-    @shipping_address ||= current_user.shipping_address || Address.new
+    @billing_address ||= current_user.billing_address || Address.new(current_user.data)
+    @shipping_address ||= current_user.shipping_address || Address.new(current_user.data)
     @email ||= current_user.email
   end
 

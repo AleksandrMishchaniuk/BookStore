@@ -27,4 +27,14 @@ class User < ActiveRecord::Base
     (order.try(:id))? order : nil
   end
 
+  def data
+    return nil if soc_auths.empty?
+    soc_auths.reverse.inject({}) do |res, auth|
+      if auth.try(:data) && auth.data.kind_of?(Hash)
+        res.merge!(auth.data.delete_if{ |key, val| val.blank? })
+      end
+      res
+    end
+  end
+
 end
