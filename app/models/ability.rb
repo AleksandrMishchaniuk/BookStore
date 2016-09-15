@@ -19,7 +19,7 @@ class Ability
       if user.admin?
         can :access, :rails_admin
         can :dashboard
-        if request.original_fullpath.include? 'admin/'
+        if /\/admin\/?/.match(request.original_fullpath)
           can :manage, store_data
           cannot :manage, order_data
           cannot :manage, Review
