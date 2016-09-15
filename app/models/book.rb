@@ -16,7 +16,7 @@ class Book < ActiveRecord::Base
     configure :image, :carrierwave
     exclude_fields :carts, :orders, :reviews
     list do
-      exclude_fields :image, :short_description, :full_description
+      exclude_fields :image, :short_description, :full_description, :created_at, :updated_at
     end
     show do
       include_fields :reviews, :orders

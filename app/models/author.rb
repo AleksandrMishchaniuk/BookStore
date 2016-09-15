@@ -4,13 +4,13 @@ class Author < ActiveRecord::Base
   validates :first_name,  presence: true, length: {maximum: 64}
   validates :last_name,                   length: {maximum: 64}
 
-  def full_name
+  def name
     first_name.to_s + " " + last_name.to_s
   end
 
   rails_admin do
-    object_label_method do
-      :full_name
+    list do
+      exclude_fields :created_at, :updated_at
     end
   end
 end

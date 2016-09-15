@@ -34,6 +34,9 @@ en:
       review:
         one: review
         other: reviews
+      soc_auth:
+        one: Soc auth
+        other: Soc auths
     attributes:
       address:
         first_name: First name
@@ -146,5 +149,11 @@ en:
         reviews: Reviews
         shipping_address: Shipping address
         billing_address: Billing address
+        created_at: Created at
+        updated_at: Updated at
+      soc_auth:
+        provider: Provider
+        data: Data
+        user: User
         created_at: Created at
         updated_at: Updated at

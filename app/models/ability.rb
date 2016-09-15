@@ -23,7 +23,7 @@ class Ability
           can :manage, store_data
           cannot :manage, order_data
           cannot :manage, Review
-          can :read, order_data
+          can :read, Order
           can :read, Review
           can :update, [Order, Review]
         end

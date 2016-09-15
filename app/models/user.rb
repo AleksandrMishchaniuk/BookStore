@@ -16,6 +16,12 @@ class User < ActiveRecord::Base
     object_label_method do
       :email
     end
+    show do
+      include_all_fields
+      fields :billing_address, :shipping_address do
+        pretty_value { bindings[:view].admin_pretty_address(value) if value }
+      end
+    end
   end
 
   def admin?

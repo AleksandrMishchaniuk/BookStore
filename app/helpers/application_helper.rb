@@ -1,9 +1,13 @@
 module ApplicationHelper
   def authors_list(authors)
-    authors.map { |author| author.full_name }.join(', ')
+    authors.map { |author| author.name }.join(', ')
   end
   def awesome_remove
     haml_tag :i, class: 'fa fa-remove fa-lg'
+  end
+
+  def formated_price(price)
+    "$ %.02f" % price
   end
 
   def error_message(object, field)

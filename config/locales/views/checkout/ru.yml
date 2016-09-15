@@ -28,4 +28,7 @@ ru:
   checkout:
     payment:
       edit:
-        example: прим.        
+        example: прим.
+    order:
+      show:
+        order_number: Номер заказа

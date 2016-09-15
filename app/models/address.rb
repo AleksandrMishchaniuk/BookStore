@@ -11,4 +11,13 @@ class Address < ActiveRecord::Base
   validates :country,         presence: true, length: {maximum: 255}
   validates :zip,             presence: true, length: {maximum: 25}
   validates :phone,           presence: true, phone: { possible: true, types: [:voip, :mobile] }
+
+  rails_admin do
+    include_all_fields
+    field :shipping_for_user
+    field :billing_for_user
+    list do
+      exclude_fields :created_at, :updated_at
+    end
+  end
 end

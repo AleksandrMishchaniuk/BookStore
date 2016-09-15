@@ -29,3 +29,6 @@ en:
     payment:
       edit:
         example: ex.
+    order:
+      show:
+        order_number: Order number

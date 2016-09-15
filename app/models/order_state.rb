@@ -5,6 +5,9 @@ class OrderState < ActiveRecord::Base
   validates :id_of_state,   numericality: {only_integer: true, greater_than: 0}
 
   rails_admin do
+    list do
+      exclude_fields :created_at, :updated_at
+    end
     edit do
       exclude_fields :orders
     end

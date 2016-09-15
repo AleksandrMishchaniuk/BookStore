@@ -11,6 +11,9 @@ class Review < ActiveRecord::Base
   scope :approved, -> { where(approved: true) }
 
   rails_admin do
+    list do
+      exclude_fields :created_at, :updated_at
+    end
     edit do
       field :approved
     end

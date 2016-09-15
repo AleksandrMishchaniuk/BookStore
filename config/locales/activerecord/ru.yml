@@ -34,6 +34,9 @@ ru:
       review:
         one: отзыв
         other: отзывы
+      soc_auth:
+        one: Соц. ак-нт
+        other: Соц. акк-нты
     attributes:
       address:
         first_name: Имя
@@ -146,5 +149,11 @@ ru:
         reviews: Отзывы
         shipping_address: Адрес доставки
         billing_address: Платежный адрес
+        created_at: Время создания
+        updated_at: Время обновления
+      soc_auth:
+        provider: Провайдер
+        data: Данные
+        user: Пользователь
         created_at: Время создания
         updated_at: Время обновления
