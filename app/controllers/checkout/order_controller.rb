@@ -4,7 +4,7 @@ module Checkout
     def start
       unless @order.persisted?
         @order.order_state = OrderState.in_progress
-        return redirect_to :back unless @order.save_to_progress
+        return redirect_to :back unless @order.save_with_cart_items
       end
       redirect_to edit_checkout_addresses_path
     end

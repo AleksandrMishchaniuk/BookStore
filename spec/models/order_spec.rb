@@ -49,19 +49,19 @@ RSpec.describe Order, type: :model do
   context 'order persist methods' do
     let(:order) { create :order }
 
-    describe '#save_to_progress' do
+    describe '#save_with_cart_items' do
       context 'when user try to change book count in cart item' do
 
         it 'changes cart item' do
           old_count = order.carts[0].book_count
           new_count = old_count + 2
           order.carts[0].book_count = new_count
-          order.save_to_progress
+          order.save_with_cart_items
           order.reload
           expect(order.carts[0].book_count).to eq(new_count)
         end
 
-        context 'when use #save instead #save_to_progress' do
+        context 'when use #save instead #save_with_cart_items' do
           it 'does not change cart item' do
             old_count = order.carts[0].book_count
             new_count = old_count + 2
@@ -73,24 +73,7 @@ RSpec.describe Order, type: :model do
         end # when use #save method
 
       end # when user rty to change book count in cart item
-    end # #save_to_progress
-
-    describe '#delete_from_progress' do
-      it 'destroys order and its cart items' do
-        order.delete_from_progress
-        expect(order).to_not be_persisted
-        expect(order.carts[0]).to_not be_persisted
-      end
-
-      context 'when use #destroy instead #delete_from_progress' do
-        it 'destroys order, but does not destroy its cart items' do
-          order.destroy
-          expect(order).to_not be_persisted
-          expect(order.carts[0]).to be_persisted
-        end
-      end
-    end # #delete_from_progress
-
+    end # #save_with_cart_items
   end # order persist methods
 
   describe '#coupon' do

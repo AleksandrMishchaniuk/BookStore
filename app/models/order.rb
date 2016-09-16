@@ -1,7 +1,7 @@
 class Order < ActiveRecord::Base
   include OrderAdmin
 
-  attr_reader :save_strategy, :keep_strategy
+  attr_reader :persist_strategy, :keep_strategy
 
   belongs_to :user
   belongs_to :order_state
@@ -24,11 +24,11 @@ class Order < ActiveRecord::Base
 
   alias :cart_items :carts
 
-  def save_strategy=(val)
-    unless val.kind_of? OrderStrategy::SaveBase
-      raise 'argument sould be instance of OrderStrategy::SaveBase'
+  def persist_strategy=(val)
+    unless val.kind_of? OrderStrategy::PersistBase
+      raise 'argument sould be instance of OrderStrategy::PersistBase'
     end
-    @save_strategy = val
+    @persist_strategy = val
   end
 
   def keep_strategy=(val)
@@ -43,7 +43,11 @@ class Order < ActiveRecord::Base
   end
 
   def save_by_strategy
-    @save_strategy.save(self)
+    @persist_strategy.save(self)
+  end
+
+  def destroy_by_strategy
+    @persist_strategy.destroy(self)
   end
 
   def item_total
@@ -71,7 +75,16 @@ class Order < ActiveRecord::Base
     cart_items.map { |item| item.attributes }
   end
 
-  def save_to_progress
+  def find_or_build_cart_item(book_id)
+    cart_items.find { |item| item.book_id == book_id.to_i } ||
+    cart_items.new(book_id: book_id, book_count: 0)
+  end
+
+  def cart_item(book_id)
+    cart_items.find { |item| item.book_id == book_id.to_i }
+  end
+
+  def save_with_cart_items
     return false unless save
     unless cart_items.empty?
       cart_items.each { |item| item.save! }
@@ -79,15 +92,18 @@ class Order < ActiveRecord::Base
     true
   end
 
-  def delete_from_progress
-    unless cart_items.empty?
-      cart_items.each { |item| item.destroy! }
-    end
-    destroy!
-  end
-
   def ==(another)
     attributes == another.attributes && cart_items == another.cart_items
+  end
+
+  def set_coupon(object)
+    if object && !object.used
+      self.coupon = object
+      self
+    elsif object.nil? || object != coupon
+      self.coupon = nil
+      false
+    end
   end
 
   def coupon

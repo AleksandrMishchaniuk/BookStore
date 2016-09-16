@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
 
   def define_order_in_progress
     @order ||= order_factory.order
-    @order.save_strategy = order_factory.save_strategy(@order)
+    @order.persist_strategy = order_factory.persist_strategy(@order)
   end
 
   def save_order_in_progress

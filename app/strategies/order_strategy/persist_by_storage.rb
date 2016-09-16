@@ -1,4 +1,4 @@
-class OrderStrategy::SaveByStorage < OrderStrategy::SaveBase
+class OrderStrategy::PersistByStorage < OrderStrategy::PersistBase
 
   def initialize(storage, key)
     if storage.kind_of? Storage
@@ -14,7 +14,13 @@ class OrderStrategy::SaveByStorage < OrderStrategy::SaveBase
   end
 
   def save(order)
-    raise 'You should inplement method #save'
+    prepare(order)
+    @storage[@key] = order.cart_items_to_array
+  end
+
+  def destroy(order)
+    prepare_destroy(order)
+    order.cart_items.delete_all
   end
 
 end

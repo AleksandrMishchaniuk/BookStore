@@ -23,14 +23,14 @@ class OrderFactory
     end
   end
 
-  def save_strategy(order)
+  def persist_strategy(order)
     unless order.kind_of? Order
       raise 'argument sould be instance of Order'
     end
     if order.persisted?
-      OrderStrategy::SaveByDb.new
+      OrderStrategy::PersistByDb.new
     else
-      OrderStrategy::SaveByStorage.new(storage, NOT_PERSISTED_KEY)
+      OrderStrategy::PersistByStorage.new(storage, NOT_PERSISTED_KEY)
     end
   end
 

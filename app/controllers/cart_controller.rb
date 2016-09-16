@@ -6,14 +6,13 @@ class CartController < ApplicationController
   end
 
   def add_item
-    @cart_item =  @order.cart_items.find { |item| item.book_id == cart_params[:book_id].to_i} ||
-                 @order.cart_items.new(book_id: cart_params[:book_id], book_count: 0)
+    @cart_item = @order.find_or_build_cart_item(cart_params[:book_id])
     @cart_item.book_count += cart_params[:book_count].to_i
     redirect_to :back
   end
 
   def update_item
-    @cart_item =  @order.cart_items.find { |item| item.book_id == cart_params[:book_id].to_i}
+    @cart_item = @order.cart_item(cart_params[:book_id])
     @cart_item.book_count = cart_params[:book_count]
     respond_to do |format|
       format.json
@@ -21,7 +20,7 @@ class CartController < ApplicationController
   end
 
   def remove_item
-    @cart_item =  @order.cart_items.find { |item| item.book_id == params[:id].to_i}
+    @cart_item = @order.cart_item(params[:id])
     @cart_item.destroy if @cart_item.persisted?
     @order.cart_items.delete(@cart_item)
     order_destroy if @order.cart_items.empty?
@@ -36,11 +35,8 @@ class CartController < ApplicationController
   def update_coupon
     error = nil
     coupon = Coupon.find_by(code: params[:coupon])
-    if coupon && !coupon.used
-      order.coupon = coupon
-    elsif coupon.nil? || coupon != order.coupon
+    unless @order.set_coupon(coupon)
       error = t('views.cart.msg.coupon_error')
-      order.coupon = nil
     end
     redirect_to cart_path, alert: error
   end
@@ -48,13 +44,11 @@ class CartController < ApplicationController
   protected
 
   def save_order_for_progress
-    @order.save_to_progress if @order.persisted?
+    @order.save_by_strategy
   end
 
   def order_destroy
-    @order.detach_coupon
-    @order.delete_from_progress if @order.persisted?
-    @order.cart_items.delete_all
+    @order.destroy_by_strategy
   end
 
   def cart_params
