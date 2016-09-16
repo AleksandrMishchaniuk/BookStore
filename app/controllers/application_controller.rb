@@ -12,6 +12,8 @@ class ApplicationController < ActionController::Base
       redirect_to main_app.forbidden_path
   end
 
+  attr_accessor :order
+
   def change_locale
     route = Rails.application.routes.recognize_path(request.referer)
     route[:locale] = params[:locale]
@@ -22,42 +24,17 @@ class ApplicationController < ActionController::Base
   protected
 
   def define_order_in_progress
-    @order = Order.find(session[:order_in_progress_id]) if session[:order_in_progress_id]
-    @order ||=  current_user.try(:order_in_progress) || order_from_session || Order.new
-  end
-
-  def order_from_session
-    return false unless session[:cart_items]
-    order = Order.new
-    order.carts = session[:cart_items].map { |item| Cart.new(item) }
-    order
+    @order ||= order_factory.order
+    @order.save_strategy = order_factory.save_strategy(@order)
   end
 
   def save_order_in_progress
-    if !order.persisted?
-      session_to_nil(:order_in_progress_id)
-      session[:cart_items] = order.cart_items.map { |item| item.attributes }
-    elsif user_signed_in?
-      session_to_nil(:cart_items)
-      session_to_nil(:order_in_progress_id)
-      order.order_state ||= OrderState.in_progress
-      current_user.orders << order unless current_user.orders.include? order
-    else
-      session_to_nil(:cart_items)
-      session[:order_in_progress_id] = order.id
-    end
+    @order.keep_strategy = order_factory.keep_strategy(@order)
+    @order.keep_by_strategy
   end
 
-  def session_to_nil(key)
-    session[key] = nil unless session[key].nil?
-  end
-
-  def order
-    @order
-  end
-
-  def order=(var)
-    @order = var
+  def order_factory
+    @order_factory ||= OrderFactory.new(self)
   end
 
   def set_request_environment

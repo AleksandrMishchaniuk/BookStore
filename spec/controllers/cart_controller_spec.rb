@@ -3,7 +3,10 @@ require 'rails_helper'
 RSpec.describe CartController, type: :controller do
   include OdrderInProgressHelpers
   include CartControllerSharedExamples
-  before(:each) { request.env["HTTP_REFERER"] = cart_path }
+  before(:each) do
+    request.env["HTTP_REFERER"] = cart_path
+    allow_any_instance_of(Order).to receive(:session).and_return(controller.session)
+  end
   let(:resource_params){{ book_id: nil, book_count: nil }}
 
   shared_context 'when order is not persisted and cart items exist' do
@@ -107,6 +110,7 @@ RSpec.describe CartController, type: :controller do
       context 'when cart is empty after removing item' do
         it 'destroies order' do
           assigns(:order).cart_items.each { |i| i.delete unless i.id == item.id }
+          assigns(:order).reload
           query
           expect(assigns(:order)).to_not be_persisted
         end

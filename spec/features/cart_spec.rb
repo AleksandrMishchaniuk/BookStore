@@ -2,7 +2,14 @@ require 'rails_helper'
 
 feature 'Cart' do
   given(:order) { create :order }
-  background(:each) { page.set_rack_session(order_in_progress_id: order.id) }
+  background(:each) do
+    allow_any_instance_of(Order).to receive(:session).and_return(page.get_rack_session)
+    storage = {}
+    storage[OrderFactory::PERSISTED_KEY] = order.id
+    session = {}
+    session[OrderFactory::STORAGE_KEY] = storage
+    page.set_rack_session(session)
+  end
   scenario 'present count of items in the cart' do
     visit root_path
     expect(find('.li_cart .badge')).to have_content(order.cart_items.count)
@@ -66,7 +73,9 @@ feature 'Cart' do
   end
 
   scenario 'visit to cart page when cart is empty' do
-    page.set_rack_session(order_in_progress_id: nil)
+    session = {}
+    session[OrderFactory::STORAGE_KEY] = nil
+    page.set_rack_session(session)
     order.destroy
     visit cart_path
     expect(page).to have_content('Cart is empty')

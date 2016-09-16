@@ -3,6 +3,8 @@ require 'rails_helper'
 RSpec.describe ApplicationController, type: :controller do
   include OdrderInProgressHelpers
 
+  before { allow_any_instance_of(Order).to receive(:session).and_return(controller.session) }
+
   describe "#define_order_in_progress" do
     it "should set object of Order to @order" do
       controller.send(:define_order_in_progress)
@@ -12,7 +14,6 @@ RSpec.describe ApplicationController, type: :controller do
     context "when session has saved :cart_items hash" do
       it do
         order = order_from_session_by_cart_items
-        controller.send(:set_session_environment)
         controller.send(:define_order_in_progress)
         expect(assigns(:order)).to eq(order)
       end
@@ -22,7 +23,6 @@ RSpec.describe ApplicationController, type: :controller do
       it do
         order_not_persisted = order_from_session_by_cart_items
         order_persisted_with_session = order_by_id_from_session
-        controller.send(:set_session_environment)
         controller.send(:define_order_in_progress)
         expect(assigns(:order)).to eq(order_persisted_with_session)
         expect(assigns(:order)).to_not eq(order_not_persisted)
@@ -33,7 +33,6 @@ RSpec.describe ApplicationController, type: :controller do
       it do
         order_persisted_with_user = order_by_current_user
         order_not_persisted = order_from_session_by_cart_items
-        controller.send(:set_session_environment)
         controller.send(:define_order_in_progress)
         expect(assigns(:order)).to eq(order_persisted_with_user)
         expect(assigns(:order)).to_not eq(order_not_persisted)
@@ -45,7 +44,6 @@ RSpec.describe ApplicationController, type: :controller do
         order_not_persisted = order_from_session_by_cart_items
         order_persisted_with_session = order_by_id_from_session
         order_persisted_with_user = order_by_current_user
-        controller.send(:set_session_environment)
         controller.send(:define_order_in_progress)
         expect(assigns(:order)).to eq(order_persisted_with_session)
         expect(assigns(:order)).to_not eq(order_not_persisted)
@@ -55,22 +53,22 @@ RSpec.describe ApplicationController, type: :controller do
   end
 
   shared_examples 'when order is not persisted' do
-    it 'changes session[:cart_items]' do
-      expect{ controller.send(:save_order_in_progress) }.to change{ session[:cart_items] }
+    it 'changes storage[:cart_items]' do
+      expect{ controller.send(:save_order_in_progress) }.to change{ storage[:cart_items] }
     end
-    it 'sets session[:order_in_progress_id] to nil' do
+    it 'sets storage[:order_in_progress_id] to nil' do
       controller.send(:save_order_in_progress)
-      expect(session[:order_in_progress_id]).to be_nil
+      expect(storage[:order_in_progress_id]).to be_nil
     end
   end
 
   describe '#save_order_in_progress' do
-    let(:session) { controller.session }
+    let(:storage) { Storage.new(controller, OrderFactory::STORAGE_KEY) }
     let(:user) { create(:user) }
     before(:each) do
       create(:state_in_progress)
-      session[:cart_items] = {}
-      session[:order_in_progress_id] = rand(1..10)
+      storage[:cart_items] = {}
+      storage[:order_in_progress_id] = rand(1..10)
     end
     context 'when order is not persisted' do
       before { controller.instance_variable_set(:@order, build(:order)) }
@@ -93,13 +91,13 @@ RSpec.describe ApplicationController, type: :controller do
       let(:order) { create(:order) }
       before { controller.instance_variable_set(:@order, order) }
       context 'when user is not loged in' do
-        it 'sets session[:cart_items] to nil' do
+        it 'sets storage[:cart_items] to nil' do
           controller.send(:save_order_in_progress)
-          expect(session[:cart_items]).to be_nil
+          expect(storage[:cart_items]).to be_nil
         end
-        it 'sets session[:order_in_progress_id] to order.id' do
+        it 'sets storage[:order_in_progress_id] to order.id' do
           controller.send(:save_order_in_progress)
-          expect(session[:order_in_progress_id]).to eq(order.id)
+          expect(storage[:order_in_progress_id]).to eq(order.id)
         end
       end
       context 'when user is loged in' do
@@ -111,13 +109,13 @@ RSpec.describe ApplicationController, type: :controller do
           controller.send(:save_order_in_progress)
           expect(user.order_in_progress).to eq(order.reload)
         end
-        it 'sets session[:order_in_progress_id] to nil' do
+        it 'sets storage[:order_in_progress_id] to nil' do
           controller.send(:save_order_in_progress)
-          expect(session[:order_in_progress_id]).to be_nil
+          expect(storage[:order_in_progress_id]).to be_nil
         end
-        it 'sets session[:cart_items] to nil' do
+        it 'sets storage[:cart_items] to nil' do
           controller.send(:save_order_in_progress)
-          expect(session[:cart_items]).to be_nil
+          expect(storage[:cart_items]).to be_nil
         end
       end
     end # 'when order is persisted'

@@ -3,9 +3,11 @@ require 'rails_helper'
 RSpec.describe Checkout::PaymentController, type: :controller do
   include BeforeAfterActionsSharedExamples
 
+  before { allow_any_instance_of(Order).to receive(:session).and_return(controller.session) }
+
   shared_context 'order on checkout payment step' do
     let(:order){ create(:order) }
-    before do
+    before (:each) do
       controller.instance_variable_set(:@order, order)
       order.billing_address = create(:address)
       order.shipping_address = create(:address)

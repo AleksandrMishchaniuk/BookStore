@@ -1,13 +1,15 @@
 module OdrderInProgressHelpers
   def order_from_session_by_cart_items
     order = build(:order)
-    subject.session[:cart_items] = order.cart_items.map { |item| item.attributes }
+    storage = Storage.new(controller, OrderFactory::STORAGE_KEY)
+    storage[OrderFactory::NOT_PERSISTED_KEY] = order.cart_items.map { |item| item.attributes }
     order
   end
 
   def order_by_id_from_session
     order = create(:order)
-    subject.session[:order_in_progress_id] = order.id
+    storage = Storage.new(controller, OrderFactory::STORAGE_KEY)
+    storage[OrderFactory::PERSISTED_KEY] = order.id
     order.reload
   end
 

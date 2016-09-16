@@ -1,6 +1,8 @@
 class Order < ActiveRecord::Base
   include OrderAdmin
 
+  attr_reader :save_strategy, :keep_strategy
+
   belongs_to :user
   belongs_to :order_state
   belongs_to :shipping_address, class_name: 'Address', foreign_key: :shipping_address
@@ -22,6 +24,28 @@ class Order < ActiveRecord::Base
 
   alias :cart_items :carts
 
+  def save_strategy=(val)
+    unless val.kind_of? OrderStrategy::SaveBase
+      raise 'argument sould be instance of OrderStrategy::SaveBase'
+    end
+    @save_strategy = val
+  end
+
+  def keep_strategy=(val)
+    unless val.kind_of? OrderStrategy::KeepBase
+      raise 'argument sould be instance of OrderStrategy::KeepBase'
+    end
+    @keep_strategy = val
+  end
+
+  def keep_by_strategy
+    @keep_strategy.keep(self)
+  end
+
+  def save_by_strategy
+    @save_strategy.save(self)
+  end
+
   def item_total
     cart_items.inject(0) { |sum, item| sum + item.total_price }.to_f
   end
@@ -41,6 +65,10 @@ class Order < ActiveRecord::Base
 
   def number
     "R#{created_at.strftime("%Y%m%d")}#{id}"
+  end
+
+  def cart_items_to_array
+    cart_items.map { |item| item.attributes }
   end
 
   def save_to_progress
