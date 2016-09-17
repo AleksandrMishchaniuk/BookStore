@@ -25,12 +25,14 @@
       = @book.full_description
 .reviews
   %h3= "#{t('activerecord.models.review.other').mb_chars.capitalize}"
-  - if user_signed_in?
+  - if !user_signed_in?
+    %i
+    = t('views.shop.review_msg_without_user')
+    %strong= link_to t('navbar.link.sign_in'), new_user_session_path
+  - elsif can? :create, Review
     = link_to t('views.shop.add_review_link'), new_shop_book_review_path(@book)
   - else
-    %i
-      = t('views.shop.review_msg_without_user')
-      %strong= link_to t('navbar.link.sign_in'), new_user_session_path
+    %i= t('views.shop.you_cannot_create_review')
   - if @reviews.empty?
     %p.text-center.lead= t('views.shop.no_reviews_text')
   - else
