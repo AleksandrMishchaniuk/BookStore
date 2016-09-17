@@ -20,9 +20,9 @@ RSpec.describe User::OrdersController, type: :controller do
       end
       it 'finds orders in queue, in delivery and delivered from current user' do
         allow(controller).to receive(:current_user).and_return(user)
-        expect(user.orders).to receive(:in_queue)
-        expect(user.orders).to receive(:in_delivery)
-        expect(user.orders).to receive(:delivered)
+        expect(Order).to receive(:in_queue)
+        expect(Order).to receive(:in_delivery)
+        expect(Order).to receive(:delivered)
         get :index
       end
     end
@@ -44,7 +44,7 @@ RSpec.describe User::OrdersController, type: :controller do
     context 'when user loged in' do
       it 'finds order by id' do
         allow(controller).to receive(:current_user).and_return(user)
-        expect(user.orders).to receive(:find).with(order.id)
+        expect(Order).to receive(:find).with(order.id)
         query_correct
       end
       context 'when order id is correct' do

@@ -4,25 +4,17 @@ class Ability
   def store_data
     [Author, Book, Category, Delivery, OrderState]
   end
-  def order_data
-    [Order, Address, Cart, CreditCard]
-  end
 
   def initialize(user)
-    can :read, :all
-    can :create, User
-    can :manage, order_data
-    can :read, Review
     if user
       can :create, Review
-      cannot :create, User
+      can :read, Order, user_id: user.id
       if user.admin?
         can :access, :rails_admin
         can :dashboard
         if /\/admin\/?/.match(request.original_fullpath)
           can :manage, store_data
-          cannot :manage, order_data
-          cannot :manage, Review
+          cannot :create, Review
           can :read, Coupon
           can [:update, :destroy], Coupon, order: nil
           can [:read, :update], [Order, Review]

@@ -7,5 +7,6 @@ en:
       add_review_link: Add review for this book
       review_msg_without_user: for adding review, you should
       no_reviews_text: No Reviews yet
+      you_cannot_create_review: You can not leave reviews
     review:
       new_review_title: new review for

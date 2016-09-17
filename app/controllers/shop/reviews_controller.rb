@@ -1,5 +1,6 @@
 class Shop::ReviewsController < ::ApplicationController
   before_action :authenticate_user!
+  authorize_resource
 
   def new
     @review = Review.new(book: Book.find(params[:book_id]))
