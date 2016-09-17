@@ -2,8 +2,7 @@ class CartController < ApplicationController
 
   after_action :save_order_for_progress, except: [:show]
 
-  def show
-  end
+  def show; end
 
   def add_item
     @cart_item = @order.find_or_build_cart_item(cart_params[:book_id])

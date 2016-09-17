@@ -2,7 +2,7 @@ class Ability
   include CanCan::Ability
 
   def store_data
-    [Author, Book, Category, Delivery, OrderState, Coupon]
+    [Author, Book, Category, Delivery, OrderState]
   end
   def order_data
     [Order, Address, Cart, CreditCard]
@@ -23,9 +23,9 @@ class Ability
           can :manage, store_data
           cannot :manage, order_data
           cannot :manage, Review
-          can :read, Order
-          can :read, Review
-          can :update, [Order, Review]
+          can :read, Coupon
+          can [:update, :destroy], Coupon, order: nil
+          can [:read, :update], [Order, Review]
         end
       end
     end

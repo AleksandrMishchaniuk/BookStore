@@ -13,11 +13,11 @@ class User::SessionsController < Devise::SessionsController
 
   # DELETE /resource/sign_out
   def destroy
-    cart_items = session[:cart_items]
-    coupon_id = session[:coupon_id]
+    cart_items = session[OrderFactory::STORAGE_KEY]
+    coupon_id = session[OrderFactory::COUPON_STORAGE_KEY]
     super
-    session[:cart_items] = cart_items
-    session[:coupon_id] = coupon_id
+    session[OrderFactory::STORAGE_KEY] = cart_items
+    session[OrderFactory::COUPON_STORAGE_KEY] = coupon_id
   end
 
   # protected

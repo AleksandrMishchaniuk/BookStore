@@ -1,7 +1,9 @@
 class OrderFactory
   STORAGE_KEY = :current_order
+  COUPON_STORAGE_KEY = :current_coupon
   PERSISTED_KEY = :order_in_progress_id
   NOT_PERSISTED_KEY = :cart_items
+  COUPON_KEY = :coupon_id
 
   def initialize(context)
     unless context.kind_of? ApplicationController
@@ -12,12 +14,12 @@ class OrderFactory
 
   def order
     order_of_user = current_user.order_in_progress if user_signed_in?
-    if storage[PERSISTED_KEY]
-      Order.find(storage[PERSISTED_KEY])
+    if order_storage[PERSISTED_KEY]
+      Order.find(order_storage[PERSISTED_KEY])
     elsif order_of_user
       order_of_user
-    elsif storage[NOT_PERSISTED_KEY]
-      order_from_storage(NOT_PERSISTED_KEY)
+    elsif order_storage[NOT_PERSISTED_KEY]
+      order_from_order_storage(NOT_PERSISTED_KEY)
     else
       Order.new
     end
@@ -28,9 +30,9 @@ class OrderFactory
       raise 'argument sould be instance of Order'
     end
     if order.persisted?
-      OrderStrategy::PersistByDb.new
+      OrderStrategy::PersistByDb.new(coupon_storage, COUPON_KEY)
     else
-      OrderStrategy::PersistByStorage.new(storage, NOT_PERSISTED_KEY)
+      OrderStrategy::PersistByStorage.new(coupon_storage, COUPON_KEY, order_storage, NOT_PERSISTED_KEY)
     end
   end
 
@@ -40,19 +42,23 @@ class OrderFactory
     end
     if order.persisted?
       if user_signed_in?
-        OrderStrategy::KeepByUser.new(storage, current_user)
+        OrderStrategy::KeepByUser.new(order_storage, current_user)
       else
-        OrderStrategy::KeepByStoragePersist.new(storage, PERSISTED_KEY)
+        OrderStrategy::KeepByStoragePersist.new(order_storage, PERSISTED_KEY)
       end
     else
-      OrderStrategy::KeepByStorageNotPersist.new(storage, NOT_PERSISTED_KEY)
+      OrderStrategy::KeepByStorageNotPersist.new(order_storage, NOT_PERSISTED_KEY)
     end
   end
 
   protected
 
-  def storage
-    @storage ||= Storage.new(@context, STORAGE_KEY)
+  def order_storage
+    @order_storage ||= Storage.new(@context, STORAGE_KEY)
+  end
+
+  def coupon_storage
+    @coupon_storage ||= Storage.new(@context, COUPON_STORAGE_KEY)
   end
 
   def current_user
@@ -63,10 +69,10 @@ class OrderFactory
     @context.user_signed_in?
   end
 
-  def order_from_storage(key)
-    return false unless storage[key]
+  def order_from_order_storage(key)
+    return false unless order_storage[key]
     order = Order.new
-    order.carts = storage[key].map { |item| Cart.new(item) }
+    order.carts = order_storage[key].map { |item| Cart.new(item) }
     order
   end
 

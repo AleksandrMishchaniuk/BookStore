@@ -14,4 +14,27 @@ class OrderStrategy::PersistByDb < OrderStrategy::PersistBase
     order.cart_items.delete_all
   end
 
+  def get_coupon(order)
+    prepare(order)
+    check_coupon_storage(order)
+    order.coupon
+  end
+
+  def set_coupon(order, coupon)
+    prepare(order)
+    check_coupon_storage(order)
+    return coupon if coupon == order.coupon
+    prepare_set_coupon(order, coupon)
+    order.coupon = coupon
+  end
+
+  protected
+
+  def check_coupon_storage(order)
+    if @coupon_storage[@coupon_key]
+      order.coupon = Coupon.find(@coupon_storage[@coupon_key])
+      @coupon_storage[@coupon_key] = nil
+    end
+  end
+
 end

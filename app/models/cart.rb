@@ -11,7 +11,7 @@ class Cart < ActiveRecord::Base
   end
 
   def ==(another)
-    attributes == another.attributes
+    attributes == another.try(:attributes)
   end
 
 end

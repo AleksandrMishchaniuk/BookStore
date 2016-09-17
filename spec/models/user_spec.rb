@@ -1,8 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  let(:session) { {} }
-  before { allow_any_instance_of(Order).to receive(:session).and_return(session) }
 
   describe '#admin?' do
     context 'when user is admin' do

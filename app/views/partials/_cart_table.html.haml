@@ -41,7 +41,7 @@
           %td.text-right{colspan: 4}
             = t('activerecord.attributes.coupon.discount').mb_chars.upcase
             = "(#{t('activerecord.models.coupon.one')}"
-            == ##{order.coupon.code} : #{order.coupon.discount * 100}%):
+            == ##{order.coupon_by_strategy.code} : #{order.coupon_by_strategy.discount * 100}%):
           %td.items_discount.price
             == -$
             %span= "%.02f" % order.item_discount

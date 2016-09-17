@@ -3,7 +3,6 @@ require 'rails_helper'
 feature 'Checkout' do
   given(:order) { create :order }
   background(:each) do
-    allow_any_instance_of(Order).to receive(:session).and_return(page.get_rack_session)
     storage = {}
     storage[OrderFactory::PERSISTED_KEY] = order.id
     session = {}

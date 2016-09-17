@@ -5,7 +5,6 @@ RSpec.describe CartController, type: :controller do
   include CartControllerSharedExamples
   before(:each) do
     request.env["HTTP_REFERER"] = cart_path
-    allow_any_instance_of(Order).to receive(:session).and_return(controller.session)
   end
   let(:resource_params){{ book_id: nil, book_count: nil }}
 
@@ -146,10 +145,7 @@ RSpec.describe CartController, type: :controller do
     let(:coupon) { create(:coupon).reload }
 
     shared_examples 'base coupon expectations' do
-      before do
-        allow_any_instance_of(Order).to receive(:session).and_return(controller.session)
-        controller.instance_variable_set(:@order, order)
-      end
+      before { controller.instance_variable_set(:@order, order) }
       let(:code) { coupon.code }
       it 'redirects to :show page' do
         query
@@ -158,16 +154,15 @@ RSpec.describe CartController, type: :controller do
       context 'when coupon code exists' do
         it 'sets value for @order.coupon' do
           query
-          expect(order.coupon).to eq(coupon)
+          expect(order.coupon_by_strategy).to eq(coupon)
         end
         context 'when coupon already used' do
           before(:each) do
-            order.coupon = nil
             coupon.update_attributes(used: true)
           end
           it 'sets @order.coupon to nil' do
             query
-            expect(order.coupon).to be_nil
+            expect(order.coupon_by_strategy).to be_nil
           end
           it 'sends alert flash' do
             query

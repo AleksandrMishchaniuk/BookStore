@@ -3,8 +3,6 @@ require 'rails_helper'
 RSpec.describe Checkout::PaymentController, type: :controller do
   include BeforeAfterActionsSharedExamples
 
-  before { allow_any_instance_of(Order).to receive(:session).and_return(controller.session) }
-
   shared_context 'order on checkout payment step' do
     let(:order){ create(:order) }
     before (:each) do

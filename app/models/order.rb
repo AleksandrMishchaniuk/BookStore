@@ -20,8 +20,6 @@ class Order < ActiveRecord::Base
   scope :in_delivery, -> { where(order_state: OrderState.in_delivery) }
   scope :delivered, -> { where(order_state: OrderState.delivered) }
 
-  after_create :set_coupon_after_save
-
   alias :cart_items :carts
 
   def persist_strategy=(val)
@@ -55,8 +53,8 @@ class Order < ActiveRecord::Base
   end
 
   def item_discount
-    return 0 unless coupon
-    item_total * coupon.discount
+    return 0 unless coupon_by_strategy
+    item_total * coupon_by_strategy.discount
   end
 
   def item_total_with_discount
@@ -93,66 +91,30 @@ class Order < ActiveRecord::Base
   end
 
   def ==(another)
-    attributes == another.attributes && cart_items == another.cart_items
+    attributes == another.try(:attributes) && cart_items == another.try(:cart_items)
   end
 
   def set_coupon(object)
     if object && !object.used
-      self.coupon = object
+      self.coupon_by_strategy=(object)
       self
-    elsif object.nil? || object != coupon
-      self.coupon = nil
+    elsif object.nil? || object != coupon_by_strategy
+      self.coupon_by_strategy=(nil)
       false
     end
   end
 
-  def coupon
-    (persisted?)? super : get_coupon_from_session
+  def coupon_by_strategy
+    @persist_strategy.try(:get_coupon, self) || coupon
   end
 
-  def coupon_id
+  def coupon_id_by_strategy
     coupon.try(:id)
   end
 
-  def coupon=(object)
-    return if object == coupon
-    raise 'Object shoult be Coupon or NilClass' unless object.kind_of?(Coupon) || object.nil?
-    detach_coupon
-    object.attach if object
-    if persisted?
-      super(object)
-    else
-      save_coupon_to_session(object)
-    end
+  def coupon_by_strategy=(object)
+    @persist_strategy.set_coupon(self, object)
   end
 
-  def detach_coupon
-    coupon.detach if coupon
-    clear_coupon_in_session
-  end
-
-  protected
-
-  def session
-    Thread.current[:session]
-  end
-
-  def save_coupon_to_session(object)
-    session[:coupon_id] = (object)? object.id : nil
-  end
-
-  def get_coupon_from_session
-    (session[:coupon_id])? Coupon.find(session[:coupon_id]) : nil
-  end
-
-  def clear_coupon_in_session
-    session[:coupon_id] = nil
-  end
-
-  def set_coupon_after_save
-    if get_coupon_from_session
-      update_attributes(coupon: get_coupon_from_session)
-    end
-  end
 
 end

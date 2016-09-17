@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe ApplicationController, type: :controller do
   include OdrderInProgressHelpers
 
-  before { allow_any_instance_of(Order).to receive(:session).and_return(controller.session) }
+  # before { allow_any_instance_of(Order).to receive(:session).and_return(controller.session) }
 
   describe "#define_order_in_progress" do
     it "should set object of Order to @order" do
