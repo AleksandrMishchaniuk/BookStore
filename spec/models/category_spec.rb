@@ -8,8 +8,8 @@ RSpec.describe Category, type: :model do
     let(:expectation) do
       <<-RES
 category.item "category 1", "category 1", '/'+I18n.locale.to_s+'/shop/categories/#{categories[0].id}', html: {class: 'some_class'}
- category.item "category 2", "category 2", '/'+I18n.locale.to_s+'/shop/categories/#{categories[1].id}', html: {class: 'some_class'}
- category.item "category 3", "category 3", '/'+I18n.locale.to_s+'/shop/categories/#{categories[2].id}', html: {class: 'some_class'}
+category.item "category 2", "category 2", '/'+I18n.locale.to_s+'/shop/categories/#{categories[1].id}', html: {class: 'some_class'}
+category.item "category 3", "category 3", '/'+I18n.locale.to_s+'/shop/categories/#{categories[2].id}', html: {class: 'some_class'}
       RES
     end
     before { expectation }

@@ -9,6 +9,11 @@ RSpec.describe PagesController, type: :controller do
       expect(response).to have_http_status(:success)
     end
 
+    it 'calls .bestsellers for Book model' do
+      expect(Book).to receive(:bestsellers)
+      get :home
+    end
+
     it "pass to view array of books" do
       books = (1..5).map { create(:book) }
       get :home

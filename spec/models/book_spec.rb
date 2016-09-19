@@ -66,4 +66,12 @@ RSpec.describe Book, type: :model do
     end # when several target books in order
   end # .bestsellers
 
+  describe '#approved_reviews' do
+    it "calls method .approved on reviews collection" do
+      book = create :book
+      expect(book.reviews).to receive(:approved)
+      book.send(:approved_reviews)
+    end
+  end
+
 end

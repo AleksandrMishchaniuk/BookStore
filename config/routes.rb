@@ -60,6 +60,9 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'forbidden', to: 'errors#render_403', as: :forbidden
+  match '*a', to: 'errors#render_404', via: :all
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -114,6 +117,5 @@ Rails.application.routes.draw do
   #     # (app/controllers/admin/products_controller.rb)
   #     resources :products
   #   end
-  get 'forbidden', to: 'errors#render_403', as: :forbidden
-  match '*a', to: 'errors#render_404', via: :all
+
 end

@@ -4,7 +4,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   before_action :set_locale
   before_filter :set_request_environment
-  before_filter :set_session_environment
   before_action :define_order_in_progress
   after_action :save_order_in_progress
   after_filter :store_location
@@ -39,9 +38,6 @@ class ApplicationController < ActionController::Base
 
   def set_request_environment
     Thread.current[:request] = request
-  end
-  def set_session_environment
-    Thread.current[:session] = session
   end
 
   def set_locale

@@ -74,8 +74,7 @@ class Order < ActiveRecord::Base
   end
 
   def find_or_build_cart_item(book_id)
-    cart_items.find { |item| item.book_id == book_id.to_i } ||
-    cart_items.new(book_id: book_id, book_count: 0)
+    cart_item(book_id) || cart_items.new(book_id: book_id, book_count: 0)
   end
 
   def cart_item(book_id)
@@ -101,6 +100,8 @@ class Order < ActiveRecord::Base
     elsif object.nil? || object != coupon_by_strategy
       self.coupon_by_strategy=(nil)
       false
+    else
+      self
     end
   end
 
@@ -115,6 +116,5 @@ class Order < ActiveRecord::Base
   def coupon_by_strategy=(object)
     @persist_strategy.set_coupon(self, object)
   end
-
 
 end

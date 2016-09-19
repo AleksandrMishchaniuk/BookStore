@@ -7,7 +7,7 @@ class Category < ActiveRecord::Base
     def items_for_navigation(css_class)
       all.map do |categ|
         "category.item \"#{categ.name}\", \"#{categ.name}\", '/'+I18n.locale.to_s+'/shop/categories/#{categ.id}', html: {class: '#{css_class}'}"
-      end.join("\n ")
+      end.join("\n")
     end
   end
 
