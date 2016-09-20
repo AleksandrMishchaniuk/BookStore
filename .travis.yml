@@ -7,8 +7,4 @@ before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
   - cp config/database.yml.travis config/database.yml
 env:
-  - AWS_ACCESS_KEY_ID=GGGGGGGGGGGGGGGGGGG
-  - AWS_SECRET_ACCESS_KEY=GGGGGGGGggggggggggggggGGGGGGGGGG
-  - S3_REGION=your-s3-region
-  - S3_BUCKET=your-bucket
-  - ADMIN_EMAIL=example@email.com
+  - AWS_ACCESS_KEY_ID=GGGGGGGGGGGGGGGGGGG AWS_SECRET_ACCESS_KEY=GGGGGGGGggggggggggggggGGGGGGGGGG S3_REGION=your-s3-region S3_BUCKET=your-bucket ADMIN_EMAIL=example@email.com
