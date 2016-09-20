@@ -1,0 +1,15 @@
+
+ADMIN_EMAIL: email for sign in as admin # needs for seeding
+ADMIN_PASSWORD: password for sign in as admin # needs for seeding
+USER_EMAIL: email for sign in as user # needs for seeding
+USER_PASSWORD: password for sign in as user # needs for seeding
+
+AWS_ACCESS_KEY_ID: Access key id of your user on AWS
+AWS_SECRET_ACCESS_KEY: Secret access key of your user on AWS
+S3_REGION: Region of your S3 bucket
+S3_BUCKET: Name of your S3 bucket
+
+FACEBOOK_APP_ID: Your facebook application id
+FACEBOOK_APP_SECRET: Your facebook application secret key
+
+SECRET_KEY_BASE: Your base hash for secret key
