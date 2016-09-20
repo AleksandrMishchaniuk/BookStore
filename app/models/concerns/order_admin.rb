@@ -43,7 +43,13 @@ module OrderAdmin
         exclude_fields :books
       end
       edit do
-        field :order_state
+        field :order_state do
+          associated_collection_scope do
+            Proc.new do |scope|
+              scope = scope.where.not(id_of_state: OrderState.in_progress.id)
+            end
+          end
+        end
       end
     end
   end

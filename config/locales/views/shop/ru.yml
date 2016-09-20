@@ -8,5 +8,6 @@ ru:
       review_msg_without_user: для добавления отзыва, Вы должны
       no_reviews_text: Пока нет ни одного отзыва
       you_cannot_create_review: Вы не можете оставлять отзывы
+      review_notice: Ваш отзыв будет показан после одобрения администратора
     review:
       new_review_title: новый отзыв для

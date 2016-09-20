@@ -21,6 +21,8 @@ class Order < ActiveRecord::Base
   scope :delivered, -> { where(order_state: OrderState.delivered) }
 
   after_create :in_progress
+  before_destroy :destroy_cart_items
+  after_destroy :destroy_binded_objects
 
   alias :cart_items :carts
 
@@ -89,6 +91,12 @@ class Order < ActiveRecord::Base
       cart_items.each { |item| item.save! }
     end
     true
+  end
+
+  def destroy_binded_objects
+    billing_address.try(:destroy!)
+    shipping_address.try(:destroy!)
+    credit_card.try(:destroy!)
   end
 
   def destroy_cart_items

@@ -14,7 +14,7 @@ class Shop::ReviewsController < ::ApplicationController
     @review.user = current_user
     @review.book = book
     if @review.save
-      redirect_to shop_book_path(params[:book_id]), notice: 'You review will be shown after approved by admin'
+      redirect_to shop_book_path(params[:book_id]), notice: t('views.shop.review_notice')
     else
       render :new
     end

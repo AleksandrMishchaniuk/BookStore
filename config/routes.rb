@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     get '/' => 'pages#home', as: :root_locale
     get 'users/edit' => 'user/settings#edit'
     devise_for :users, controllers: { sessions: 'user/sessions' }, skip: :omniauth_callbacks
-    mount RailsAdmin::Engine => '/admingit', as: 'rails_admin'
+    mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 
     resource :cart, only: [:show, :destroy], controller: :cart do
       post :add_item, on: :member

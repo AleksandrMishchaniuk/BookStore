@@ -8,5 +8,6 @@ en:
       review_msg_without_user: for adding review, you should
       no_reviews_text: No Reviews yet
       you_cannot_create_review: You can not leave reviews
+      review_notice: You review will be shown after approved by admin
     review:
       new_review_title: new review for

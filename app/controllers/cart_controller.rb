@@ -11,17 +11,19 @@ class CartController < ApplicationController
   end
 
   def update_item
-    @cart_item = @order.cart_item(cart_params[:book_id])
-    @cart_item.book_count = cart_params[:book_count]
+    if @cart_item = @order.cart_item(cart_params[:book_id])
+      @cart_item.book_count = cart_params[:book_count]
+    end
     respond_to do |format|
       format.json
     end
   end
 
   def remove_item
-    @cart_item = @order.cart_item(params[:id])
-    @cart_item.destroy if @cart_item.persisted?
-    @order.cart_items.delete(@cart_item)
+    if @cart_item = @order.cart_item(params[:id])
+      @cart_item.destroy if @cart_item.persisted?
+      @order.cart_items.delete(@cart_item)
+    end
     order_destroy if @order.cart_items.empty?
     redirect_to :back
   end

@@ -2,7 +2,7 @@ class Ability
   include CanCan::Ability
 
   def store_data
-    [Author, Book, Category, Delivery, OrderState]
+    [Author, Book, Category, Delivery]
   end
 
   def initialize(user)
@@ -15,9 +15,10 @@ class Ability
         if /\/admin\/?/.match(request.original_fullpath)
           can :manage, store_data
           cannot :create, Review
-          can :read, Coupon
+          can :read, [Coupon, OrderState]
           can [:update, :destroy], Coupon, order: nil
           can [:read, :update], [Order, Review]
+          cannot :update, Order, order_state: OrderState.in_progress
         end
       end
     end

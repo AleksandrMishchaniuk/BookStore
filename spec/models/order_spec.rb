@@ -3,6 +3,21 @@ require 'rails_helper'
 RSpec.describe Order, type: :model do
   let(:order) { create :order }
 
+  it "sets order_state to in_progress for new created order" do
+    state = create :state_in_progress
+    expect(order.order_state).to eq(state)
+  end
+
+  it "destroys binded objects after destruction order" do
+    expect(order).to receive(:destroy_binded_objects)
+    order.destroy!
+  end
+
+  it "calls #destroys cart_items before destruction order" do
+    expect(order).to receive(:destroy_cart_items)
+    order.destroy!
+  end
+
   describe '#persist_strategy=' do
     context 'when passed no instance OrderStrategy::PersistBase' do
       let(:val) { 'some object' }
@@ -187,8 +202,26 @@ RSpec.describe Order, type: :model do
     end # when user rty to change book count in cart item
   end # #save_with_cart_items
 
+  describe '#destroy_binded_objects' do
+    let(:billing_address) { create :address }
+    let(:shipping_address) { create :address }
+    let(:credit_card) { create :credit_card }
+    before(:each) do
+      order.billing_address = billing_address
+      order.shipping_address = shipping_address
+      order.shipping_address = shipping_address
+      order.credit_card = credit_card
+    end
+    it "destroys order's adresses and credit cats" do
+      order.destroy_binded_objects
+      expect(billing_address).to_not be_persisted
+      expect(shipping_address).to_not be_persisted
+      expect(credit_card).to_not be_persisted
+    end
+  end # #destroy_binded_objects
+
   describe '#destroy_cart_items' do
-    it "destrois cart_items in DB" do
+    it "destroys cart_items in DB" do
       order.destroy_cart_items
       order.cart_items.each do |item|
         expect(item).to_not be_persisted

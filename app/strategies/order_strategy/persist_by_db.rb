@@ -7,7 +7,6 @@ class OrderStrategy::PersistByDb < OrderStrategy::PersistBase
 
   def destroy(order)
     prepare_destroy(order)
-    order.destroy_cart_items
     order.destroy!
     order.cart_items.delete_all
   end

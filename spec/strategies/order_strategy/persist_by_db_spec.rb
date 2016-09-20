@@ -26,9 +26,6 @@ RSpec.describe OrderStrategy::PersistByDb do
     it "calls #prepare_destroy" do
       expect(subject).to receive(:prepare_destroy).with(order)
     end
-    it "calls #destroy_cart_items for order" do
-      expect(order).to receive(:destroy_cart_items).and_call_original
-    end
     it "calls #destroy! for order" do
       expect(order).to receive(:destroy!).and_call_original
     end
