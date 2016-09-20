@@ -13,13 +13,6 @@ class ApplicationController < ActionController::Base
 
   attr_accessor :order
 
-  def change_locale
-    route = Rails.application.routes.recognize_path(request.referer)
-    route[:locale] = params[:locale]
-    session[:locale] = params[:locale]
-    redirect_to route
-  end
-
   protected
 
   def define_order_in_progress
