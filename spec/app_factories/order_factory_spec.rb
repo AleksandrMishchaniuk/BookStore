@@ -8,12 +8,10 @@ RSpec.describe OrderFactory do
   it { expect(described_class::NOT_PERSISTED_KEY).to be_kind_of Symbol }
   it { expect(described_class::COUPON_KEY).to be_kind_of Symbol }
 
-  let(:subject) { described_class.new(context) }
+  subject { described_class.new(context) }
   let(:context) do
     object = double('instance ApplicationController')
-    allow(object).to receive(:kind_of?).and_return(ApplicationController)
-    # allow(object).to receive(:current_user)
-    # allow(object).to receive(:user_signed_in?)
+    allow(object).to receive(:kind_of?).with(ApplicationController).and_return(true)
     object
   end
 
@@ -35,11 +33,12 @@ RSpec.describe OrderFactory do
   describe '#order' do
     let(:user) { (create :user).reload }
     let(:order_keep_by_storage_persist) { create(:order).reload }
-    let(:order_keep_by_user_persist) { create(:order_in_progress).reload }
+    let(:order_keep_by_user_persist) { create(:order).reload }
     let(:order_keep_by_storage_not_persist) { build :order }
     let(:order_new) { Order.new }
     let(:storage){ {} }
     before(:each) do
+      create :state_in_progress
       allow(subject).to receive(:order_storage).and_return(storage)
       storage[described_class::PERSISTED_KEY] = order_keep_by_storage_persist.id
       storage[described_class::NOT_PERSISTED_KEY] = order_keep_by_storage_not_persist.cart_items_to_array
@@ -91,10 +90,10 @@ RSpec.describe OrderFactory do
   describe '#persist_strategy' do
     before do
       coupon_storage = double('instance Storage')
-      allow(coupon_storage).to receive(:kind_of?).and_return(Storage)
+      allow(coupon_storage).to receive(:kind_of?).with(Storage).and_return(true)
       allow(subject).to receive(:coupon_storage).and_return(coupon_storage)
       order_storage = double('instance Storage')
-      allow(order_storage).to receive(:kind_of?).and_return(Storage)
+      allow(order_storage).to receive(:kind_of?).with(Storage).and_return(true)
       allow(subject).to receive(:order_storage).and_return(order_storage)
     end
 
@@ -124,10 +123,9 @@ RSpec.describe OrderFactory do
     let(:user){ create :user }
     before do
       order_storage = double('instance Storage')
-      allow(order_storage).to receive(:kind_of?).and_return(Storage)
+      allow(order_storage).to receive(:kind_of?).with(Storage).and_return(true)
       allow(subject).to receive(:order_storage).and_return(order_storage)
       allow(subject).to receive(:current_user).and_return(user)
-      # allow(subject).to receive(:user_signed_in?).and_return(true)
     end
 
     context 'when passed no instance Order' do

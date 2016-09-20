@@ -20,6 +20,8 @@ class Order < ActiveRecord::Base
   scope :in_delivery, -> { where(order_state: OrderState.in_delivery) }
   scope :delivered, -> { where(order_state: OrderState.delivered) }
 
+  after_create :in_progress
+
   alias :cart_items :carts
 
   def persist_strategy=(val)
@@ -89,6 +91,10 @@ class Order < ActiveRecord::Base
     true
   end
 
+  def destroy_cart_items
+    cart_items.each { |item| item.destroy! } unless cart_items.empty?
+  end
+
   def ==(another)
     attributes == another.try(:attributes) && cart_items == another.try(:cart_items)
   end
@@ -115,6 +121,10 @@ class Order < ActiveRecord::Base
 
   def coupon_by_strategy=(object)
     @persist_strategy.set_coupon(self, object)
+  end
+
+  def in_progress
+    update(order_state: OrderState.in_progress)
   end
 
 end

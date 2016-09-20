@@ -187,6 +187,15 @@ RSpec.describe Order, type: :model do
     end # when user rty to change book count in cart item
   end # #save_with_cart_items
 
+  describe '#destroy_cart_items' do
+    it "destrois cart_items in DB" do
+      order.destroy_cart_items
+      order.cart_items.each do |item|
+        expect(item).to_not be_persisted
+      end
+    end
+  end # #destroy_cart_items
+
   describe '#set_coupon' do
     before { allow(order).to receive(:coupon_by_strategy=) }
 

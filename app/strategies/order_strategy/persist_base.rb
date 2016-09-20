@@ -26,9 +26,7 @@ class OrderStrategy::PersistBase
   protected
 
   def prepare(order)
-    unless order.kind_of? Order
-      raise 'argument sould be instance of Order'
-    end
+    raise 'argument sould be instance of Order' unless order.kind_of? Order
   end
 
   def prepare_destroy(order)
@@ -37,12 +35,13 @@ class OrderStrategy::PersistBase
   end
 
   def prepare_set_coupon(order, object)
-    raise 'Object shoult be Coupon or NilClass' unless object.kind_of?(Coupon) || object.nil?
+    raise 'argument #2 shoult be Coupon or NilClass' unless object.kind_of?(Coupon) || object.nil?
     detach_coupon(order)
     object.attach if object
   end
 
   def detach_coupon(order)
+    raise 'argument shoult be instance Order' unless order.kind_of?(Order)
     order.coupon_by_strategy.detach if order.coupon_by_strategy
     @coupon_storage[@coupon_key] = nil
   end

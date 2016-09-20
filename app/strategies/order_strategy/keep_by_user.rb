@@ -11,7 +11,6 @@ class OrderStrategy::KeepByUser < OrderStrategy::KeepBase
 
   def keep(order)
     prepare_keep(order)
-    order.order_state ||= OrderState.in_progress
     @user.orders << order unless @user.orders.include? order
   end
 
