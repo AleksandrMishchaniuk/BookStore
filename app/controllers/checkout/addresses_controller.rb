@@ -22,10 +22,10 @@ module Checkout
           order.shipping_address = Address.create(address_params :shipping)
         end
       end
+      order.save!
       if order.billing_address.errors.any? || order.shipping_address.errors.any?
         render :edit
       else
-        order.save!
         redirect_to edit_checkout_delivery_path
       end
     end
