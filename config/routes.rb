@@ -4,12 +4,18 @@ Rails.application.routes.draw do
 
   get 'change/locale/:locale' => 'locale#change_locale', as: :change_locale
 
-  devise_for :users, only: :omniauth_callbacks, controllers: {omniauth_callbacks: 'user/omniauth_callbacks'}
+  devise_for :users, only: :omniauth_callbacks,
+              controllers: {omniauth_callbacks: 'user/omniauth_callbacks'}
 
   scope "(:locale)", locale: /en|ru/ do
     get '/' => 'pages#home', as: :root_locale
     get 'users/edit' => 'user/settings#edit'
-    devise_for :users, controllers: { sessions: 'user/sessions' }, skip: :omniauth_callbacks
+    devise_for :users,
+                controllers: {
+                  sessions: 'user/sessions',
+                  passwords: 'user/passwords'
+                },
+                skip: :omniauth_callbacks
     mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
 
     resource :cart, only: [:show, :destroy], controller: :cart do
