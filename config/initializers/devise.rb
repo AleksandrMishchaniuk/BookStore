@@ -3,7 +3,7 @@
 Devise.setup do |config|
   config.secret_key = '41e745fdc62802bb88325d54c46781d26c96cc8957ae74f9795c33f3be30a21482abb6807394f80e2f00e58af6e42fdd031a17c757ad6a9d23542681b299075f'
 
-  config.mailer_sender = 'service@map.bookstore.com'
+  config.mailer_sender = 'service@map-bookstore.herokuapp.com'
 
   require 'devise/orm/active_record'
 
