@@ -6,6 +6,7 @@
       = link_to t('views.cart.btn.empty_cart').mb_chars.capitalize, cart_path, method: :delete, class: 'btn btn-danger'
       = link_to t('btn.go_to_shop').mb_chars.capitalize, shop_books_path, class: 'btn btn-primary'
     .col-sm-6.text-right
+      %small= '( ' + Coupon.unused.map(&:code).join(' , ') + ' )'
       = form_tag update_coupon_cart_path, class: 'form-inline coupon_form', role: 'form' do
         = text_field_tag :coupon, '', placeholder: t('views.cart.placeholder.coupon_code').mb_chars.capitalize, class: 'form-control'
         = submit_tag t('btn.update').mb_chars.capitalize, class: 'btn'

@@ -7,12 +7,15 @@
 .row
   .col-xs-offset-3.col-xs-6
     = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+
       .form-group
         = f.email_field :email, autofocus: true, class: 'form-control', placeholder: t('activerecord.attributes.user.email')
+        %small ( #{ENV['ADMIN_EMAIL']} , #{ENV['USER_EMAIL']} )
 
       .form-group
         = f.password_field :password, autocomplete: "off", class: 'form-control', placeholder: t('activerecord.attributes.user.password')
         = link_to t(".forgot?"), new_password_path(resource_name), class: 'forgot_password_link'
+        %small ( #{ENV['ADMIN_PASSWORD']} , #{ENV['USER_PASSWORD']} )
 
       .form-group
         = f.submit t('.sign_in'), class: 'btn btn-primary'
