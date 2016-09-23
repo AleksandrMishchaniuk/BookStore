@@ -59,6 +59,7 @@ class ApplicationController < ActionController::Base
         request.path != main_app.new_user_password_path &&
         request.path != main_app.edit_user_password_path &&
         request.path != main_app.new_user_unlock_path &&
+        request.path != main_app.user_unlock_path(locale: nil) &&
         request.path != "/users/confirmation" &&
         request.path != main_app.destroy_user_session_path &&
         request.path != main_app.change_locale_path &&
