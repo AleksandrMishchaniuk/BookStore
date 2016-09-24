@@ -9,7 +9,7 @@ class Address < ActiveRecord::Base
   validates :address_line,    presence: true, length: {maximum: 512}
   validates :city,            presence: true, length: {maximum: 255}
   validates :country,         presence: true, length: {maximum: 255}
-  validates :zip,             presence: true, length: {maximum: 25}
+  validates :zip,             presence: true, length: {maximum: 15}, numericality: {only_integer: true}
   validates :phone,           presence: true, phone: { possible: true, types: [:voip, :mobile] }
 
   rails_admin do

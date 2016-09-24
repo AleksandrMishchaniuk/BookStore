@@ -45,8 +45,23 @@ module OrderAdmin
       edit do
         field :order_state do
           associated_collection_scope do
-            Proc.new do |scope|
-              scope = scope.where.not(id_of_state: OrderState.in_progress.id)
+            case value
+            when OrderState.in_delivery
+              Proc.new do |scope|
+                scope = scope.where.not(id_of_state: [OrderState.in_progress.id, OrderState.in_queue.id])
+              end
+            when OrderState.delivered
+              Proc.new do |scope|
+                scope = scope.where(id_of_state: [OrderState.delivered.id, OrderState.canceled.id])
+              end
+            when OrderState.canceled
+              Proc.new do |scope|
+                scope = scope.where(id_of_state: [OrderState.in_queue.id, OrderState.canceled.id])
+              end
+            else
+              Proc.new do |scope|
+                scope = scope.where.not(id_of_state: OrderState.in_progress.id)
+              end
             end
           end
         end
