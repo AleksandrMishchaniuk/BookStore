@@ -1,22 +1,44 @@
 module Checkout
+  # :nodoc:
   class BaseController < ::ApplicationController
     before_filter :check_order, except: :start
 
     def check_step!(step)
-      return if step == 1
-      return redirect_to edit_checkout_addresses_path unless @order.billing_address
-      return if step == 2
-      return redirect_to edit_checkout_delivery_path unless @order.delivery
-      return if step == 3
-      return redirect_to edit_checkout_payment_path unless @order.credit_card
-      return if step == 4
-      return redirect_to checkout_confirm_path unless @order.order_state == OrderState.in_queue
+      check_configs.each do |conf|
+        return if step == conf[:step]
+        return redirect_to conf[:path] unless conf[:condition]
+      end
     end
 
     protected
 
     def check_order
       redirect_to cart_path unless @order.persisted?
+    end
+
+    def check_configs
+      [
+        {
+          step: 1,
+          path: edit_checkout_addresses_path,
+          condition: @order.billing_address
+        },
+        {
+          step: 2,
+          path: edit_checkout_delivery_path,
+          condition: @order.delivery
+        },
+        {
+          step: 3,
+          path: edit_checkout_payment_path,
+          condition: @order.credit_card
+        },
+        {
+          step: 4,
+          path: checkout_confirm_path,
+          condition: @order.order_state == OrderState.in_queue
+        }
+      ]
     end
   end
 end

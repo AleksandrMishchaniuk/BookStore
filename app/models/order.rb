@@ -24,7 +24,7 @@ class Order < ActiveRecord::Base
   before_destroy :destroy_cart_items
   after_destroy :destroy_binded_objects
 
-  alias :cart_items :carts
+  alias cart_items carts
 
   def persist_strategy=(val)
     unless val.kind_of? OrderStrategy::PersistBase
@@ -109,10 +109,10 @@ class Order < ActiveRecord::Base
 
   def set_coupon(object)
     if object && !object.used
-      self.coupon_by_strategy=(object)
+      self.coupon_by_strategy = object
       self
     elsif object.nil? || object != coupon_by_strategy
-      self.coupon_by_strategy=(nil)
+      self.coupon_by_strategy = nil
       false
     else
       self
@@ -135,4 +135,27 @@ class Order < ActiveRecord::Base
     update(order_state: OrderState.in_progress)
   end
 
+  def create_or_update_credit_card(params)
+    if credit_card
+      credit_card.update(params)
+    else
+      self.credit_card = CreditCard.create(params)
+    end
+  end
+
+  def create_or_update_billing_address(params)
+    if billing_address
+      billing_address.update(params)
+    else
+      self.billing_address = Address.create(params)
+    end
+  end
+
+  def create_or_update_shipping_address(params)
+    if shipping_address && shipping_address != billing_address
+      shipping_address.update(params)
+    else
+      self.shipping_address = Address.create(params)
+    end
+  end
 end

@@ -12,7 +12,7 @@ class Ability
       if user.admin?
         can :access, :rails_admin
         can :dashboard
-        if /\/admin\/?/.match(self.class.request.original_fullpath)
+        if self.class.request.original_fullpath =~ %r{\/admin\/?}
           can :manage, store_data
           cannot :create, Review
           can :read, [Coupon, OrderState]

@@ -1,3 +1,4 @@
+#:nodoc:
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -7,8 +8,8 @@ class ApplicationController < ActionController::Base
   before_action :define_order_in_progress
   after_action :save_order_in_progress
   after_filter :store_location
-  rescue_from CanCan::AccessDenied do |exception|
-      redirect_to main_app.forbidden_path
+  rescue_from CanCan::AccessDenied do
+    redirect_to main_app.forbidden_path
   end
 
   attr_accessor :order
@@ -36,16 +37,17 @@ class ApplicationController < ActionController::Base
   def set_locale
     I18n.locale = params[:locale] || I18n.default_locale
   end
+
   def default_url_options
     { locale: I18n.locale }
   end
 
   # Devise hooks
-  def after_sign_out_path_for(resource_or_scope)
+  def after_sign_out_path_for(_resource_or_scope)
     request.referrer || root_locale_path
   end
 
-  def after_sign_in_path_for(resource)
+  def after_sign_in_path_for(_resource)
     url = session[:previous_url] || root_locale_path
     route = Rails.application.routes.recognize_path(url)
     route[:locale] = session[:locale] || I18n.locale
@@ -54,18 +56,21 @@ class ApplicationController < ActionController::Base
 
   def store_location
     return unless request.get?
-    if (request.path != main_app.new_user_session_path &&
-        request.path != main_app.new_user_registration_path &&
-        request.path != main_app.new_user_password_path &&
-        request.path != main_app.edit_user_password_path &&
-        request.path != main_app.new_user_unlock_path &&
-        request.path != main_app.user_unlock_path(locale: nil) &&
-        request.path != "/users/confirmation" &&
-        request.path != main_app.destroy_user_session_path &&
-        request.path != main_app.change_locale_path &&
-        !request.xhr?) # don't store ajax calls
-      session[:previous_url] = request.fullpath
-    end
+    session[:previous_url] = request.fullpath unless conditions.include? false
   end
 
+  def conditions
+    [
+      request.path != main_app.new_user_session_path,
+      request.path != main_app.new_user_registration_path,
+      request.path != main_app.new_user_password_path,
+      request.path != main_app.edit_user_password_path,
+      request.path != main_app.new_user_unlock_path,
+      request.path != main_app.user_unlock_path(locale: nil),
+      request.path != '/users/confirmation',
+      request.path != main_app.destroy_user_session_path,
+      request.path != main_app.change_locale_path,
+      !request.xhr? # don't store ajax calls
+    ]
+  end
 end

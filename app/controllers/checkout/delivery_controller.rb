@@ -1,6 +1,6 @@
 module Checkout
+  # :nodoc:
   class DeliveryController < BaseController
-
     def edit
       @step = 2
       check_step! @step
@@ -22,6 +22,5 @@ module Checkout
     def delivery_params
       params.require(:order).permit(:delivery)
     end
-
   end
 end

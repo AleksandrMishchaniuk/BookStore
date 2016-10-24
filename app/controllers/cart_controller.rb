@@ -1,5 +1,5 @@
+# :nodoc:
 class CartController < ApplicationController
-
   after_action :save_order_for_progress, except: [:show]
 
   def show; end
@@ -11,16 +11,16 @@ class CartController < ApplicationController
   end
 
   def update_item
-    if @cart_item = @order.cart_item(cart_params[:book_id])
-      @cart_item.book_count = cart_params[:book_count]
-    end
+    @cart_item = @order.cart_item(cart_params[:book_id])
+    @cart_item.book_count = cart_params[:book_count] if @cart_item
     respond_to do |format|
       format.json
     end
   end
 
   def remove_item
-    if @cart_item = @order.cart_item(params[:id])
+    @cart_item = @order.cart_item(params[:id])
+    if @cart_item
       @cart_item.destroy if @cart_item.persisted?
       @order.cart_items.delete(@cart_item)
     end
@@ -36,9 +36,7 @@ class CartController < ApplicationController
   def update_coupon
     error = nil
     coupon = Coupon.find_by(code: params[:coupon])
-    unless @order.set_coupon(coupon)
-      error = t('views.cart.msg.coupon_error')
-    end
+    @order.set_coupon(coupon) || error = t('views.cart.msg.coupon_error')
     redirect_to cart_path, alert: error
   end
 
@@ -55,5 +53,4 @@ class CartController < ApplicationController
   def cart_params
     params.require(:cart).permit(:book_id, :book_count)
   end
-
 end

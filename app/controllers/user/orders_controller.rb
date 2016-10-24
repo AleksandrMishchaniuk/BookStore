@@ -1,3 +1,4 @@
+# :nodoc:
 class User::OrdersController < ApplicationController
   before_action :authenticate_user!
 
@@ -13,5 +14,4 @@ class User::OrdersController < ApplicationController
   rescue
     redirect_to user_orders_path
   end
-
 end

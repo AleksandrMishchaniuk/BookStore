@@ -1,3 +1,4 @@
+# :nodoc:
 module OrderAdmin
   extend ActiveSupport::Concern
 

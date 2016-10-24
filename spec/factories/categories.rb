@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :category do
-    sequence(:name)    {FFaker::Lorem.word}
+    sequence(:name) { FFaker::Lorem.word }
 
     factory :category_with_books do
       transient do
@@ -12,6 +12,5 @@ FactoryGirl.define do
         end
       end
     end
-
   end
 end

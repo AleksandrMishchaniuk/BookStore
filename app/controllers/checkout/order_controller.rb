@@ -1,6 +1,6 @@
 module Checkout
+  # :nodoc:
   class OrderController < BaseController
-
     def start
       unless @order.persisted?
         @order.order_state = OrderState.in_progress
@@ -23,6 +23,5 @@ module Checkout
       @order = Order.new
       render 'show'
     end
-
   end
 end

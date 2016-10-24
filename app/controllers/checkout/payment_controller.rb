@@ -1,6 +1,6 @@
 module Checkout
+  # :nodoc:
   class PaymentController < BaseController
-
     def edit
       @step = 3
       check_step! @step
@@ -9,11 +9,7 @@ module Checkout
 
     def update
       @step = 3
-      if @order.credit_card
-        @order.credit_card.update(credit_card_params)
-      else
-        @order.credit_card = CreditCard.create(credit_card_params)
-      end
+      @order.create_or_update_credit_card(credit_card_params)
       if @order.credit_card.errors.any?
         render :edit
       else
@@ -27,6 +23,5 @@ module Checkout
     def credit_card_params
       params.require(:credit_card).permit(:number, :code, :expiration_date)
     end
-
   end
 end

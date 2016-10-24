@@ -1,6 +1,5 @@
 FactoryGirl.define do
   factory :order do
-
     transient do
       items_count 3
     end
@@ -18,6 +17,5 @@ FactoryGirl.define do
     factory :order_in_queue do
       association :order_state, factory: :state_in_queue
     end
-
   end
 end
