@@ -6,7 +6,7 @@ RSpec.describe OrderStrategy::PersistBase do
   let(:coupon_key) { :coupon_key }
   let(:coupon_storage) do
     object = {}
-    allow(object).to receive(:kind_of?).with(Storage).and_return(true)
+    allow(object).to receive(:is_a?).with(Storage).and_return(true)
     object
   end
 

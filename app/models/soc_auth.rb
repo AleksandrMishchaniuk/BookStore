@@ -1,5 +1,5 @@
+# :nodoc:
 class SocAuth < ActiveRecord::Base
-
   serialize :data
 
   belongs_to :user
@@ -9,5 +9,4 @@ class SocAuth < ActiveRecord::Base
       exclude_fields :created_at, :updated_at
     end
   end
-  
 end

@@ -7,7 +7,7 @@ RSpec.describe OrderStrategy::PersistByStorage do
   let(:order_key) { :order_key }
   let(:coupon_storage) do
     object = {}
-    allow(object).to receive(:kind_of?).with(Storage).and_return(true)
+    allow(object).to receive(:is_a?).with(Storage).and_return(true)
     object
   end
   let(:order_storage){ coupon_storage.clone }

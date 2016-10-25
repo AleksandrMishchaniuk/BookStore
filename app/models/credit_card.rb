@@ -1,3 +1,4 @@
+# :nodoc:
 class CreditCard < ActiveRecord::Base
   has_many :orders
 

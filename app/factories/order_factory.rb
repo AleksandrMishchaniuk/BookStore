@@ -1,3 +1,4 @@
+# :nodoc:
 class OrderFactory
   STORAGE_KEY = :current_order
   COUPON_STORAGE_KEY = :current_coupon
@@ -6,7 +7,7 @@ class OrderFactory
   COUPON_KEY = :coupon_id
 
   def initialize(context)
-    unless context.kind_of? ApplicationController
+    unless context.is_a? ApplicationController
       raise 'argument sould be instance of ApplicationController'
     end
     @context = context
@@ -26,20 +27,17 @@ class OrderFactory
   end
 
   def persist_strategy(order)
-    unless order.kind_of? Order
-      raise 'argument sould be instance of Order'
-    end
+    raise 'argument sould be instance of Order' unless order.is_a? Order
     if order.persisted?
       OrderStrategy::PersistByDb.new(coupon_storage, COUPON_KEY)
     else
-      OrderStrategy::PersistByStorage.new(coupon_storage, COUPON_KEY, order_storage, NOT_PERSISTED_KEY)
+      OrderStrategy::PersistByStorage.new(coupon_storage, COUPON_KEY,
+                                          order_storage, NOT_PERSISTED_KEY)
     end
   end
 
   def keep_strategy(order)
-    unless order.kind_of? Order
-      raise 'argument sould be instance of Order'
-    end
+    raise 'argument sould be instance of Order' unless order.is_a? Order
     if order.persisted?
       if user_signed_in?
         OrderStrategy::KeepByUser.new(order_storage, current_user)
@@ -75,5 +73,4 @@ class OrderFactory
     order.carts = order_storage[key].map { |item| Cart.new(item) }
     order
   end
-
 end

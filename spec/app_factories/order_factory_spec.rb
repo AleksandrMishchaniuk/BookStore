@@ -11,7 +11,7 @@ RSpec.describe OrderFactory do
   subject { described_class.new(context) }
   let(:context) do
     object = double('instance ApplicationController')
-    allow(object).to receive(:kind_of?).with(ApplicationController).and_return(true)
+    allow(object).to receive(:is_a?).with(ApplicationController).and_return(true)
     object
   end
 

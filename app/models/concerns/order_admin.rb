@@ -18,13 +18,16 @@ module OrderAdmin
           label I18n.t('views.partials.cart_table.subtotal').mb_chars.capitalize
         end
         field :item_discount do
-          label I18n.t('activerecord.attributes.coupon.discount').mb_chars.capitalize
+          label I18n.t('activerecord.attributes.coupon.discount')
+            .mb_chars.capitalize
         end
         field :item_total_with_discount do
-          label I18n.t('views.partials.cart_table.subtotal_with_discount').mb_chars.capitalize
+          label I18n.t('views.partials.cart_table.subtotal_with_discount')
+            .mb_chars.capitalize
         end
         field :order_total do
-          label I18n.t('views.partials.cart_table.order_total').mb_chars.capitalize
+          label I18n.t('views.partials.cart_table.order_total')
+            .mb_chars.capitalize
         end
         field :carts do
           pretty_value { bindings[:view].admin_cart_table(value) }
@@ -48,20 +51,23 @@ module OrderAdmin
           associated_collection_scope do
             case value
             when OrderState.in_delivery
-              Proc.new do |scope|
-                scope = scope.where.not(id_of_state: [OrderState.in_progress.id, OrderState.in_queue.id])
+              proc do |scope|
+                scope.where.not(id_of_state: [OrderState.in_progress.id,
+                                              OrderState.in_queue.id])
               end
             when OrderState.delivered
-              Proc.new do |scope|
-                scope = scope.where(id_of_state: [OrderState.delivered.id, OrderState.canceled.id])
+              proc do |scope|
+                scope.where(id_of_state: [OrderState.delivered.id,
+                                          OrderState.canceled.id])
               end
             when OrderState.canceled
-              Proc.new do |scope|
-                scope = scope.where(id_of_state: [OrderState.in_queue.id, OrderState.canceled.id])
+              proc do |scope|
+                scope.where(id_of_state: [OrderState.in_queue.id,
+                                          OrderState.canceled.id])
               end
             else
-              Proc.new do |scope|
-                scope = scope.where.not(id_of_state: OrderState.in_progress.id)
+              proc do |scope|
+                scope.where.not(id_of_state: OrderState.in_progress.id)
               end
             end
           end
@@ -69,5 +75,4 @@ module OrderAdmin
       end
     end
   end
-
 end

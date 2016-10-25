@@ -27,11 +27,11 @@ RSpec.describe Order, type: :model do
     end # when passed no instance OrderStrategy::PersistBase
     context 'when passed instance OrderStrategy::PersistBase' do
       let(:val) { double 'instance OrderStrategy::PersistBase' }
-      before { allow(val).to receive(:kind_of?).and_return(OrderStrategy::PersistBase) }
+      before { allow(val).to receive(:is_a?).and_return(OrderStrategy::PersistBase) }
       it "sets @persist_strategy" do
         order.persist_strategy = val
         variable = order.instance_variable_get(:@persist_strategy)
-        expect(variable).to be_kind_of(OrderStrategy::PersistBase)
+        expect(variable).to be_is_a(OrderStrategy::PersistBase)
       end
     end # when passed instance OrderStrategy::PersistBase
   end # #persist_strategy=
@@ -45,11 +45,11 @@ RSpec.describe Order, type: :model do
     end # when passed no instance OrderStrategy::KeepBase
     context 'when passed instance OrderStrategy::KeepBase' do
       let(:val) { double 'instance OrderStrategy::KeepBase' }
-      before { allow(val).to receive(:kind_of?).and_return(OrderStrategy::KeepBase) }
+      before { allow(val).to receive(:is_a?).and_return(OrderStrategy::KeepBase) }
       it "sets @keep_strategy" do
         order.keep_strategy = val
         variable = order.instance_variable_get(:@keep_strategy)
-        expect(variable).to be_kind_of(OrderStrategy::KeepBase)
+        expect(variable).to be_is_a(OrderStrategy::KeepBase)
       end
     end # when passed instance OrderStrategy::KeepBase
   end # #keep_strategy=

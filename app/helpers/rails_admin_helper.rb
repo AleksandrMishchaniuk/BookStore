@@ -1,5 +1,5 @@
+# :nodoc:
 module RailsAdminHelper
-
   def admin_cart_table(cart)
     res = <<-HTML
       <table class="table">
@@ -10,7 +10,7 @@ module RailsAdminHelper
     res.html_safe
   end
 
-  def admin_cart_table_thead(cart)
+  def admin_cart_table_thead(_cart)
     <<-HTML
     <thead>
       <tr>
@@ -23,7 +23,7 @@ module RailsAdminHelper
   end
 
   def admin_cart_table_tbody(cart)
-    res = "<tbody>"
+    res = '<tbody>'
     res += cart.map do |item|
       <<-HTML
         <tr>
@@ -35,7 +35,7 @@ module RailsAdminHelper
         </tr>
       HTML
     end.join(' ')
-    res += "</tbody>"
+    res += '</tbody>'
     res
   end
 
@@ -56,10 +56,9 @@ module RailsAdminHelper
     res = <<-HTML
       <span>
         #{card.number},
-        #{card.expiration_date.strftime("%m/%Y")}
+        #{card.expiration_date.strftime('%m/%Y')}
       </span>
     HTML
     res.html_safe
   end
-
 end

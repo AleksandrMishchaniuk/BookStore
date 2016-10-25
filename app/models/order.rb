@@ -1,3 +1,4 @@
+# :nodoc:
 class Order < ActiveRecord::Base
   include OrderAdmin
 
@@ -5,8 +6,10 @@ class Order < ActiveRecord::Base
 
   belongs_to :user
   belongs_to :order_state
-  belongs_to :shipping_address, class_name: 'Address', foreign_key: :shipping_address
-  belongs_to :billing_address, class_name: 'Address', foreign_key: :billing_address
+  belongs_to :shipping_address, class_name: 'Address',
+                                foreign_key: :shipping_address
+  belongs_to :billing_address, class_name: 'Address',
+                               foreign_key: :billing_address
   belongs_to :credit_card
   belongs_to :delivery
   has_many :carts
@@ -27,14 +30,14 @@ class Order < ActiveRecord::Base
   alias cart_items carts
 
   def persist_strategy=(val)
-    unless val.kind_of? OrderStrategy::PersistBase
+    unless val.is_a? OrderStrategy::PersistBase
       raise 'argument sould be instance of OrderStrategy::PersistBase'
     end
     @persist_strategy = val
   end
 
   def keep_strategy=(val)
-    unless val.kind_of? OrderStrategy::KeepBase
+    unless val.is_a? OrderStrategy::KeepBase
       raise 'argument sould be instance of OrderStrategy::KeepBase'
     end
     @keep_strategy = val
@@ -53,7 +56,7 @@ class Order < ActiveRecord::Base
   end
 
   def item_total
-    cart_items.inject(0) { |sum, item| sum + item.total_price }.to_f
+    cart_items.inject(0) { |a, e| a + e.total_price }.to_f
   end
 
   def item_discount
@@ -66,15 +69,15 @@ class Order < ActiveRecord::Base
   end
 
   def order_total
-    item_total_with_discount + ( delivery.try(:price) || 0 )
+    item_total_with_discount + (delivery.try(:price) || 0)
   end
 
   def number
-    "R#{created_at.strftime("%Y%m%d")}#{id}"
+    "R#{created_at.strftime('%Y%m%d')}#{id}"
   end
 
   def cart_items_to_array
-    cart_items.map { |item| item.attributes }
+    cart_items.map(&:attributes)
   end
 
   def find_or_build_cart_item(book_id)
@@ -87,9 +90,7 @@ class Order < ActiveRecord::Base
 
   def save_with_cart_items
     return false unless save
-    unless cart_items.empty?
-      cart_items.each { |item| item.save! }
-    end
+    cart_items.each(&:save!) unless cart_items.empty?
     true
   end
 
@@ -100,11 +101,11 @@ class Order < ActiveRecord::Base
   end
 
   def destroy_cart_items
-    cart_items.each { |item| item.destroy! } unless cart_items.empty?
+    cart_items.each(&:destroy!) unless cart_items.empty?
   end
 
-  def ==(another)
-    attributes == another.try(:attributes) && cart_items == another.try(:cart_items)
+  def ==(other)
+    attributes == other.try(:attributes) && cart_items == other.try(:cart_items)
   end
 
   def set_coupon(object)

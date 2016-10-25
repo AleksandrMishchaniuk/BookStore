@@ -1,7 +1,7 @@
+# :nodoc:
 class Storage
-
   def initialize(controller, key)
-    unless controller.kind_of? ApplicationController
+    unless controller.is_a? ApplicationController
       raise 'argument sould be instance of ApplicationController'
     end
     @storage = controller.session[key] ||= {}
@@ -16,4 +16,7 @@ class Storage
     end
   end
 
+  def respond_to_missing?(name, include_private = false)
+    @storage.respond_to?(name) || super
+  end
 end
