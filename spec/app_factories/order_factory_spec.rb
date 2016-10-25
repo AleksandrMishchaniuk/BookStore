@@ -2,11 +2,11 @@ require "rails_helper"
 
 RSpec.describe OrderFactory do
 
-  it { expect(described_class::STORAGE_KEY).to be_kind_of Symbol }
-  it { expect(described_class::COUPON_STORAGE_KEY).to be_kind_of Symbol }
-  it { expect(described_class::PERSISTED_KEY).to be_kind_of Symbol }
-  it { expect(described_class::NOT_PERSISTED_KEY).to be_kind_of Symbol }
-  it { expect(described_class::COUPON_KEY).to be_kind_of Symbol }
+  it { expect(described_class::STORAGE_KEY).to be_is_a Symbol }
+  it { expect(described_class::COUPON_STORAGE_KEY).to be_is_a Symbol }
+  it { expect(described_class::PERSISTED_KEY).to be_is_a Symbol }
+  it { expect(described_class::NOT_PERSISTED_KEY).to be_is_a Symbol }
+  it { expect(described_class::COUPON_KEY).to be_is_a Symbol }
 
   subject { described_class.new(context) }
   let(:context) do
@@ -90,10 +90,10 @@ RSpec.describe OrderFactory do
   describe '#persist_strategy' do
     before do
       coupon_storage = double('instance Storage')
-      allow(coupon_storage).to receive(:kind_of?).with(Storage).and_return(true)
+      allow(coupon_storage).to receive(:is_a?).with(Storage).and_return(true)
       allow(subject).to receive(:coupon_storage).and_return(coupon_storage)
       order_storage = double('instance Storage')
-      allow(order_storage).to receive(:kind_of?).with(Storage).and_return(true)
+      allow(order_storage).to receive(:is_a?).with(Storage).and_return(true)
       allow(subject).to receive(:order_storage).and_return(order_storage)
     end
 
@@ -106,14 +106,14 @@ RSpec.describe OrderFactory do
     context 'when passed persisted order' do
       let(:order) { create :order }
       it "returns instance OrderStrategy::PersistByDb" do
-        expect(subject.persist_strategy(order)).to be_kind_of(OrderStrategy::PersistByDb)
+        expect(subject.persist_strategy(order)).to be_is_a(OrderStrategy::PersistByDb)
       end
     end # when passed persisted order
 
     context 'when passed not persisted order' do
       let(:order) { build :order }
       it "returns instance OrderStrategy::PersistByStorage" do
-        expect(subject.persist_strategy(order)).to be_kind_of(OrderStrategy::PersistByStorage)
+        expect(subject.persist_strategy(order)).to be_is_a(OrderStrategy::PersistByStorage)
       end
     end # when passed not persisted order
   end # #persist_strategy
@@ -123,7 +123,7 @@ RSpec.describe OrderFactory do
     let(:user){ create :user }
     before do
       order_storage = double('instance Storage')
-      allow(order_storage).to receive(:kind_of?).with(Storage).and_return(true)
+      allow(order_storage).to receive(:is_a?).with(Storage).and_return(true)
       allow(subject).to receive(:order_storage).and_return(order_storage)
       allow(subject).to receive(:current_user).and_return(user)
     end
@@ -139,14 +139,14 @@ RSpec.describe OrderFactory do
       context 'when user is signed in' do
         before { allow(subject).to receive(:user_signed_in?).and_return(true) }
         it "returns instance OrderStrategy::KeepByUser" do
-          expect(subject.keep_strategy(order)).to be_kind_of(OrderStrategy::KeepByUser)
+          expect(subject.keep_strategy(order)).to be_is_a(OrderStrategy::KeepByUser)
         end
       end # when user is signed in
 
       context 'when user is not signed in' do
         before { allow(subject).to receive(:user_signed_in?).and_return(false) }
         it "returns instance OrderStrategy::KeepByStoragePersist" do
-          expect(subject.keep_strategy(order)).to be_kind_of(OrderStrategy::KeepByStoragePersist)
+          expect(subject.keep_strategy(order)).to be_is_a(OrderStrategy::KeepByStoragePersist)
         end
       end # when user is not signed in
     end # when order is persisted
@@ -154,7 +154,7 @@ RSpec.describe OrderFactory do
     context 'when order is not persisted' do
       let(:order) { build :order }
       it "returns instance OrderStrategy::KeepByStorageNotPersist" do
-        expect(subject.keep_strategy(order)).to be_kind_of(OrderStrategy::KeepByStorageNotPersist)
+        expect(subject.keep_strategy(order)).to be_is_a(OrderStrategy::KeepByStorageNotPersist)
       end
     end # when order is not persisted
   end # #keep_strategy
@@ -162,14 +162,14 @@ RSpec.describe OrderFactory do
   describe '#order_storage' do
     before { allow(context).to receive(:session).and_return({}) }
     it "returns instance Storage" do
-      expect(subject.send(:order_storage)).to be_kind_of(Storage)
+      expect(subject.send(:order_storage)).to be_is_a(Storage)
     end
   end # #order_storage
 
   describe '#coupon_storage' do
     before { allow(context).to receive(:session).and_return({}) }
     it "returns instance Storage" do
-      expect(subject.send(:coupon_storage)).to be_kind_of(Storage)
+      expect(subject.send(:coupon_storage)).to be_is_a(Storage)
     end
   end # #coupon_storage
 
